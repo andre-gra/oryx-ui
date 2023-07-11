@@ -13,15 +13,15 @@ interface IAccordionMultipleRootProps extends IAccordionComponentProps {
   defaultValue?: string[]
 }
 
-type IAccordionUnion = IAccordionSingleRootProps | IAccordionMultipleRootProps
+type TAccordionUnion = IAccordionSingleRootProps | IAccordionMultipleRootProps
 
-export type IAccordionRootProps = IAccordionUnion & {
+export type TAccordionRootProps = TAccordionUnion & {
   defaultValue?: string
   collapsible?: boolean
   disabled?: boolean
 }
 
-const AccordionRoot = React.forwardRef(({ children, className, ...props }: IAccordionRootProps, forwardedRef: ForwardedRef<HTMLDivElement>) => (
+const AccordionRoot = React.forwardRef(({ children, className, ...props }: TAccordionRootProps, forwardedRef: ForwardedRef<HTMLDivElement>) => (
   <AccordionPrimitive.Root className={classNames(
     'bg-mauve6 w-[300px] rounded-md shadow-[0_2px_10px] shadow-violet10',
     className

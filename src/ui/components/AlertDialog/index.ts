@@ -1,10 +1,21 @@
-import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
-
-/* Accordion Types */
-export interface IAlertDialogProps extends AlertDialogPrimitive.AlertDialogProps {
-  children: React.ReactNode;
-  className?: string,
-  value: string
+/* -------------------------------------------------------------------------------------------------
+ * AlertDialog Types
+ * ----------------------------------------------------------------------------------------------- */
+export interface IAlertDialogComponentProps {
+  children: React.ReactNode
+  className?: string
 }
 
-export const AccordionRoot = AlertDialogPrimitive.Root
+/* -------------------------------------------------------------------------------------------------
+ * AlertDialog Components
+ * ----------------------------------------------------------------------------------------------- */
+export { AlertDialogRoot as Root } from './AlertDialogRoot'
+export { AlertDialogTrigger as Trigger } from './AlertDialogTrigger'
+export { AlertDialogPortal as Portal } from './AlertDialogPortal'
+export { AlertDialogOverlay as Overlay } from './AlertDialogOverlay'
+export { AlertDialogContent as Content } from './AlertDialogContent'
+export { AlertDialogCancel as Cancel } from './AlertDialogCancel'
+export { AlertDialogAction as Action } from './AlertDialogAction'
+export { AlertDialogTitle as Title } from './AlertDialogTitle'
+export { AlertDialogDescription as Description } from './AlertDialogDescription'
+
