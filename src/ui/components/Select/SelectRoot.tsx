@@ -1,13 +1,7 @@
 import * as Select from '@radix-ui/react-select'
-import { ISelectComponentProps } from '.'
+import { SelectProps } from '@radix-ui/react-select'
 
-export interface ISelectRootProps extends ISelectComponentProps {
-  defaultOpen?: boolean
-  open?: boolean
-  openOnChange?: (open: boolean) => void
-}
-
-const SelectRoot = ({ children, ...props }: ISelectRootProps) => (
+const SelectRoot = ({ children, ...props }: SelectProps) => (
   <Select.Root
     {...props}>
     {children}

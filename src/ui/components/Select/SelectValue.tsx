@@ -1,12 +1,10 @@
 import React, { ForwardedRef } from 'react'
 import classNames from 'classnames'
 import * as SelectPrimitive from '@radix-ui/react-select'
-import { ISelectComponentProps } from '.'
+import { SelectValueProps } from '@radix-ui/react-select'
 
-export interface ISelectValueProps extends Omit<ISelectComponentProps, 'children'> {
-  asChild?: boolean
-  children? : string
-  placeholder?: string
+export interface ISelectValueProps extends SelectValueProps {
+  backgroundColor?: string
 }
 
 const SelectValue = React.forwardRef(({ children, className, ...props }: ISelectValueProps, forwardedRef: ForwardedRef<HTMLSpanElement>) => (

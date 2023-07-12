@@ -1,8 +1,8 @@
 import classNames from 'classnames'
 import * as SelectPrimitive from '@radix-ui/react-select'
-import { ISelectComponentProps } from '.'
+import { SelectPortalProps } from '@radix-ui/react-select'
 
-export interface ISelectPortalProps extends ISelectComponentProps {
+export interface ISelectPortalProps extends SelectPortalProps {
   value? : string
   asChild?: boolean
 }

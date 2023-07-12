@@ -1,9 +1,9 @@
 import React, { ForwardedRef } from 'react'
 import classNames from 'classnames'
 import * as SelectPrimitive from '@radix-ui/react-select'
-import { ISelectComponentProps } from '.'
+import { SelectItemTextProps } from '@radix-ui/react-select'
 
-export interface ISelectItemTextProps extends ISelectComponentProps {
+export interface ISelectItemTextProps extends SelectItemTextProps {
   value? : string
   asChild?: boolean
 }

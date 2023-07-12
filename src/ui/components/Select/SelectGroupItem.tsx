@@ -1,10 +1,11 @@
 import React, { ForwardedRef } from 'react'
 import classnames from 'classnames'
 import * as Select from './'
-import { ISelectComponentProps } from '.'
 import { CheckIcon } from '@radix-ui/react-icons'
 
-export interface ISelectGroupItemProps extends ISelectComponentProps {
+export interface ISelectGroupItemProps {
+  children: React.ReactNode
+  className?: string
   value : string
   asChild?: boolean
   disabled?: boolean
