@@ -5,7 +5,7 @@ import SelectDemo from "../ui/demo/SelectDemo"
 const CollectionPage = () => {
 
   return (
-    <div className="main-background">
+    <div className="main-background flex gap-2 items-center justify-center">
       <AccordionDemo />
       <AlertDialogDemo />
       <SelectDemo />
