@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require('tailwindcss/plugin')
-const { blackA, mauve, violet, red, purple, indigo } = require('@radix-ui/colors')
+const { blackA, mauve, violet, red, purple, indigo, orange, blue } = require('@radix-ui/colors')
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -17,7 +17,19 @@ export default {
         ...violet,
         ...red,
         ...purple,
-        ...indigo
+        ...indigo,
+        ...orange,
+        ...blue
+      },
+      padding: {
+        sm: '8px',
+        base: '12px',
+        lg: '15px',
+      },
+      height: {
+        sm: '20px',
+        base: '40px',
+        lg: '60px',
       },
       keyframes: {
         slideUpAndFade: {

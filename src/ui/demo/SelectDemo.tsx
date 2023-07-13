@@ -3,13 +3,13 @@ import * as Select from '../components/Select'
 import { SelectGroupItem } from '../components/Select/SelectGroupItem'
 
 const SelectDemo = () => (
-  <Select.Root
-    onOpenChange={() =>window.alert('openOnChange')}
-    defaultOpen={true}
-    >
+  <Select.Root>
     <Select.Trigger
       aria-label="Food"
-      backgroundColor="bg-red6"
+      background="bg-red6"
+      text='text-mauve3'
+      animation='rotate-x'
+      size='lg'
     >
       <Select.Value placeholder="Select a fruit…" />
       <Select.Icon>

@@ -1,18 +1,14 @@
 import React, { ForwardedRef } from 'react'
-import classNames from 'classnames'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { SelectValueProps } from '@radix-ui/react-select'
 
 export interface ISelectValueProps extends SelectValueProps {
-  backgroundColor?: string
+  todo?: string
 }
 
-const SelectValue = React.forwardRef(({ children, className, ...props }: ISelectValueProps, forwardedRef: ForwardedRef<HTMLSpanElement>) => (
+const SelectValue = React.forwardRef(({ children, ...props }: ISelectValueProps, forwardedRef: ForwardedRef<HTMLSpanElement>) => (
   <SelectPrimitive.Value
-    className={classNames(
-      'text-violet11 hover:bg-mauve3 shadow-blackA7 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] outline-none focus:shadow-[0_0_0_2px] focus:shadow-black',
-      className
-    )}
+    // We ignore `classNames` as this part shouldn't be styled.
     {...props}
     ref={forwardedRef}
   >
