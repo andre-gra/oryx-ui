@@ -6,7 +6,7 @@ import { SelectTriggerProps as TriggerProps } from '@radix-ui/react-select'
 type BackgroundColor = 'bg-mauve11' | 'bg-mauve3' | 'bg-mauve4' | 'bg-red6'
 type TextColor = 'text-mauve11' | 'text-mauve3' | 'text-orange9' | 'text-blue10'
 type Animation = 'rotate-x' | 'rotate-y'
-type Size = 'sm' | 'md' | 'lg'
+type Size = 'sm' | 'base' | 'lg'
 
 export interface ISelectTriggerProps extends TriggerProps {
   size?: Size
