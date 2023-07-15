@@ -12,6 +12,7 @@ export default {
   theme: {
     extend: {
       colors: {
+
         ...blackA,
         ...mauve,
         ...violet,
@@ -127,6 +128,9 @@ export default {
         }),
       })
     }),
+    require('./src/themes/presets/melomys')({
+      className: 'melomys'
+    })
   ],
 }
 
