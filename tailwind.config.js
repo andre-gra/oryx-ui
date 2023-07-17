@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require('tailwindcss/plugin')
 const { createThemes } = require('tw-colors')
-const { blackA, mauve, violet, red, purple, indigo, orange, blue } = require('@radix-ui/colors')
+const { amber, teal, amberDark, mintDark } = require('./src/themes/palettes')
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -12,17 +12,6 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-
-        ...blackA,
-        ...mauve,
-        ...violet,
-        ...red,
-        ...purple,
-        ...indigo,
-        ...orange,
-        ...blue
-      },
       padding: {
         sm: '8px',
         base: '12px',
@@ -131,19 +120,16 @@ export default {
     }),
     createThemes({
       melomys: {
-        'primary': 'steelblue',
-        'secondary': 'darkblue',
-        'brand': '#F3F3F3',
+        ...teal
       },
       light: {
-        'primary': 'red',
-        'secondary': 'darkred',
-        'brand': 'indigo',
+        ...amber
       },
       dark: {
-        'primary': 'green',
-        'secondary': 'darkgreen',
-        'brand': 'purple',
+        ...mintDark
+      },
+      teal: {
+        ...teal
       }
     })
   ],
