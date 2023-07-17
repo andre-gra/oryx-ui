@@ -1,71 +1,138 @@
-import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
-import * as Select from '../components/Select'
-import { SelectGroupItem } from '../components/Select/SelectGroupItem'
+import React, { ForwardedRef } from 'react'
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
+import * as Select from '@radix-ui/react-select'
+import classnames from 'classnames'
+import { useTheme } from '../../themes/useTheme'
 
-const SelectDemo = () => (
-  <Select.Root>
-    <Select.Trigger
-      aria-label="Food"
-      background="bg-red6"
-      text='text-mauve3'
-      animation='rotate-x'
-      size='lg'
-    >
-      <Select.Value placeholder="Select a fruit…" />
-      <Select.Icon>
-        <ChevronDownIcon />
-      </Select.Icon>
-    </Select.Trigger>
-    <Select.Portal>
-      <Select.Content>
-        <Select.ScrollUpButton>
-          <ChevronUpIcon />
-        </Select.ScrollUpButton>
-        <Select.Viewport>
-          <Select.Group>
-            <Select.Label>
-              Fruits
-            </Select.Label>
-            <SelectGroupItem className='text-red-600' value="apple">Apple</SelectGroupItem>
-            <SelectGroupItem value="banana">Banana</SelectGroupItem>
-            <SelectGroupItem value="blueberry">Blueberry</SelectGroupItem>
-            <SelectGroupItem value="grapes">Grapes</SelectGroupItem>
-            <SelectGroupItem value="pineapple">Pineapple</SelectGroupItem>
-          </Select.Group>
+type Option = { label: string, value: string }
+type Options = { group: Option[], label: string }
+export interface SelectProps {
+  label: string
+  placeholder?: string
+  options: Options[],
+  value?: string,
+  onValueChange?(value: string): void;
+}
 
-          <Select.Separator />
+const SelectDemo = ({ ...props }: SelectProps) => {
 
-          <Select.Group>
-            <Select.Label>
-              Vegetables
-            </Select.Label>
-            <SelectGroupItem value="aubergine">Aubergine</SelectGroupItem>
-            <SelectGroupItem value="broccoli">Broccoli</SelectGroupItem>
-            <SelectGroupItem value="carrot" disabled>
-              Carrot
-            </SelectGroupItem>
-            <SelectGroupItem value="courgette">Courgette</SelectGroupItem>
-            <SelectGroupItem value="leek">Leek</SelectGroupItem>
-          </Select.Group>
+  const { theme } = useTheme()
 
-          <Select.Separator />
-
-          <Select.Group>
-            <Select.Label>
-              Meat
-            </Select.Label>
-            <SelectGroupItem value="beef">Beef</SelectGroupItem>
-            <SelectGroupItem value="chicken">Chicken</SelectGroupItem>
-            <SelectGroupItem value="lamb">Lamb</SelectGroupItem>
-            <SelectGroupItem value="pork">Pork</SelectGroupItem>
-          </Select.Group>
-        </Select.Viewport>
-        <Select.ScrollDownButton>
+  return (
+    <Select.Root value={props.value} onValueChange={props.onValueChange}>
+      <Select.Trigger
+        aria-label={props.label}
+        className={classnames(
+          theme,
+          'inline-flex items-center justify-center rounded px-[15px] text-[13px] leading-none h-[35px] gap-[5px] bg-color3 text-color11 shadow-[0_2px_10px] shadow-color9 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color10 data-[placeholder]:text-color11 outline-none',
+        )}
+      >
+        <Select.Value placeholder={props.placeholder} />
+        <Select.Icon
+          className={classnames(
+            theme,
+            'select-icon text-color11',
+          )}
+        >
           <ChevronDownIcon />
-        </Select.ScrollDownButton>
-      </Select.Content>
-    </Select.Portal>
-  </Select.Root>
-)
+        </Select.Icon>
+      </Select.Trigger>
+      <Select.Portal>
+        <Select.Content
+          className={classnames(
+            theme,
+            'overflow-hidden bg-color9 rounded-md shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]',
+          )}
+        >
+          <Select.ScrollUpButton
+            className={classnames(
+              theme,
+              'flex items-center justify-center h-[25px] bg-color9 text-color11 cursor-default',
+            )}
+          >
+            <ChevronUpIcon />
+          </Select.ScrollUpButton>
+          <Select.Viewport
+            className={classnames(
+              theme,
+              'p-[5px]',
+            )}
+          >
+            {
+              props.options.map((option, index) => (
+                <>
+                  <Select.Group key={option.label.toLowerCase()}>
+                    <Select.Label
+                      className={classnames(
+                        theme,
+                        'px-[25px] text-xs leading-[25px] text-color11'
+                      )}
+                    >
+                      {option.label}
+                    </Select.Label>
+                    {option.group.map((item) => (
+                      <SelectItem theme={theme} key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    )
+                    )}
+                  </Select.Group>
+                  {props.options.length > 1 && index < props.options.length - 1 && (
+                    <Select.Separator
+                    className={classnames(
+                      theme,
+                      'h-[1px] bg-color10 m-[5px]'
+                    )}
+                    />
+                  )}
+                </>
+              ))
+            }
+          </Select.Viewport>
+          <Select.ScrollDownButton
+            className={classnames(
+              theme,
+              'flex items-center justify-center h-[25px] bg-color9 text-color11 cursor-default',
+            )}
+          >
+            <ChevronDownIcon />
+          </Select.ScrollDownButton>
+        </Select.Content>
+      </Select.Portal>
+    </Select.Root>
+  )
+}
+
+export interface ISelectGroupItemProps {
+  children: React.ReactNode
+  className?: string
+  value: string
+  asChild?: boolean
+  disabled?: boolean
+  theme: string
+}
+
+const SelectItem = React.forwardRef(({ children, theme, ...props }: ISelectGroupItemProps, forwardedRef: ForwardedRef<HTMLDivElement>) => {
+  return (
+    <Select.Item
+      className={classnames(
+        theme,
+        'text-[13px] leading-none text-color11 rounded-[3px] flex items-center h-[25px] pr-[35px] pl-[25px] relative select-none data-[disabled]:text-gray6 data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1'
+      )}
+      {...props}
+      ref={forwardedRef}
+    >
+      <Select.ItemText>{children}</Select.ItemText>
+      <Select.ItemIndicator
+        className={classnames(
+          theme,
+          'absolute left-0 w-[25px] inline-flex items-center justify-center',
+        )}
+      >
+        <CheckIcon />
+      </Select.ItemIndicator>
+    </Select.Item>
+  )
+})
 
 export default SelectDemo
