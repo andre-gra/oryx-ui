@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require('tailwindcss/plugin')
+const { createThemes } = require('tw-colors')
 const { blackA, mauve, violet, red, purple, indigo, orange, blue } = require('@radix-ui/colors')
 
 /** @type {import('tailwindcss').Config} */
@@ -128,8 +129,22 @@ export default {
         }),
       })
     }),
-    require('./src/themes/presets/melomys')({
-      className: 'melomys'
+    createThemes({
+      melomys: {
+        'primary': 'steelblue',
+        'secondary': 'darkblue',
+        'brand': '#F3F3F3',
+      },
+      light: {
+        'primary': 'red',
+        'secondary': 'darkred',
+        'brand': 'indigo',
+      },
+      dark: {
+        'primary': 'green',
+        'secondary': 'darkgreen',
+        'brand': 'purple',
+      }
     })
   ],
 }
