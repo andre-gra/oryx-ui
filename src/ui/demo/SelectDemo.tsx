@@ -41,7 +41,7 @@ const SelectDemo = ({ ...props }: SelectProps) => {
         <Select.Content
           className={classnames(
             theme,
-            'overflow-hidden bg-color9 rounded-md shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]',
+            'overflow-hidden bg-color2 rounded-md shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]',
           )}
         >
           <Select.ScrollUpButton
@@ -60,12 +60,12 @@ const SelectDemo = ({ ...props }: SelectProps) => {
           >
             {
               props.options.map((option, index) => (
-                <>
-                  <Select.Group key={option.label.toLowerCase()}>
+                <div key={option.label.toLowerCase()}>
+                  <Select.Group>
                     <Select.Label
                       className={classnames(
                         theme,
-                        'px-[25px] text-xs leading-[25px] text-color11'
+                        'px-[25px] text-xs leading-[25px] text-gray11'
                       )}
                     >
                       {option.label}
@@ -85,7 +85,7 @@ const SelectDemo = ({ ...props }: SelectProps) => {
                     )}
                     />
                   )}
-                </>
+                </div>
               ))
             }
           </Select.Viewport>
@@ -117,7 +117,7 @@ const SelectItem = React.forwardRef(({ children, theme, ...props }: ISelectGroup
     <Select.Item
       className={classnames(
         theme,
-        'text-[13px] leading-none text-color11 rounded-[3px] flex items-center h-[25px] pr-[35px] pl-[25px] relative select-none data-[disabled]:text-gray6 data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1'
+        'text-[13px] leading-none text-color12 rounded-[3px] flex items-center h-[25px] pr-[35px] pl-[25px] relative select-none data-[disabled]:text-gray6 data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-color4 data-[highlighted]:text-color11'
       )}
       {...props}
       ref={forwardedRef}
