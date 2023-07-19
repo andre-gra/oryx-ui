@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react'
 
 // TODO fare in modo di collegare i type con i nomi dei temi importati
+// utilizzando Enum tipi -> export enum Theme { Light = 'theme-light', Dark = 'theme-dark', Melomys = 'theme-melomys' }
 export type Theme = 'theme-light' | 'theme-dark' | 'theme-melomys'
 
 export interface ThemeContextProps {

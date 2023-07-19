@@ -3,7 +3,7 @@ import AccordionDemo from "../ui/demo/AccordionDemo"
 import AlertDialogDemo from "../ui/demo/AlertDialogDemo"
 import SelectDemo from "../ui/demo/SelectDemo"
 
-const options = [
+const optionsSelect = [
   {
     group: [
       { value: 'apple', label: 'Apple' },
@@ -36,15 +36,28 @@ const options = [
   }
 ]
 
+const itemsAccordion = [
+  {
+    mainText: 'Is it accessible?',
+    collapsibleText: 'Yes. It adheres to the WAI-ARIA design pattern'
+
+  },
+  {
+    mainText: 'Is it unstyled?',
+    collapsibleText: 'Yes. It\'s unstyled by default, giving you freedom over the look and feel.'
+
+  },
+]
+
 const CollectionPage = () => {
 
   return (
     <>
       <div className="main-background flex gap-2 items-center justify-center">
         <SelectTheme />
-        <AccordionDemo />
+        <AccordionDemo items={itemsAccordion} />
         <AlertDialogDemo />
-        <SelectDemo label='Fruits' options={options} placeholder="Choose something..." />
+        <SelectDemo label='Fruits' options={optionsSelect} placeholder="Choose something..." />
       </div>
     </>
   )

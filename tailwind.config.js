@@ -10,6 +10,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  // TODO utilizzare la funzione presets di tailwind per non dover scrivere qui le estensioni del tema
   theme: {
     extend: {
       padding: {

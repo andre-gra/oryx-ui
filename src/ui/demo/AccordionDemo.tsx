@@ -1,10 +1,19 @@
 import { useRef } from 'react'
-import * as Accordion from '../components/Accordion'
+import * as Accordion from '@radix-ui/react-accordion'
+import classnames from 'classnames'
+import { useTheme } from '../../themes/useTheme'
 
-const AccordionDemo = () => {
+type Items = { mainText: string, collapsibleText: string }
+export interface AccordionProps {
+  items: Items[],
+}
+
+const AccordionDemo = ({ ...props }: AccordionProps) => {
+
+  const { theme } = useTheme()
 
   const accordionRootRef = useRef<HTMLDivElement>(null)
-  const accordionItemRef = useRef<Map<string,HTMLDivElement> | null>(null)
+  const accordionItemRef = useRef<Map<string, HTMLDivElement> | null>(null)
   const accordionHeaderRef = useRef<HTMLHeadingElement>(null)
   const accordionTriggerRef = useRef<HTMLButtonElement>(null)
   const accordionContentRef = useRef<HTMLDivElement>(null)
@@ -36,43 +45,61 @@ const AccordionDemo = () => {
   }
 
   return (
-    <Accordion.AccordionRoot
+    <Accordion.Root
+      className={classnames(
+        theme,
+        'bg-color2 w-[300px] rounded-md shadow-[0_2px_10px] shadow-color9',
+      )}
       ref={accordionRootRef}
-      type="multiple"
+      type={props.items.length > 1 ? 'multiple' : 'single'}
     >
-      <Accordion.AccordionItem id={'1'} ref={(node) => {
-        const map = getMap()
-        if (node) {
-          map.set('1', node)
-        } else {
-          map.delete('1')
-        }
-      }} value="item-1">
-        <Accordion.AccordionHeader ref={accordionHeaderRef}>
-          <Accordion.AccordionTrigger ref={accordionTriggerRef}>Is it accessible?</Accordion.AccordionTrigger>
-        </Accordion.AccordionHeader>
-        <Accordion.AccordionContent ref={accordionContentRef} onClick={() => handleAccordionTriggerClick('1')}>
-          Yes. It adheres to the WAI-ARIA design pattern.
-        </Accordion.AccordionContent>
-      </Accordion.AccordionItem>
-
-      <Accordion.AccordionItem id={'2'} ref={(node) => {
-        const map = getMap()
-        if (node) {
-          map.set('2', node)
-        } else {
-          map.delete('2')
-        }
-      }} value="item-2">
-        <Accordion.AccordionHeader ref={accordionHeaderRef}>
-          <Accordion.AccordionTrigger ref={accordionTriggerRef}>Is it unstyled?</Accordion.AccordionTrigger>
-        </Accordion.AccordionHeader>
-        <Accordion.AccordionContent ref={accordionContentRef} onClick={() => handleAccordionTriggerClick('2')}>
-          Yes. It's unstyled by default, giving you freedom over the look and feel.
-        </Accordion.AccordionContent>
-      </Accordion.AccordionItem>
-
-    </Accordion.AccordionRoot>
+      {
+        props.items.map((item) => {
+          return (
+            <Accordion.Item
+              className={classnames(
+                theme,
+                'focus-within:shadow-color9 mt-px overflow-hidden first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:z-10 focus-within:shadow-[0_0_0_2px]',
+              )}
+              key={item.mainText}
+              id={item.mainText} 
+              ref={(node) => {
+                const map = getMap()
+                if (node) {
+                  map.set(item.mainText, node)
+                } else {
+                  map.delete(item.mainText)
+                }
+              }} value={item.mainText}>
+              <Accordion.Header
+                className={classnames(
+                  'flex',
+                )}
+                ref={accordionHeaderRef}>
+                <Accordion.Trigger
+                  className={classnames(
+                    theme,
+                    'text-color11 shadow-color9 hover:bg-color4 group flex h-[45px] flex-1 cursor-default items-center justify-between bg-color3 px-5 text-[15px] leading-none shadow-[0_1px_0] outline-none',
+                  )}
+                  ref={accordionTriggerRef}>
+                  {item.mainText}
+                </Accordion.Trigger>
+              </Accordion.Header>
+              <Accordion.Content
+                className={classnames(
+                  theme,
+                  'text-color12 bg-color2 data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden text-[15px]',
+                )}
+                ref={accordionContentRef} onClick={() => handleAccordionTriggerClick('1')}>
+                <div className="py-[15px] px-5 animate-fade-up">
+                  {item.collapsibleText}
+                </div>
+              </Accordion.Content>
+            </Accordion.Item>
+          )
+        })
+      }
+    </Accordion.Root>
   )
 }
 
