@@ -120,7 +120,7 @@ export default {
     }),
     createThemes({
       melomys: {
-        ...teal
+        ...amberDark
       },
       light: {
         ...amber

@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react'
 
 // TODO fare in modo di collegare i type con i nomi dei temi importati
-export type Theme = 'oryx' | 'melomys'
+export type Theme = 'theme-light' | 'theme-dark' | 'theme-melomys'
 
 export interface ThemeContextProps {
   theme: Theme
@@ -19,7 +19,7 @@ const ThemeProvider: React.FC<ProviderProps> = ({ children }: ProviderProps) => 
     const localTheme = localStorage.getItem('theme')
     return localTheme !== null
       ? localTheme as Theme
-      : 'oryx'
+      : 'theme-light'
   })
 
   return (
