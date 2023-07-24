@@ -48,7 +48,7 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
     <Accordion.Root
       className={classnames(
         theme,
-        'bg-color2 w-[300px] rounded-md shadow-[0_2px_10px] shadow-color9',
+        'bg-color2 w-[300px] rounded-md shadow-[0_2px_10px] shadow-blackA7',
       )}
       ref={accordionRootRef}
       type={props.items.length > 1 ? 'multiple' : 'single'}

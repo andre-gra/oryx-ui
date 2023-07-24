@@ -1,4 +1,9 @@
-import { sage } from "./sage"
+import { sage } from "./gray/sage"
+import { blackA, whiteA} from '@radix-ui/colors'
+import error from "./semantic/error"
+import success from "./semantic/success"
+import warning from "./semantic/warning"
+import info from "./semantic/info"
 
 export const teal = {
   color1: 'hsl(165, 60.0%, 98.8%)',
@@ -13,5 +18,11 @@ export const teal = {
   color10: 'hsl(173, 83.4%, 32.5%)',
   color11: 'hsl(174, 90.0%, 25.2%)',
   color12: 'hsl(170, 50.0%, 12.5%)',
-  ...sage
+  ...sage,
+  ...blackA,
+  ...whiteA,
+  ...error,
+  ...success,
+  ...warning,
+  ...info
 }

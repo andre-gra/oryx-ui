@@ -1,4 +1,9 @@
-import { sand } from "./sand"
+import { sand } from "./gray/sand"
+import { blackA, whiteA} from '@radix-ui/colors'
+import error from "./semantic/error"
+import success from "./semantic/success"
+import warning from "./semantic/warning"
+import info from "./semantic/info"
 
 export const amber = {
   color1: 'hsl(39, 70.0%, 99.0%)',
@@ -13,5 +18,11 @@ export const amber = {
   color10: 'hsl(35, 100%, 55.5%)',
   color11: 'hsl(30, 100%, 34.0%)',
   color12: 'hsl(20, 80.0%, 17.0%)',
-  ...sand 
+  ...sand,
+  ...blackA,
+  ...whiteA,
+  ...error,
+  ...success,
+  ...warning,
+  ...info
 }
