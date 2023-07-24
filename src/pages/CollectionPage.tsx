@@ -9,7 +9,7 @@ const optionsSelect = [
       { value: 'apple', label: 'Apple' },
       { value: 'pear', label: 'Pear' },
       { value: 'banana', label: 'Banana' },
-      { value: 'orange', label: 'Orange' },
+      { value: 'orange', label: 'Orange', disabled: true },
       { value: 'grape', label: 'Grape' },
       { value: 'watermelon', label: 'Watermelon' }
     ],
