@@ -1,8 +1,9 @@
 import React, { createContext, useState } from 'react'
+import type { Amber, Teal, AmberDark, MintDark } from './palettes'
 
 // TODO fare in modo di collegare i type con i nomi dei temi importati
 // utilizzando Enum tipi -> export enum Theme { Light = 'theme-light', Dark = 'theme-dark', Melomys = 'theme-melomys' }
-export type Theme = 'theme-light' | 'theme-dark' | 'theme-melomys'
+export type Theme = `theme-${Amber | Teal | AmberDark | MintDark}`
 
 export interface ThemeContextProps {
   theme: Theme
@@ -20,7 +21,7 @@ const ThemeProvider: React.FC<ProviderProps> = ({ children }: ProviderProps) => 
     const localTheme = localStorage.getItem('theme')
     return localTheme !== null
       ? localTheme as Theme
-      : 'theme-light'
+      : 'theme-amber'
   })
 
   return (

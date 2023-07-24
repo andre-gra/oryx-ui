@@ -1,12 +1,19 @@
 import { useTheme } from './useTheme'
 import SelectDemo from '../ui/demo/SelectDemo'
+import type { Theme } from './themeProvider'
 
-const options = [
+type ThemeOptions = {
+  group: { value: Theme; label: string }[]
+  label: string
+
+}
+
+const options: ThemeOptions[] = [
   {
     group: [
-      { value: 'theme-light', label: 'Light' },
-      { value: 'theme-dark', label: 'Dark' },
-      { value: 'theme-melomys', label: 'Melomys' },
+      { value: 'theme-amber', label: 'Amber' },
+      { value: 'theme-amberDark', label: 'AmberDark' },
+      { value: 'theme-mintDark', label: 'MintDark' },
       { value: 'theme-teal', label: 'Teal' }
     ],
     label: 'Theme'

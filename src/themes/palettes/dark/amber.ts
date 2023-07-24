@@ -5,7 +5,7 @@ import info from "./semantic/info"
 import success from "./semantic/success"
 import warning from "./semantic/warning"
 
-export const amber = {
+export const amberDark = {
   color1: 'hsl(36, 100%, 6.1%)',
   color2: 'hsl(35, 100%, 7.6%)',
   color3: 'hsl(32, 100%, 10.2%)',
@@ -26,3 +26,5 @@ export const amber = {
   ...warning,
   ...info,
 }
+
+export type AmberDark = 'amberDark'

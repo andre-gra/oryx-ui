@@ -26,3 +26,5 @@ export const amber = {
   ...warning,
   ...info
 }
+
+export type Amber = 'amber'

@@ -26,3 +26,5 @@ export const teal = {
   ...warning,
   ...info
 }
+
+export type Teal = 'teal'

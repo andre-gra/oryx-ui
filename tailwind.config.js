@@ -119,14 +119,15 @@ export default {
         }),
       })
     }),
+    // TODO create a plugin that import all radix color themes
     createThemes({
-      melomys: {
+      amberDark: {
         ...amberDark
       },
-      light: {
+      amber: {
         ...amber
       },
-      dark: {
+      mintDark: {
         ...mintDark
       },
       teal: {
