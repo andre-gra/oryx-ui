@@ -31,6 +31,8 @@ const options: ThemeOptions[] = [
       { value: 'theme-orangeDark', label: 'OrangeDark' },
       { value: 'theme-brownDark', label: 'BrownDark' },
       { value: 'theme-skyDark', label: 'SkyDark' },
+      { value: 'theme-limeDark', label: 'limeDark' },
+      { value: 'theme-yellowDark', label: 'YellowDark' },
       { value: 'theme-red', label: 'Red' },
       { value: 'theme-teal', label: 'Teal' },
       { value: 'theme-crimson', label: 'Crimson' },
@@ -46,7 +48,9 @@ const options: ThemeOptions[] = [
       { value: 'theme-orange', label: 'Orange' },
       { value: 'theme-brown', label: 'Brown' },
       { value: 'theme-sky', label: 'Sky' },
-      { value: 'theme-mint', label: 'Mint' }
+      { value: 'theme-mint', label: 'Mint' },
+      { value: 'theme-lime', label: 'Lime' },
+      { value: 'theme-yellow', label: 'Yellow' }
     ],
     label: 'Theme'
   }

@@ -8,7 +8,7 @@ import info from "./semantic/info"
 const color: { [key: string]: string } = {}
 
 function replaceKeyString(inputString: string) {
-  const regex = /(sky)(\d+)/gi
+  const regex = /(mint)(\d+)/gi
   return inputString.replace(regex, 'color$2')
 }
 
