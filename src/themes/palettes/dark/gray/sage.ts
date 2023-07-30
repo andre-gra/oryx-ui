@@ -1,14 +1,15 @@
-export const sage = {
-  gray1: 'hsl(155, 7.0%, 8.4%)',
-  gray2: 'hsl(150, 7.4%, 10.6%)',
-  gray3: 'hsl(150, 6.7%, 13.1%)',
-  gray4: 'hsl(150, 6.4%, 15.3%)',
-  gray5: 'hsl(150, 6.1%, 17.4%)',
-  gray6: 'hsl(150, 5.8%, 19.9%)',
-  gray7: 'hsl(150, 5.5%, 23.6%)',
-  gray8: 'hsl(150, 5.1%, 30.6%)',
-  gray9: 'hsl(155, 6.0%, 42.5%)',
-  gray10: 'hsl(153, 4.8%, 48.2%)',
-  gray11: 'hsl(155, 5.0%, 61.8%)',
-  gray12: 'hsl(155, 6.0%, 93.0%)',
+import { sageDark } from "@radix-ui/colors"
+
+const gray: { [key: string]: string } = {}
+
+function replaceKeyString(inputString: string) {
+  const regex = /(sage)(\d+)/gi
+  return inputString.replace(regex, 'gray$2')
 }
+
+Object.entries(sageDark).forEach(([key, value]) => {
+  key = replaceKeyString(key)
+  gray[key] = value
+})
+
+export default gray

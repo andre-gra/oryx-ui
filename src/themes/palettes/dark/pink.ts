@@ -1,23 +1,23 @@
-import gray from "./gray/sand"
-import { blackA, whiteA, amber } from '@radix-ui/colors'
+import gray from "./gray/sage"
+import { blackA, whiteA, pinkDark} from '@radix-ui/colors'
 import error from "./semantic/error"
 import success from "./semantic/success"
-import info from "./semantic/info"
 import warning from "./semantic/warning"
+import info from "./semantic/info"
 
 const color: { [key: string]: string } = {}
 
 function replaceKeyString(inputString: string) {
-  const regex = /(amber)(\d+)/gi
+  const regex = /(pink)(\d+)/gi
   return inputString.replace(regex, 'color$2')
 }
 
-Object.entries(amber).forEach(([key, value]) => {
+Object.entries(pinkDark).forEach(([key, value]) => {
   key = replaceKeyString(key)
   color[key] = value
 })
 
-export const amberO = {
+export const pinkDarkO = {
   ...color,
   ...gray,
   ...blackA,
@@ -25,7 +25,7 @@ export const amberO = {
   ...error,
   ...success,
   ...warning,
-  ...info,
+  ...info
 }
 
-export type Amber = 'amber'
+export type PinkDark = 'pinkDark'

@@ -1,9 +1,8 @@
 import React, { createContext, useState } from 'react'
-import type { Amber, Teal, AmberDark, MintDark } from './palettes'
+import type { Amber, Teal, AmberDark, MintDark, TomatoDark, Tomato, Red, RedDark, Crimson, CrimsonDark, Pink, PinkDark, Plum, PlumDark, Purple, PurpleDark, Violet, VioletDark, Indigo, Blue, BlueDark, Cyan, CyanDark, TealDark, GreenDark, Green, GrassDark, Grass, OrangeDark, Orange, BrownDark, Brown, SkyDark, Sky, Mint, Lime, LimeDark, Yellow, YellowDark } from './palettes'
+import { IndigoDark } from './palettes/dark/indigo'
 
-// TODO fare in modo di collegare i type con i nomi dei temi importati
-// utilizzando Enum tipi -> export enum Theme { Light = 'theme-light', Dark = 'theme-dark', Melomys = 'theme-melomys' }
-export type Theme = `theme-${Amber | Teal | AmberDark | MintDark}`
+export type Theme = `theme-${Amber | Teal | TealDark | AmberDark | Mint | MintDark | TomatoDark | Tomato | Red | RedDark | Crimson | CrimsonDark | Pink | PinkDark | Plum | PlumDark | Purple | PurpleDark | Violet | VioletDark | Indigo | IndigoDark | Blue | BlueDark | Cyan | CyanDark | GreenDark | Green | GrassDark | Grass | OrangeDark | Orange | BrownDark | Brown | SkyDark | Sky | Lime | LimeDark | Yellow | YellowDark}`
 
 export interface ThemeContextProps {
   theme: Theme

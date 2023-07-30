@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require('tailwindcss/plugin')
 const { createThemes } = require('tw-colors')
-const { amber, teal, amberDark, mintDark } = require('./src/themes/palettes')
+const { amberO, tealO, tealDarkO, amberDarkO, mintDarkO, mintO, tomatoDarkO, tomatoO, redDarkO, redO, crimsonDarkO, crimsonO, pinkDarkO, pinkO, plumDarkO, plumO, purpleDarkO, purpleO, violetDarkO, violetO, indigoO, indigoDarkO, blueDarkO, blueO, cyanO, cyanDarkO, greenDarkO, greenO, grassDarkO, grassO, orangeDarkO, orangeO, brownDarkO, brownO, skyDarkO, skyO, limeDarkO, limeO, yellowDarkO, yellowO } = require('./src/themes/palettes')
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -122,17 +122,125 @@ export default {
     // TODO create a plugin that import all radix color themes
     createThemes({
       amberDark: {
-        ...amberDark
+        ...amberDarkO
       },
       amber: {
-        ...amber
+        ...amberO
+      },
+      mint: {
+        ...mintO
       },
       mintDark: {
-        ...mintDark
+        ...mintDarkO
       },
       teal: {
-        ...teal
-      }
+        ...tealO
+      },
+      tealDark: {
+        ...tealDarkO
+      },
+      tomatoDark: {
+        ...tomatoDarkO
+      },
+      tomato: {
+        ...tomatoO
+      },
+      redDark: {
+        ...redDarkO
+      },
+      red: {
+        ...redO
+      },
+      crimson: {
+        ...crimsonO
+      },
+      crimsonDark: {
+        ...crimsonDarkO
+      },
+      pinkDark: {
+        ...pinkDarkO
+      },
+      pink: {
+        ...pinkO
+      },
+      plum: {
+        ...plumO
+      },
+      plumDark: {
+        ...plumDarkO
+      },
+      purpleDark: {
+        ...purpleDarkO
+      },
+      purple: {
+        ...purpleO
+      },
+      violet: {
+        ...violetO
+      },
+      violetDark: {
+        ...violetDarkO
+      },
+      indigo: {
+        ...indigoO
+      },
+      indigoDark: {
+        ...indigoDarkO
+      },
+      blue: {
+        ...blueO
+      },
+      blueDark: {
+        ...blueDarkO
+      },
+      cyan: {
+        ...cyanO
+      },
+      cyanDark: {
+        ...cyanDarkO
+      },
+      green: {
+        ...greenO
+      },
+      greenDark: {
+        ...greenDarkO
+      },
+      grass: {
+        ...grassO
+      },
+      grassDark: {
+        ...grassDarkO
+      },
+      orange: {
+        ...orangeO
+      },
+      orangeDark: {
+        ...orangeDarkO
+      },
+      brown: {
+        ...brownO
+      },
+      brownDark: {
+        ...brownDarkO
+      },
+      sky: {
+        ...skyO
+      },
+      skyDark: {
+        ...skyDarkO
+      },
+      lime: {
+        ...limeO
+      },
+      limeDark: {
+        ...limeDarkO
+      },
+      yellow: {
+        ...yellowO
+      },
+      yellowDark: {
+        ...yellowDarkO
+      },
     })
   ],
 }

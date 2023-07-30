@@ -1,14 +1,15 @@
-export const sand = {
-  gray1: 'hsl(50, 20.0%, 99.0%)',
-  gray2: 'hsl(60, 7.7%, 97.5%)',
-  gray3: 'hsl(59, 6.5%, 95.1%)',
-  gray4: 'hsl(58, 6.1%, 92.9%)',
-  gray5: 'hsl(57, 6.0%, 90.7%)',
-  gray6: 'hsl(56, 5.9%, 88.4%)',
-  gray7: 'hsl(55, 5.9%, 85.2%)',
-  gray8: 'hsl(51, 6.0%, 77.1%)',
-  gray9: 'hsl(50, 2.0%, 55.7%)',
-  gray10: 'hsl(55, 1.7%, 51.9%)',
-  gray11: 'hsl(50, 2.0%, 43.1%)',
-  gray12: 'hsl(50, 6.0%, 10.0%)',
+import { sand } from "@radix-ui/colors"
+
+const gray: { [key: string]: string } = {}
+
+function replaceKeyString(inputString: string) {
+  const regex = /(sand)(\d+)/gi
+  return inputString.replace(regex, 'gray$2')
 }
+
+Object.entries(sand).forEach(([key, value]) => {
+  key = replaceKeyString(key)
+  gray[key] = value
+})
+
+export default gray

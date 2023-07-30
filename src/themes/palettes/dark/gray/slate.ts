@@ -1,13 +1,13 @@
-import { sage } from "@radix-ui/colors"
+import { slateDark } from "@radix-ui/colors"
 
 const gray: { [key: string]: string } = {}
 
 function replaceKeyString(inputString: string) {
-  const regex = /(sage)(\d+)/gi
+  const regex = /(slate)(\d+)/gi
   return inputString.replace(regex, 'gray$2')
 }
 
-Object.entries(sage).forEach(([key, value]) => {
+Object.entries(slateDark).forEach(([key, value]) => {
   key = replaceKeyString(key)
   gray[key] = value
 })
