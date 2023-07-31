@@ -1,5 +1,5 @@
-import * as Popover from '@radix-ui/react-popover';
-import { MixerHorizontalIcon, Cross2Icon } from '@radix-ui/react-icons';
+import * as Popover from "@radix-ui/react-popover";
+import { MixerHorizontalIcon, Cross2Icon } from "@radix-ui/react-icons";
 
 const PopoverDemo = () => (
   <Popover.Root>
@@ -17,9 +17,14 @@ const PopoverDemo = () => (
         sideOffset={5}
       >
         <div className="flex flex-col gap-2.5">
-          <p className="text-mauve12 text-[15px] leading-[19px] font-medium mb-2.5">Dimensions</p>
+          <p className="text-mauve12 text-[15px] leading-[19px] font-medium mb-2.5">
+            Dimensions
+          </p>
           <fieldset className="flex gap-5 items-center">
-            <label className="text-[13px] text-violet11 w-[75px]" htmlFor="width">
+            <label
+              className="text-[13px] text-violet11 w-[75px]"
+              htmlFor="width"
+            >
               Width
             </label>
             <input
@@ -29,7 +34,10 @@ const PopoverDemo = () => (
             />
           </fieldset>
           <fieldset className="flex gap-5 items-center">
-            <label className="text-[13px] text-violet11 w-[75px]" htmlFor="maxWidth">
+            <label
+              className="text-[13px] text-violet11 w-[75px]"
+              htmlFor="maxWidth"
+            >
               Max. width
             </label>
             <input
@@ -39,7 +47,10 @@ const PopoverDemo = () => (
             />
           </fieldset>
           <fieldset className="flex gap-5 items-center">
-            <label className="text-[13px] text-violet11 w-[75px]" htmlFor="height">
+            <label
+              className="text-[13px] text-violet11 w-[75px]"
+              htmlFor="height"
+            >
               Height
             </label>
             <input
@@ -49,7 +60,10 @@ const PopoverDemo = () => (
             />
           </fieldset>
           <fieldset className="flex gap-5 items-center">
-            <label className="text-[13px] text-violet11 w-[75px]" htmlFor="maxHeight">
+            <label
+              className="text-[13px] text-violet11 w-[75px]"
+              htmlFor="maxHeight"
+            >
               Max. height
             </label>
             <input

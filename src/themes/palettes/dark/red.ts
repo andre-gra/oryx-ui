@@ -1,21 +1,21 @@
-import gray from "./gray/sage"
-import { blackA, whiteA, redDark} from '@radix-ui/colors'
-import error from "./semantic/error"
-import success from "./semantic/success"
-import warning from "./semantic/warning"
-import info from "./semantic/info"
+import gray from "./gray/sage";
+import { blackA, whiteA, redDark } from "@radix-ui/colors";
+import error from "./semantic/error";
+import success from "./semantic/success";
+import warning from "./semantic/warning";
+import info from "./semantic/info";
 
-const color: { [key: string]: string } = {}
+const color: { [key: string]: string } = {};
 
 function replaceKeyString(inputString: string) {
-  const regex = /(red)(\d+)/gi
-  return inputString.replace(regex, 'color$2')
+  const regex = /(red)(\d+)/gi;
+  return inputString.replace(regex, "color$2");
 }
 
 Object.entries(redDark).forEach(([key, value]) => {
-  key = replaceKeyString(key)
-  color[key] = value
-})
+  key = replaceKeyString(key);
+  color[key] = value;
+});
 
 export const redDarkO = {
   ...color,
@@ -25,7 +25,7 @@ export const redDarkO = {
   ...error,
   ...success,
   ...warning,
-  ...info
-}
+  ...info,
+};
 
-export type RedDark = 'redDark'
+export type RedDark = "redDark";

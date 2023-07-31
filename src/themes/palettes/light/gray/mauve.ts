@@ -1,15 +1,15 @@
-import { mauve } from "@radix-ui/colors"
+import { mauve } from "@radix-ui/colors";
 
-const gray: { [key: string]: string } = {}
+const gray: { [key: string]: string } = {};
 
 function replaceKeyString(inputString: string) {
-  const regex = /(mauve)(\d+)/gi
-  return inputString.replace(regex, 'gray$2')
+  const regex = /(mauve)(\d+)/gi;
+  return inputString.replace(regex, "gray$2");
 }
 
 Object.entries(mauve).forEach(([key, value]) => {
-  key = replaceKeyString(key)
-  gray[key] = value
-})
+  key = replaceKeyString(key);
+  gray[key] = value;
+});
 
-export default gray
+export default gray;

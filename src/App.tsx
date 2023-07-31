@@ -1,13 +1,12 @@
-import CollectionPage from './pages/CollectionPage'
-import ThemeProvider from './themes/themeProvider'
+import CollectionPage from "./pages/CollectionPage";
+import ThemeProvider from "./themes/themeProvider";
 
 function App() {
-
   return (
     <ThemeProvider>
       <CollectionPage />
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;
