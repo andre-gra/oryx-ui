@@ -1,6 +1,7 @@
 import SelectTheme from "../themes/SelectTheme";
 import AccordionDemo from "../ui/demo/AccordionDemo";
 import AlertDialogDemo from "../ui/demo/AlertDialogDemo";
+import NavigationMenuDemo from "../ui/demo/NavigationDemo";
 import SelectDemo from "../ui/demo/SelectDemo";
 
 const optionsSelect = [
@@ -51,7 +52,8 @@ const itemsAccordion = [
 const CollectionPage = () => {
   return (
     <>
-      <div className="main-background flex gap-2 items-center justify-center">
+      <div className="main-background flex flex-wrap gap-2 items-center justify-center content-center">
+        <NavigationMenuDemo />
         <SelectTheme />
         <AccordionDemo items={itemsAccordion} />
         <AlertDialogDemo />
