@@ -2,6 +2,7 @@ import { useRef } from "react";
 import * as Accordion from "@radix-ui/react-accordion";
 import classnames from "classnames";
 import { useTheme } from "../../themes/useTheme";
+import { useSize } from "../../themes/useSize";
 
 type Items = { mainText: string; collapsibleText: string };
 export interface AccordionProps {
@@ -10,6 +11,7 @@ export interface AccordionProps {
 
 const AccordionDemo = ({ ...props }: AccordionProps) => {
   const { theme } = useTheme();
+  const { size } = useSize();
 
   const accordionRootRef = useRef<HTMLDivElement>(null);
   const accordionItemRef = useRef<Map<string, HTMLDivElement> | null>(null);
@@ -47,7 +49,8 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
     <Accordion.Root
       className={classnames(
         theme,
-        "bg-color2 w-[300px] rounded-md shadow-[0_2px_10px] shadow-blackA7",
+        `accordion-root${size}`,
+        "bg-color2 rounded-md shadow-[0_2px_10px] shadow-blackA7",
       )}
       ref={accordionRootRef}
       type={props.items.length > 1 ? "multiple" : "single"}
@@ -78,7 +81,8 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
               <Accordion.Trigger
                 className={classnames(
                   theme,
-                  "text-color11 shadow-color9 hover:bg-color4 group flex h-[45px] flex-1 cursor-default items-center justify-between bg-color3 px-5 text-[15px] leading-none shadow-[0_1px_0] outline-none",
+                  `accordion-trigger${size}`,
+                  "text-color11 shadow-color9 hover:bg-color4 group flex flex-1 cursor-default items-center justify-between bg-color3 px-5 leading-none shadow-[0_1px_0] outline-none",
                 )}
                 ref={accordionTriggerRef}
               >
@@ -88,14 +92,13 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
             <Accordion.Content
               className={classnames(
                 theme,
-                "text-color12 bg-color2 data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden text-[15px]",
+                `accordion-content${size}`,
+                "text-color12 bg-color2 data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden",
               )}
               ref={accordionContentRef}
               onClick={() => handleAccordionTriggerClick("1")}
             >
-              <div className="py-[15px] px-5 animate-fade-up">
-                {item.collapsibleText}
-              </div>
+              <div className="px-5 animate-fade-up">{item.collapsibleText}</div>
             </Accordion.Content>
           </Accordion.Item>
         );
