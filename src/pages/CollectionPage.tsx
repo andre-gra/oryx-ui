@@ -2,6 +2,7 @@ import SelectTheme from "../themes/SelectTheme";
 import AccordionDemo from "../ui/demo/AccordionDemo";
 import AlertDialogDemo from "../ui/demo/AlertDialogDemo";
 import NavigationMenuDemo from "../ui/demo/NavigationDemo";
+import PopoverDemo from "../ui/demo/PopoverDemo";
 import SelectDemo from "../ui/demo/SelectDemo";
 
 const optionsSelect = [
@@ -62,6 +63,7 @@ const CollectionPage = () => {
           options={optionsSelect}
           placeholder="Choose something..."
         />
+        <PopoverDemo />
       </div>
     </>
   );
