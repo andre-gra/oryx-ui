@@ -1,3 +1,4 @@
+import SelectSize from "../themes/SelectSize";
 import SelectTheme from "../themes/SelectTheme";
 import AccordionDemo from "../ui/demo/AccordionDemo";
 import AlertDialogDemo from "../ui/demo/AlertDialogDemo";
@@ -56,6 +57,7 @@ const CollectionPage = () => {
       <div className="main-background flex flex-wrap gap-2 items-center justify-center content-center">
         <NavigationMenuDemo />
         <SelectTheme />
+        <SelectSize />
         <AccordionDemo items={itemsAccordion} />
         <AlertDialogDemo />
         <SelectDemo
