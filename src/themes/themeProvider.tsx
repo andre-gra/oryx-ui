@@ -19,6 +19,7 @@ import type {
   Violet,
   VioletDark,
   Indigo,
+  IndigoDark,
   Blue,
   BlueDark,
   Cyan,
@@ -40,7 +41,6 @@ import type {
   Yellow,
   YellowDark,
 } from "./palettes";
-import { IndigoDark } from "./palettes/dark/indigo";
 
 export type Theme = `theme-${
   | Amber
