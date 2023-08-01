@@ -51,16 +51,6 @@ export default {
   // TODO utilizzare la funzione presets di tailwind per non dover scrivere qui le estensioni del tema
   theme: {
     extend: {
-      padding: {
-        sm: "8px",
-        base: "12px",
-        lg: "15px",
-      },
-      height: {
-        sm: "20px",
-        base: "40px",
-        lg: "60px",
-      },
       keyframes: {
         slideUpAndFade: {
           from: { opacity: 0, transform: "translateY(2px)" },
