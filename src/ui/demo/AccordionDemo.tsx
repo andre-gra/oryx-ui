@@ -60,7 +60,7 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
           <Accordion.Item
             className={classnames(
               theme,
-              "focus-within:shadow-color9 mt-px overflow-hidden first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:z-10 focus-within:shadow-[0_0_0_2px]",
+              "focus-within:shadow-color9 mt-px overflow-hidden first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:shadow-[0_0_0_2px]",
             )}
             key={item.mainText}
             id={item.mainText}

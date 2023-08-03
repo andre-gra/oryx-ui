@@ -1,9 +1,11 @@
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import classnames from "classnames";
 import { useTheme } from "../../themes/useTheme";
+import { useSize } from "../../themes/useSize";
 
 const AlertDialogDemo = () => {
   const { theme } = useTheme();
+  const { size } = useSize();
 
   return (
     <AlertDialog.Root>
@@ -26,7 +28,7 @@ const AlertDialogDemo = () => {
         <AlertDialog.Content
           className={classnames(
             theme,
-            "data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[500px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-color2 p-[25px] shadow-color9 focus:outline-none",
+            "data-[state=open]:animate-contentShow z-10 fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[500px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-color2 p-[25px] shadow-color9 focus:outline-none",
           )}
         >
           <AlertDialog.Title

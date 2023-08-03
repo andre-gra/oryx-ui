@@ -11,7 +11,7 @@ const NavigationMenuDemo = () => {
     <NavigationMenu.Root
       className={classnames(
         theme,
-        "relative z-[1] flex w-screen justify-center",
+        "relative z-10 flex w-screen justify-center",
       )}
     >
       <NavigationMenu.List
@@ -199,7 +199,7 @@ const NavigationMenuDemo = () => {
         <NavigationMenu.Indicator
           className={classnames(
             theme,
-            "data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]",
+            "data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-10 flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]",
           )}
         >
           <div
