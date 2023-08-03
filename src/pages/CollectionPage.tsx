@@ -39,6 +39,37 @@ const optionsSelect = [
   },
 ];
 
+const fieldsPopover = [
+  {
+    fieldTitle: "Dimensions",
+    field: [
+      {
+        label: "Width",
+        htmlFor: "width",
+        id: "width",
+        defaultValue: "100%",
+      },
+      {
+        label: "Max. width",
+        htmlFor: "maxWidth",
+        id: "maxWidth",
+        defaultValue: "300px",
+      },
+      {
+        label: "Height",
+        htmlFor: "height",
+        id: "height",
+      },
+      {
+        label: "Max. height",
+        htmlFor: "maxHeight",
+        id: "maxHeight",
+        defaultValue: "none",
+      },
+    ],
+  },
+];
+
 const itemsAccordion = [
   {
     mainText: "Is it accessible?",
@@ -74,7 +105,7 @@ const CollectionPage = () => {
           options={optionsSelect}
           placeholder="Choose something..."
         />
-        <PopoverDemo />
+        <PopoverDemo fields={fieldsPopover} />
       </div>
     </>
   );
