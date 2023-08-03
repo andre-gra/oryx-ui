@@ -51,6 +51,15 @@ const itemsAccordion = [
   },
 ];
 
+const textsAlert = {
+  buttonTrigger: "Delete account",
+  content: "Are you absolutely sure?",
+  description:
+    "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+  buttonCancel: "Cancel",
+  action: "Yes, delete account",
+};
+
 const CollectionPage = () => {
   return (
     <>
@@ -59,7 +68,7 @@ const CollectionPage = () => {
         <SelectTheme />
         <SelectSize />
         <AccordionDemo items={itemsAccordion} />
-        <AlertDialogDemo />
+        <AlertDialogDemo texts={textsAlert} />
         <SelectDemo
           label="Fruits"
           options={optionsSelect}

@@ -3,7 +3,18 @@ import classnames from "classnames";
 import { useTheme } from "../../themes/useTheme";
 import { useSize } from "../../themes/useSize";
 
-const AlertDialogDemo = () => {
+type Texts = {
+  buttonTrigger: string;
+  content: string;
+  description: string;
+  buttonCancel: string;
+  action: string;
+};
+export interface AlertDialogProps {
+  texts: Texts;
+}
+
+const AlertDialogDemo = ({ ...props }: AlertDialogProps) => {
   const { theme } = useTheme();
   const { size } = useSize();
 
@@ -17,7 +28,7 @@ const AlertDialogDemo = () => {
           "text-color11 hover:bg-color4 shadow-blackA7 inline-flex items-center justify-center rounded bg-color3 font-medium leading-none shadow-[0_2px_10px] outline-none focus:shadow-[0_0_0_2px] focus:shadow-color10",
         )}
       >
-        <button>Delete account</button>
+        <button>{props.texts.buttonTrigger}</button>
       </AlertDialog.Trigger>
       <AlertDialog.Portal>
         <AlertDialog.Overlay
@@ -39,7 +50,7 @@ const AlertDialogDemo = () => {
               "text-color12 m-0 font-medium",
             )}
           >
-            Are you absolutely sure?
+            {props.texts.content}
           </AlertDialog.Title>
           <AlertDialog.Description
             className={classnames(
@@ -47,8 +58,7 @@ const AlertDialogDemo = () => {
               "text-color11 mt-4 mb-5 leading-normal",
             )}
           >
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            {props.texts.description}
           </AlertDialog.Description>
           <div
             className={classnames(
@@ -63,7 +73,7 @@ const AlertDialogDemo = () => {
                 "text-color11 bg-color4 hover:bg-color5 focus:shadow-color7 inline-flex items-center justify-center rounded font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
               )}
             >
-              <button>Cancel</button>
+              <button>{props.texts.buttonCancel}</button>
             </AlertDialog.Cancel>
             <AlertDialog.Action
               asChild
@@ -72,7 +82,7 @@ const AlertDialogDemo = () => {
                 "text-error11 bg-error4 hover:bg-error5 focus:shadow-red7 inline-flex items-center justify-center rounded font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
               )}
             >
-              <button>Yes, delete account</button>
+              <button>{props.texts.action}</button>
             </AlertDialog.Action>
           </div>
         </AlertDialog.Content>
