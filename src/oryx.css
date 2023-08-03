@@ -13,20 +13,55 @@
  * ----------------------------------------------------------------------------------------------- */
 
 /* -------------------------------------------------------------------------------------------------
- * Accordion size rules (dviding by 3 logic)
+ * Accordion size rules (dividing by 3 logic)
  * ----------------------------------------------------------------------------------------------- */
 @for $size from 2 through 4 by 1 {
   .accordion-root$(size) {
     @apply w-[calc(100px*$size)];
   }
+
   .accordion-trigger$(size) {
     @apply h-[calc(15px*$size)] text-[calc(5px*$size)];
   }
+
   .accordion-content$(size) {
     @apply text-[calc(5px*$size)];
-    > div {
+
+    .accordion-collapsibleText$(size) {
       @apply py-[calc(5px*$size)]
     }
   }
-  
+}
+
+/* -------------------------------------------------------------------------------------------------
+ * AlertDialog size rules (dividing by 3 logic)
+ * ----------------------------------------------------------------------------------------------- */
+@for $size from 2 through 4 by 1 {
+  .alertdialog-trigger$(size) {
+    @apply h-[calc(12px*$size)] px-[calc(5px*$size)] text-[calc(5px*$size)];
+  }
+
+  .alertdialog-content$(size) {
+    @apply max-w-[calc(165px*$size)] p-[calc(8px*$size)] max-h-[calc(28vh*$size)] w-[calc(30vw*$size)];
+
+    .alertdialog-title$(size) {
+      @apply text-[calc(6px*$size)];
+    }
+
+    .alertdialog-description$(size) {
+      @apply text-[calc(5x*$size)];
+    }
+
+    .alertdialog-actions$(size) {
+      @apply gap-[calc(8px*$size)];
+
+      .alertdialog-cancel$(size) {
+        @apply h-[calc(12px*$size)];
+      }
+    }
+  }
+
+  .accordion-trigger$(size) {
+    @apply h-[calc(15px*$size)] text-[calc(5px*$size)];
+  }
 }

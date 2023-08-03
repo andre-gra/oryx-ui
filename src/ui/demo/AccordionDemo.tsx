@@ -98,7 +98,14 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
               ref={accordionContentRef}
               onClick={() => handleAccordionTriggerClick("1")}
             >
-              <div className="px-5 animate-fade-up">{item.collapsibleText}</div>
+              <div
+                className={classnames(
+                  `accordion-collapsibleText${size}`,
+                  "px-5 animate-fade-up",
+                )}
+              >
+                {item.collapsibleText}
+              </div>
             </Accordion.Content>
           </Accordion.Item>
         );
