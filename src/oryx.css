@@ -49,14 +49,17 @@
     }
 
     .alertdialog-description$(size) {
-      @apply text-[calc(5x*$size)];
+      @apply text-[calc(5px*$size)];
     }
 
     .alertdialog-actions$(size) {
       @apply gap-[calc(8px*$size)];
 
       .alertdialog-cancel$(size) {
-        @apply h-[calc(12px*$size)];
+        @apply h-[calc(12px*$size)] text-[calc(5px*$size)] px-[calc(5px*$size)];
+      }
+      .alertdialog-action$(size) {
+        @apply h-[calc(12px*$size)] text-[calc(5px*$size)] px-[calc(5px*$size)];
       }
     }
   }

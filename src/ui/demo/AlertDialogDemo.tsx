@@ -60,7 +60,7 @@ const AlertDialogDemo = () => {
               asChild
               className={classnames(
                 `alertdialog-cancel${size}`,
-                "text-color11 bg-color4 hover:bg-color5 focus:shadow-color7 inline-flex items-center justify-center rounded-[4px] px-[15px] font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
+                "text-color11 bg-color4 hover:bg-color5 focus:shadow-color7 inline-flex items-center justify-center rounded font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
               )}
             >
               <button>Cancel</button>
@@ -68,7 +68,8 @@ const AlertDialogDemo = () => {
             <AlertDialog.Action
               asChild
               className={classnames(
-                "text-error11 bg-error4 hover:bg-error5 focus:shadow-red7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
+                `alertdialog-action${size}`,
+                "text-error11 bg-error4 hover:bg-error5 focus:shadow-red7 inline-flex items-center justify-center rounded font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
               )}
             >
               <button>Yes, delete account</button>
