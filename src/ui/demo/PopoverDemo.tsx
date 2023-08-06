@@ -2,6 +2,7 @@ import * as Popover from "@radix-ui/react-popover";
 import { MixerHorizontalIcon, Cross2Icon } from "@radix-ui/react-icons";
 import classnames from "classnames";
 import { useTheme } from "../../themes/useTheme";
+import { useSize } from "../../themes/useSize";
 
 type Field = {
   label: string;
@@ -18,6 +19,7 @@ export interface PopoverProps {
 
 const PopoverDemo = ({ ...props }: PopoverProps) => {
   const { theme } = useTheme();
+  const { size } = useSize();
 
   return (
     <Popover.Root>
@@ -25,7 +27,8 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
         <button
           className={classnames(
             theme,
-            "rounded-full w-[35px] h-[35px] inline-flex items-center justify-center text-color11 bg-color3 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-black cursor-default outline-none",
+            `popover-trigger${size}`,
+            "rounded-full inline-flex items-center justify-center text-color11 bg-color3 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-black cursor-default outline-none",
           )}
           aria-label={props.buttonTriggerLabel}
         >
@@ -36,30 +39,38 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
         <Popover.Content
           className={classnames(
             theme,
-            "rounded p-5 w-[260px] bg-color3 shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_hsla(206,22%,7%,.2)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade",
+            `popover-content${size}`,
+            "rounded p-5 bg-color3 shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_hsla(206,22%,7%,.2)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade",
           )}
         >
           {props.fields.map((fieldsets, index) => (
             <>
               <div key={`${index}-${fieldsets.fieldTitle}`}></div>
-              <div className={classnames(theme, "flex flex-col gap-2.5")}>
+              <div
+                className={classnames(
+                  theme,
+                  `popover-content-container${size}`,
+                  "flex flex-col",
+                )}
+              >
                 <p
                   className={classnames(
                     theme,
-                    "text-color12 text-[15px] leading-[19px] font-medium mb-2.5",
+                    `popover-content-paragraph${size}`,
+                    "text-color12 font-medium",
                   )}
                 >
                   {fieldsets.fieldTitle}
                 </p>
                 {fieldsets.field.map((fieldset) => (
                   <fieldset
-                    className={classnames(theme, "flex gap-5 items-center")}
+                    className={classnames(
+                      theme,
+                      "flex justify-between items-center",
+                    )}
                   >
                     <label
-                      className={classnames(
-                        theme,
-                        "text-[13px] text-color11 w-[75px]",
-                      )}
+                      className={classnames(theme, "text-color11")}
                       htmlFor={fieldset.htmlFor}
                     >
                       {fieldset.label}
@@ -67,7 +78,7 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
                     <input
                       className={classnames(
                         theme,
-                        "w-full inline-flex items-center justify-center flex-1 rounded px-2.5 text-[13px] leading-none text-color11 shadow-[0_0_0_1px] shadow-color7 h-[25px] focus:shadow-[0_0_0_2px] focus:shadow-color8 outline-none",
+                        "w-full inline-flex items-center justify-center flex-1 rounded leading-none text-color11 shadow-[0_0_0_1px] shadow-color7 focus:shadow-[0_0_0_2px] focus:shadow-color8 outline-none",
                       )}
                       id={fieldset.id}
                       defaultValue={fieldset.defaultValue}
@@ -80,7 +91,8 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
           <Popover.Close
             className={classnames(
               theme,
-              "rounded-full h-[25px] w-[25px] inline-flex items-center justify-center text-color11 absolute top-[5px] right-[5px] hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color7 outline-none cursor-default",
+              `popover-close${size}`,
+              "rounded-full inline-flex items-center justify-center text-color11 absolute hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color7 outline-none cursor-default",
             )}
             aria-label="Close"
           >

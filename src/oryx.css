@@ -68,3 +68,52 @@
     @apply h-[calc(15px*$size)] text-[calc(5px*$size)];
   }
 }
+
+/* -------------------------------------------------------------------------------------------------
+ * Popover size rules (dividing by 3 logic)
+ * ----------------------------------------------------------------------------------------------- */
+@for $size from 2 through 4 by 1 {
+  .popover-trigger$(size) {
+    @apply h-[calc(12px*$size)] w-[calc(12px*$size)] px-[calc(2px*$size)];
+
+    svg {
+      width: calc(5px*$size);
+      height : calc(5px*$size);
+    }
+  }
+
+  .popover-content$(size) {
+    @apply w-[calc(86px*$size)] text-[calc(5px*$size)];
+
+    .popover-content-container$(size) {
+
+      @apply gap-$size;
+
+      .popover-content-paragraph$(size) {
+        @apply leading-[calc(6px*$size)] mb-$size
+      }
+
+      fieldset {
+        @apply gap-[calc(0.25rem*$size)]
+      }
+
+      label {
+        @apply text-[calc(4px*$size)]  w-[calc(25px*$size)]
+      }
+
+      input {
+        @apply text-[calc(4px*$size)] px-$size h-[calc(8px*$size)]
+      }
+    }
+
+    .popover-close$(size) {
+      @apply h-[calc(8px*$size)] w-[calc(8px*$size)] top-[calc(2px*$size)] right-[calc(2px*$size)];
+
+      svg {
+        width: calc(5px*$size);
+        height : calc(5px*$size);
+      }
+    }
+
+  }
+}
