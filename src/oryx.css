@@ -117,3 +117,41 @@
 
   }
 }
+
+/* -------------------------------------------------------------------------------------------------
+ * Select size rules (dividing by 3 logic)
+ * ----------------------------------------------------------------------------------------------- */
+@for $size from 2 through 4 by 1 {
+  .select-trigger$(size) {
+    @apply px-[calc(5px*$size)] text-[calc(4px*$size)] h-[35px] gap-$size
+  }
+
+  .select-scroll-up-button$(size) {
+    @apply h-[calc(8px*$size)]
+  }
+
+  .select-scroll-down-button$(size) {
+    @apply h-[calc(8px*$size)] 
+  }
+
+  .select-viewport$(size) {
+    @apply p-[calc(1.5px*$size)]
+  }
+
+  .select-label$(size) {
+    @apply px-[calc(8px*$size)] leading-[calc(8px*$size)] text-[calc(4px*$size)]
+  }
+
+  .select-separator$(size) {
+    @apply h-[calc(1px*$size)] m-[calc(2px*$size)]
+  }
+
+  .select-item$(size) {
+    @apply text-[calc(4px*$size)] rounded-[calc(1px*$size)] h-[calc(8px*$size)] pr-[calc(12px*$size)] pl-[calc(8px*$size)]
+  }
+
+  .select-item-indicator$(size) {
+    @apply w-[calc(8px*$size)]
+  }
+
+}

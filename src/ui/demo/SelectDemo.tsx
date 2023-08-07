@@ -7,6 +7,7 @@ import {
 import * as Select from "@radix-ui/react-select";
 import classnames from "classnames";
 import { useTheme } from "../../themes/useTheme";
+import { useSize } from "../../themes/useSize";
 
 type Option = { label: string; value: string; disabled?: boolean };
 type Options = { group: Option[]; label: string };
@@ -20,6 +21,7 @@ export interface SelectProps {
 
 const SelectDemo = ({ ...props }: SelectProps) => {
   const { theme } = useTheme();
+  const { size } = useSize();
 
   return (
     <Select.Root value={props.value} onValueChange={props.onValueChange}>
@@ -27,7 +29,8 @@ const SelectDemo = ({ ...props }: SelectProps) => {
         aria-label={props.label}
         className={classnames(
           theme,
-          "inline-flex items-center justify-center rounded px-[15px] text-[13px] leading-none h-[35px] gap-[5px] bg-color3 text-color11 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color10 data-[placeholder]:text-color9 outline-none",
+          `select-trigger${size}`,
+          "inline-flex items-center justify-center rounded leading-none bg-color3 text-color11 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color10 data-[placeholder]:text-color9 outline-none",
         )}
       >
         <Select.Value placeholder={props.placeholder} />
@@ -45,19 +48,23 @@ const SelectDemo = ({ ...props }: SelectProps) => {
           <Select.ScrollUpButton
             className={classnames(
               theme,
-              "flex items-center justify-center h-[25px] bg-color3 text-color11 cursor-default",
+              `select-scroll-up-button${size}`,
+              "flex items-center justify-center bg-color3 text-color11 cursor-default",
             )}
           >
             <ChevronUpIcon />
           </Select.ScrollUpButton>
-          <Select.Viewport className={classnames(theme, "p-[5px]")}>
+          <Select.Viewport
+            className={classnames(theme, `select-viewport${size}`)}
+          >
             {props.options.map((option, index) => (
               <div key={option.label.toLowerCase()}>
                 <Select.Group>
                   <Select.Label
                     className={classnames(
                       theme,
-                      "px-[25px] text-xs leading-[25px] text-gray11",
+                      `select-label${size}`,
+                      "text-gray11",
                     )}
                   >
                     {option.label}
@@ -65,6 +72,7 @@ const SelectDemo = ({ ...props }: SelectProps) => {
                   {option.group.map((item) => (
                     <SelectItem
                       theme={theme}
+                      size={size}
                       key={item.value}
                       value={item.value}
                       disabled={item.disabled}
@@ -78,7 +86,8 @@ const SelectDemo = ({ ...props }: SelectProps) => {
                     <Select.Separator
                       className={classnames(
                         theme,
-                        "h-[1px] bg-color10 m-[5px]",
+                        `select-separator${size}`,
+                        "bg-color10",
                       )}
                     />
                   )}
@@ -88,7 +97,8 @@ const SelectDemo = ({ ...props }: SelectProps) => {
           <Select.ScrollDownButton
             className={classnames(
               theme,
-              "flex items-center justify-center h-[25px] bg-color3 text-color11 cursor-default",
+              `select-scroll-down-button${size}`,
+              "flex items-center justify-center bg-color3 text-color11 cursor-default",
             )}
           >
             <ChevronDownIcon />
@@ -106,18 +116,20 @@ export interface ISelectGroupItemProps {
   asChild?: boolean;
   disabled?: boolean;
   theme: string;
+  size: string;
 }
 
 const SelectItem = React.forwardRef(
   (
-    { children, theme, ...props }: ISelectGroupItemProps,
+    { children, theme, size, ...props }: ISelectGroupItemProps,
     forwardedRef: ForwardedRef<HTMLDivElement>,
   ) => {
     return (
       <Select.Item
         className={classnames(
           theme,
-          "text-[13px] leading-none text-color11 rounded-[3px] flex items-center h-[25px] pr-[35px] pl-[25px] relative select-none data-[disabled]:text-gray8 data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-color9 data-[highlighted]:text-color1",
+          `select-item${size}`,
+          "leading-none text-color11 flex items-center relative select-none data-[disabled]:text-gray8 data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-color9 data-[highlighted]:text-color1",
         )}
         {...props}
         ref={forwardedRef}
@@ -126,7 +138,8 @@ const SelectItem = React.forwardRef(
         <Select.ItemIndicator
           className={classnames(
             theme,
-            "absolute left-0 w-[25px] inline-flex items-center justify-center",
+            `select-item-indicator${size}`,
+            "absolute left-0 inline-flex items-center justify-center",
           )}
         >
           <CheckIcon />
