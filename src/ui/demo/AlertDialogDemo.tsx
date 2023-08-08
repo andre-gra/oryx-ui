@@ -25,7 +25,7 @@ const AlertDialogDemo = ({ ...props }: AlertDialogProps) => {
         className={classnames(
           theme,
           `alertdialog-trigger${size}`,
-          "text-color11 hover:bg-color4 shadow-blackA7 inline-flex items-center justify-center rounded bg-color3 font-medium leading-none shadow-[0_2px_10px] outline-none focus:shadow-[0_0_0_2px] focus:shadow-color10",
+          "text-color11 hover:bg-color4 shadow-blackA7 inline-flex items-center justify-center bg-color3 font-medium leading-none shadow-[0_2px_10px] outline-none focus:shadow-[0_0_0_2px] focus:shadow-color10",
         )}
       >
         <button>{props.texts.buttonTrigger}</button>
@@ -41,7 +41,7 @@ const AlertDialogDemo = ({ ...props }: AlertDialogProps) => {
           className={classnames(
             theme,
             `alertdialog-content${size}`,
-            "data-[state=open]:animate-contentShow z-10 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md bg-color2 shadow-color9 focus:outline-none",
+            "data-[state=open]:animate-contentShow z-10 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-color2 shadow-color9 focus:outline-none",
           )}
         >
           <AlertDialog.Title
@@ -70,7 +70,7 @@ const AlertDialogDemo = ({ ...props }: AlertDialogProps) => {
               asChild
               className={classnames(
                 `alertdialog-cancel${size}`,
-                "text-color11 bg-color4 hover:bg-color5 focus:shadow-color7 inline-flex items-center justify-center rounded font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
+                "text-color11 bg-color4 hover:bg-color5 focus:shadow-color7 inline-flex items-center justify-center font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
               )}
             >
               <button>{props.texts.buttonCancel}</button>
@@ -79,7 +79,7 @@ const AlertDialogDemo = ({ ...props }: AlertDialogProps) => {
               asChild
               className={classnames(
                 `alertdialog-action${size}`,
-                "text-error11 bg-error4 hover:bg-error5 focus:shadow-red7 inline-flex items-center justify-center rounded font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
+                "text-error11 bg-error4 hover:bg-error5 focus:shadow-red7 inline-flex items-center justify-center font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
               )}
             >
               <button>{props.texts.action}</button>
