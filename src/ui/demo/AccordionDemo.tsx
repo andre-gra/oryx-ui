@@ -50,7 +50,7 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
       className={classnames(
         theme,
         `accordion-root${size}`,
-        "bg-color2 rounded-md shadow-[0_2px_10px] shadow-blackA7",
+        "bg-color2 shadow-[0_2px_10px] shadow-blackA7",
       )}
       ref={accordionRootRef}
       type={props.items.length > 1 ? "multiple" : "single"}
@@ -60,7 +60,7 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
           <Accordion.Item
             className={classnames(
               theme,
-              "focus-within:shadow-color9 mt-px overflow-hidden first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:shadow-[0_0_0_2px]",
+              "focus-within:shadow-color9 mt-px overflow-hidden first:mt-0 focus-within:relative focus-within:shadow-[0_0_0_2px]",
             )}
             key={item.mainText}
             id={item.mainText}
