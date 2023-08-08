@@ -30,7 +30,7 @@ const SelectDemo = ({ ...props }: SelectProps) => {
         className={classnames(
           theme,
           `select-trigger${size}`,
-          "inline-flex items-center justify-center rounded leading-none bg-color3 text-color11 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color10 data-[placeholder]:text-color9 outline-none",
+          "inline-flex items-center justify-center leading-none bg-color3 text-color11 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color10 data-[placeholder]:text-color9 outline-none",
         )}
       >
         <Select.Value placeholder={props.placeholder} />
@@ -42,7 +42,8 @@ const SelectDemo = ({ ...props }: SelectProps) => {
         <Select.Content
           className={classnames(
             theme,
-            "overflow-hidden bg-color3 rounded-md shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]",
+            `select-content${size}`,
+            "overflow-hidden bg-color3 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]",
           )}
         >
           <Select.ScrollUpButton
