@@ -70,6 +70,83 @@ const fieldsPopover = [
   },
 ];
 
+const itemsMenu = [
+  {
+    title: "Learn",
+    item: [
+      {
+        type: "card",
+        title: "Radix Primitives",
+        href: "/",
+        text: "Unstyled, accessible components for React.",
+      },
+      {
+        type: "text",
+        title: "Stitches",
+        href: "https://stitches.dev/",
+        text: "CSS-in-JS with best-in-class developer experience.",
+      },
+      {
+        type: "text",
+        title: "Colors",
+        href: "/",
+        text: "Beautiful, thought-out palettes with auto dark mode.",
+      },
+      {
+        type: "text",
+        title: "Icons",
+        href: "https://icons.radix-ui.com/",
+        text: "A crisp set of 15x15 icons, balanced and consistent.",
+      },
+    ],
+  },
+  {
+    title: "Overview",
+    item: [
+      {
+        type: "text",
+        title: "Introduction",
+        href: "/",
+        text: "Build high-quality, accessible design systems and web apps.",
+      },
+      {
+        type: "text",
+        title: "Getting started",
+        href: "/",
+        text: "A quick tutorial to get you up and running with Radix Primitives.",
+      },
+      {
+        type: "text",
+        title: "Styling",
+        href: "/",
+        text: "Unstyled and compatible with any styling solution.",
+      },
+      {
+        type: "text",
+        title: "Animation",
+        href: "/",
+        text: "Use CSS keyframes or any animation library of your choice.",
+      },
+      {
+        type: "text",
+        title: "Accessibility",
+        href: "/",
+        text: "Tested in a range of browsers and assistive technologies.",
+      },
+      {
+        type: "text",
+        title: "Releases",
+        href: "/",
+        text: "Radix Primitives releases and their changelogs.",
+      },
+    ],
+  },
+  {
+    title: "Github",
+    href: "https://github.com/radix-ui",
+  },
+];
+
 const itemsAccordion = [
   {
     mainText: "Is it accessible?",
@@ -95,7 +172,7 @@ const CollectionPage = () => {
   return (
     <>
       <div className="main-background flex flex-wrap gap-2 items-center justify-center content-center">
-        <NavigationMenuDemo />
+        <NavigationMenuDemo items={itemsMenu} />
         <SelectTheme />
         <SelectSize />
         <AccordionDemo items={itemsAccordion} />
