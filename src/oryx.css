@@ -31,16 +31,14 @@
   .accordion-content$(size) {
     @apply text-[calc(5px*$size)];
 
-    .accordion-collapsibleText$(size) {
+    .accordion-collapsibleText $(size) {
       @apply py-[calc(5px*$size)];
     }
   }
-}
 
-/* -------------------------------------------------------------------------------------------------
+  /* -------------------------------------------------------------------------------------------------
  * AlertDialog size rules (dividing by 3 logic)
  * ----------------------------------------------------------------------------------------------- */
-@for $size from 2 through 4 by 1 {
   .alertdialog-trigger$(size) {
     @apply h-[calc(12px*$size)] px-[calc(5px*$size)] text-[calc(5px*$size)] rounded-[calc(1px*$size*1.5)];
   }
@@ -67,12 +65,10 @@
       }
     }
   }
-}
 
-/* -------------------------------------------------------------------------------------------------
+  /* -------------------------------------------------------------------------------------------------
  * Popover size rules (dividing by 3 logic)
  * ----------------------------------------------------------------------------------------------- */
-@for $size from 2 through 4 by 1 {
   .popover-trigger$(size) {
     @apply h-[calc(12px*$size)] w-[calc(12px*$size)] px-[calc(2px*$size)];
 
@@ -117,56 +113,103 @@
     }
 
   }
-}
 
-/* -------------------------------------------------------------------------------------------------
+  /* -------------------------------------------------------------------------------------------------
  * Select size rules (dividing by 3 logic)
  * ----------------------------------------------------------------------------------------------- */
-@for $size from 2 through 4 by 1 {
-  .select-trigger$(size) {
-    @apply px-[calc(5px*$size)] text-[calc(4px*$size)] h-[calc(12px*$size)] gap-$size rounded-[calc(1px*$size*2)];
+  @for $size from 2 through 4 by 1 {
+    .select-trigger$(size) {
+      @apply px-[calc(5px*$size)] text-[calc(4px*$size)] h-[calc(12px*$size)] gap-$size rounded-[calc(1px*$size*2)];
+
+    }
+
+    .select-content$(size) {
+      @apply rounded-[calc(1px*$size*2)];
+    }
+
+    .select-scroll-up-button$(size) {
+      @apply h-[calc(8px*$size)];
+    }
+
+    .select-scroll-down-button$(size) {
+      @apply h-[calc(8px*$size)];
+    }
+
+    .select-viewport$(size) {
+      @apply p-[calc(1.5px*$size)];
+    }
+
+    .select-label$(size) {
+      @apply px-[calc(8px*$size)] leading-[calc(8px*$size)] text-[calc(4px*$size)];
+    }
+
+    .select-separator$(size) {
+      @apply h-[calc(1px*$size)] m-[calc(2px*$size)];
+    }
+
+    .select-item$(size) {
+      @apply text-[calc(4px*$size)] rounded-[calc(1px*$size*2)] h-[calc(8px*$size)] pr-[calc(12px*$size)] pl-[calc(8px*$size)];
+    }
+
+    .select-item-indicator$(size) {
+      @apply w-[calc(8px*$size)];
+    }
 
   }
 
-  .select-content$(size) {
-    @apply rounded-[calc(1px*$size*2)];
-  }
-
-  .select-scroll-up-button$(size) {
-    @apply h-[calc(8px*$size)];
-  }
-
-  .select-scroll-down-button$(size) {
-    @apply h-[calc(8px*$size)];
-  }
-
-  .select-viewport$(size) {
-    @apply p-[calc(1.5px*$size)];
-  }
-
-  .select-label$(size) {
-    @apply px-[calc(8px*$size)] leading-[calc(8px*$size)] text-[calc(4px*$size)];
-  }
-
-  .select-separator$(size) {
-    @apply h-[calc(1px*$size)] m-[calc(2px*$size)];
-  }
-
-  .select-item$(size) {
-    @apply text-[calc(4px*$size)] rounded-[calc(1px*$size*2)] h-[calc(8px*$size)] pr-[calc(12px*$size)] pl-[calc(8px*$size)];
-  }
-
-  .select-item-indicator$(size) {
-    @apply w-[calc(8px*$size)];
-  }
-
-}
-
-/* -------------------------------------------------------------------------------------------------
- * Select size rules (dividing by 3 logic)
+  /* -------------------------------------------------------------------------------------------------
+ * Navigation size rules (dividing by 3 logic)
  * ----------------------------------------------------------------------------------------------- */
-@for $size from 2 through 4 by 1 {
   .navigation-menu-list$(size) {
     @apply rounded-[calc(1px*$size*2)] p-[calc(0.125rem*$size)];
+
+    .navigation-menu-trigger$(size) {
+      @apply gap-[calc(0.75px*$size)] rounded-[calc(1px*$size*1.5)] px-[calc(0.25rem*$size)] py-[calc(0.2rem*$size)] text-[calc(5px*$size)];
+
+      svg {
+        @apply top-[calc(0.025rem*$size)];
+      }
+    }
+
+    
+  }
+
+  .navigation-menu-simple-link$(size) {
+    @apply rounded-[calc(1px*$size*1.5)] px-[calc(0.25rem*$size)] py-[calc(0.2rem*$size)] text-[calc(5px*$size)];
+  }
+  
+  .navigation-menu-link$(size).card-nav {
+    @apply rounded-[calc(1px*$size*2)] p-[calc(8px*$size)];
+
+  }
+
+  .navigation-menu-link$(size).text-nav {
+    @apply rounded-[calc(1px*$size*2)] p-$size ;
+  }
+
+  .navigation-menu-link$(size) {
+    @apply text-[calc(5px*$size)];
+
+    & div {
+      @apply mb-[calc(1.5px*$size)];
+    }
+  }
+
+  .navigation-menu-content$(size) {
+    ul {
+      @apply gap-x-[calc(0.35px*$size)] p-[calc(7px*$size)] sm:w-[calc(165px*$size)];
+    }
+  }
+
+  .navigation-menu-indicator$(size) {
+    @apply h-[calc(3px*$size)];
+
+    & div {
+      @apply top-[70%] h-[calc(3px*$size)] w-[calc(3px*$size)] rotate-[45deg] rounded-tl-[calc(0.7px*$size)]
+      }
+  }
+
+  .navigation-menu-viewport$(size) {
+    @apply mt-[calc(3px*$size)] rounded-[calc(1px*$size*2)]
   }
 }
