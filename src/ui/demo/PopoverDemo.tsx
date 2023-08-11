@@ -44,49 +44,48 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
           )}
         >
           {props.fields.map((fieldsets, index) => (
-            <>
-              <div key={`${index}-${fieldsets.fieldTitle}`}></div>
-              <div
+            <div
+              key={`${index}-${fieldsets.fieldTitle}`}
+              className={classnames(
+                theme,
+                `popover-content-container${size}`,
+                "flex flex-col",
+              )}
+            >
+              <p
                 className={classnames(
                   theme,
-                  `popover-content-container${size}`,
-                  "flex flex-col",
+                  `popover-content-paragraph${size}`,
+                  "text-color12 font-medium",
                 )}
               >
-                <p
+                {fieldsets.fieldTitle}
+              </p>
+              {fieldsets.field.map((fieldset) => (
+                <fieldset
+                  key={`${index}-${fieldset.label}`}
                   className={classnames(
                     theme,
-                    `popover-content-paragraph${size}`,
-                    "text-color12 font-medium",
+                    "flex justify-between items-center",
                   )}
                 >
-                  {fieldsets.fieldTitle}
-                </p>
-                {fieldsets.field.map((fieldset) => (
-                  <fieldset
+                  <label
+                    className={classnames(theme, "text-color11")}
+                    htmlFor={fieldset.htmlFor}
+                  >
+                    {fieldset.label}
+                  </label>
+                  <input
                     className={classnames(
                       theme,
-                      "flex justify-between items-center",
+                      "w-full inline-flex items-center justify-center flex-1 leading-none text-color11 shadow-[0_0_0_1px] shadow-color7 focus:shadow-[0_0_0_2px] focus:shadow-color8 outline-none",
                     )}
-                  >
-                    <label
-                      className={classnames(theme, "text-color11")}
-                      htmlFor={fieldset.htmlFor}
-                    >
-                      {fieldset.label}
-                    </label>
-                    <input
-                      className={classnames(
-                        theme,
-                        "w-full inline-flex items-center justify-center flex-1 leading-none text-color11 shadow-[0_0_0_1px] shadow-color7 focus:shadow-[0_0_0_2px] focus:shadow-color8 outline-none",
-                      )}
-                      id={fieldset.id}
-                      defaultValue={fieldset.defaultValue}
-                    />
-                  </fieldset>
-                ))}
-              </div>
-            </>
+                    id={fieldset.id}
+                    defaultValue={fieldset.defaultValue}
+                  />
+                </fieldset>
+              ))}
+            </div>
           ))}
           <Popover.Close
             className={classnames(
