@@ -97,7 +97,7 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
           >
             <Cross2Icon />
           </Popover.Close>
-          <Popover.Arrow className={classnames(theme, "fill-white")} />
+          <Popover.Arrow className={classnames(theme, "fill-color3")} />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
