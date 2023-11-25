@@ -52,6 +52,16 @@ export default {
   theme: {
     extend: {
       keyframes: {
+        text: {
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center",
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
+          },
+        },
         slideUpAndFade: {
           from: { opacity: 0, transform: "translateY(2px)" },
           to: { opacity: 1, transform: "translateY(0)" },

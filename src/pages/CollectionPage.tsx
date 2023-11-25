@@ -1,5 +1,7 @@
+import classNames from "classnames";
 import SelectSize from "../themes/SelectSize";
 import SelectTheme from "../themes/SelectTheme";
+import { useTheme } from "../themes/useTheme";
 import AccordionDemo from "../ui/demo/AccordionDemo";
 import AlertDialogDemo from "../ui/demo/AlertDialogDemo";
 import NavigationMenuDemo from "../ui/demo/NavigationDemo";
@@ -169,20 +171,50 @@ const textsAlert = {
 };
 
 const CollectionPage = () => {
+  const { theme } = useTheme();
+
   return (
     <>
-      <div className="main-background flex flex-wrap gap-2 items-center justify-center content-center">
-        <NavigationMenuDemo items={itemsMenu} />
-        <SelectTheme />
-        <SelectSize />
-        <AccordionDemo items={itemsAccordion} />
-        <AlertDialogDemo texts={textsAlert} />
-        <SelectDemo
-          label="Fruits"
-          options={optionsSelect}
-          placeholder="Choose something..."
-        />
-        <PopoverDemo fields={fieldsPopover} />
+      <div
+        className={classNames(
+          theme,
+          "main-background flex flex-col justify-start bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% min-h-screen",
+        )}
+      >
+        <div className="p-10">
+          <h1 className="animate-text text-center bg-gradient-to-r from-color4 via-color7 to-color11 bg-clip-text text-transparent text-5xl font-black">
+            <span>
+              This is a demo. Try changing the theme and size and see how the
+              components fit together.
+            </span>{" "}
+            <span>Choose your style!</span>
+          </h1>
+        </div>
+        <div className="flex gap-2 my-4 mx-2 justify-center">
+          <div className="bg-color2 p-4 rounded border border-color8">
+            <span className="text-color12 font-semibold mr-2">
+              Select Theme:
+            </span>
+            <SelectTheme />
+          </div>
+          <div className="bg-color2 p-4 rounded border border-color8">
+            <span className="text-color12 font-semibold mr-2">
+              Select Size:
+            </span>
+            <SelectSize />
+          </div>
+        </div>
+        <div className="mt-10 flex flex-wrap gap-10 content-around justify-evenly items-center">
+          <NavigationMenuDemo items={itemsMenu} />
+          <AccordionDemo items={itemsAccordion} />
+          <AlertDialogDemo texts={textsAlert} />
+          <SelectDemo
+            label="Fruits"
+            options={optionsSelect}
+            placeholder="Choose something..."
+          />
+          <PopoverDemo fields={fieldsPopover} />
+        </div>
       </div>
     </>
   );

@@ -31,9 +31,15 @@ Visit <http://localhost:3000> in your browser to view the app in development mod
 
 The components in this project are based on the radix-ui library, providing a solid foundation for building accessible and flexible React components. Be sure to check the radix-ui documentation for more details.
 
+### Tailwind
+
+All the project and components use Tailwind!!
+
 ### Theming System
 
 This project integrates a custom theming system that allows you to customize the look and feel of the app to fit the needs of your project. Refer to the /themes directory for more information on how to configure and use the theming system.
+
+The presets you find in themes/palettes are based on [Radix-ui/colors](https://www.radix-ui.com/colors), to obtain a comprehensive color system for designing beautiful, accessible websites and apps.
 
 ### Issue Reporting
 
