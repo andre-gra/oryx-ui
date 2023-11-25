@@ -27,13 +27,13 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
     return accordionItemRef.current;
   }
 
-  const handleAccordionRootClick = () => {
-    accordionRootRef.current?.focus();
-  };
+  // const handleAccordionRootClick = () => {
+  //   accordionRootRef.current?.focus();
+  // };
 
-  const handleAccordionHeaderClick = () => {
-    accordionHeaderRef.current?.focus();
-  };
+  // const handleAccordionHeaderClick = () => {
+  //   accordionHeaderRef.current?.focus();
+  // };
 
   const handleAccordionTriggerClick = (itemId: string) => {
     const map = getMap();
@@ -41,9 +41,9 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
     node?.classList.add("bg-blue-500");
   };
 
-  const handleAccordionContentClick = () => {
-    accordionContentRef.current?.classList.add("bg-blue-500");
-  };
+  // const handleAccordionContentClick = () => {
+  //   accordionContentRef.current?.classList.add("bg-blue-500");
+  // };
 
   return (
     <Accordion.Root
