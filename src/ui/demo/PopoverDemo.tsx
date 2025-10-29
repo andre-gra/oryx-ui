@@ -28,7 +28,7 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
           className={classnames(
             theme,
             `popover-trigger${size}`,
-            "rounded-full inline-flex items-center justify-center text-color11 bg-color3 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-black cursor-default outline-none",
+            "rounded-full inline-flex items-center justify-center text-color11 bg-color3 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-black outline-none",
           )}
           aria-label={props.buttonTriggerLabel}
         >
@@ -91,7 +91,7 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
             className={classnames(
               theme,
               `popover-close${size}`,
-              "rounded-full inline-flex items-center justify-center text-color11 absolute hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color7 outline-none cursor-default",
+              "rounded-full inline-flex items-center justify-center text-color11 absolute hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color7 outline-none",
             )}
             aria-label="Close"
           >

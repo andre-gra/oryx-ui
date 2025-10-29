@@ -7,6 +7,7 @@ import AlertDialogDemo from "../ui/demo/AlertDialogDemo";
 import NavigationMenuDemo from "../ui/demo/NavigationDemo";
 import PopoverDemo from "../ui/demo/PopoverDemo";
 import SelectDemo from "../ui/demo/SelectDemo";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 const optionsSelect = [
   {
@@ -178,16 +179,13 @@ const CollectionPage = () => {
       <div
         className={classNames(
           theme,
-          "main-background flex flex-col justify-start bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% min-h-screen",
+          "main-background flex flex-col justify-start bg-gradient-to-r from-emerald-500 from-10% via-sky-500 via-60% to-indigo-900 to-90% min-h-screen",
         )}
       >
         <div className="p-10">
-          <h1 className="animate-text text-center bg-gradient-to-r from-color4 via-color7 to-color11 bg-clip-text text-transparent text-5xl font-black">
-            <span>
-              This is a demo. Try changing the theme and size and see how the
-              components fit together.
-            </span>{" "}
-            <span>Choose your style!</span>
+          <h1 className="animate-text text-center bg-gradient-to-r from-color4 via-color7 to-color11 bg-clip-text text-transparent text-5xl font-black pb-2">
+            This is a demo. Try changing the theme and size and see how the
+            components fit together. Choose your style!
           </h1>
         </div>
         <div className="flex gap-2 my-4 mx-2 justify-center">
@@ -215,6 +213,12 @@ const CollectionPage = () => {
           />
           <PopoverDemo fields={fieldsPopover} />
         </div>
+        <footer className="fixed bottom-0 text-center w-full p-4 text-white">
+          <p>Welcome to the Oryx-ui project! This is a React component library that harnesses the power of Vite for fast and efficient development. The components are based on the radix-ui library and integrated with a custom theming system.</p>
+          <p className="flex items-center justify-center gap-1">Made by <a href="https://github.com/andre-gra" className="text-gray-700 underline">andre-gra</a><a href="https://github.com/andre-gra/oryx-ui">
+            <GitHubLogoIcon height={20} width={20} />
+          </a></p>
+        </footer>
       </div>
     </>
   );
