@@ -189,11 +189,11 @@ const CollectionPage = () => {
           </h1>
         </div>
         <div className="flex gap-2 my-4 mx-2 justify-center flex-wrap">
-          <div className="bg-color2 p-4 rounded border border-color8">
+          <div className="bg-color2 p-4 rounded border border-color8 h-fit">
             <span className="text-color12 font-semibold mr-2">Select Theme:</span>
             <SelectTheme />
           </div>
-          <div className="bg-color2 p-4 rounded border border-color8">
+          <div className="bg-color2 p-4 rounded border border-color8 h-fit">
             <span className="text-color12 font-semibold mr-2">Select Size:</span>
             <SelectSize />
           </div>
@@ -208,7 +208,7 @@ const CollectionPage = () => {
           <SelectDemo label="Fruits" options={optionsSelect} placeholder="Choose something..." />
           <PopoverDemo fields={fieldsPopover} />
         </div>
-        <footer className="fixed bottom-0 text-center w-full p-4 text-white">
+        <footer className="sticky mt-8 text-center w-full p-4 text-white">
           <p>
             Welcome to the Oryx-ui project! This is a React component library that harnesses the
             power of Vite for fast and efficient development. The components are based on the
