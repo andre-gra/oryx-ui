@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 export type Size = "2" | "3" | "4";
 
@@ -18,6 +18,11 @@ const SizeProvider: React.FC<ProviderProps> = ({ children }: ProviderProps) => {
     const localSize = localStorage.getItem("size");
     return localSize !== null ? (localSize as Size) : "3";
   });
+
+  // Save to localStorage whenever size changes
+  useEffect(() => {
+    localStorage.setItem("size", currentSize);
+  }, [currentSize]);
 
   return (
     <SizeContext.Provider

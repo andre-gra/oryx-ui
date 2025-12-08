@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import type {
   Amber,
   Teal,
@@ -95,13 +95,16 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 
-const ThemeProvider: React.FC<ProviderProps> = ({
-  children,
-}: ProviderProps) => {
+const ThemeProvider: React.FC<ProviderProps> = ({ children }: ProviderProps) => {
   const [currentTheme, setCurrentTheme] = useState<Theme>(() => {
     const localTheme = localStorage.getItem("theme");
     return localTheme !== null ? (localTheme as Theme) : "theme-amber";
   });
+
+  // Save to localStorage whenever theme changes
+  useEffect(() => {
+    localStorage.setItem("theme", currentTheme);
+  }, [currentTheme]);
 
   return (
     <ThemeContext.Provider

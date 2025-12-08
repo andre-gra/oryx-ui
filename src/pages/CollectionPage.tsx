@@ -7,6 +7,7 @@ import AlertDialogDemo from "../ui/demo/AlertDialogDemo";
 import NavigationMenuDemo from "../ui/demo/NavigationDemo";
 import PopoverDemo from "../ui/demo/PopoverDemo";
 import SelectDemo from "../ui/demo/SelectDemo";
+import { ThemeAgentPanel } from "../ui/ThemeAgentPanel";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 const optionsSelect = [
@@ -157,8 +158,7 @@ const itemsAccordion = [
   },
   {
     mainText: "Is it unstyled?",
-    collapsibleText:
-      "Yes. It's unstyled by default, giving you freedom over the look and feel.",
+    collapsibleText: "Yes. It's unstyled by default, giving you freedom over the look and feel.",
   },
 ];
 
@@ -184,40 +184,45 @@ const CollectionPage = () => {
       >
         <div className="p-10">
           <h1 className="animate-text text-center bg-gradient-to-r from-color4 via-color7 to-color11 bg-clip-text text-transparent text-5xl font-black pb-2">
-            This is a demo. Try changing the theme and size and see how the
-            components fit together. Choose your style!
+            This is a demo. Try changing the theme and size and see how the components fit together.
+            Choose your style!
           </h1>
         </div>
-        <div className="flex gap-2 my-4 mx-2 justify-center">
+        <div className="flex gap-2 my-4 mx-2 justify-center flex-wrap">
           <div className="bg-color2 p-4 rounded border border-color8">
-            <span className="text-color12 font-semibold mr-2">
-              Select Theme:
-            </span>
+            <span className="text-color12 font-semibold mr-2">Select Theme:</span>
             <SelectTheme />
           </div>
           <div className="bg-color2 p-4 rounded border border-color8">
-            <span className="text-color12 font-semibold mr-2">
-              Select Size:
-            </span>
+            <span className="text-color12 font-semibold mr-2">Select Size:</span>
             <SelectSize />
+          </div>
+          <div className="max-w-md">
+            <ThemeAgentPanel />
           </div>
         </div>
         <div className="mt-10 flex flex-wrap gap-10 content-around justify-evenly items-center">
           <NavigationMenuDemo items={itemsMenu} />
           <AccordionDemo items={itemsAccordion} />
           <AlertDialogDemo texts={textsAlert} />
-          <SelectDemo
-            label="Fruits"
-            options={optionsSelect}
-            placeholder="Choose something..."
-          />
+          <SelectDemo label="Fruits" options={optionsSelect} placeholder="Choose something..." />
           <PopoverDemo fields={fieldsPopover} />
         </div>
         <footer className="fixed bottom-0 text-center w-full p-4 text-white">
-          <p>Welcome to the Oryx-ui project! This is a React component library that harnesses the power of Vite for fast and efficient development. The components are based on the radix-ui library and integrated with a custom theming system.</p>
-          <p className="flex items-center justify-center gap-1">Made by <a href="https://github.com/andre-gra" className="text-gray-700 underline">andre-gra</a><a href="https://github.com/andre-gra/oryx-ui">
-            <GitHubLogoIcon height={20} width={20} />
-          </a></p>
+          <p>
+            Welcome to the Oryx-ui project! This is a React component library that harnesses the
+            power of Vite for fast and efficient development. The components are based on the
+            radix-ui library and integrated with a custom theming system.
+          </p>
+          <p className="flex items-center justify-center gap-1">
+            Made by{" "}
+            <a href="https://github.com/andre-gra" className="text-gray-700 underline">
+              andre-gra
+            </a>
+            <a href="https://github.com/andre-gra/oryx-ui">
+              <GitHubLogoIcon height={20} width={20} />
+            </a>
+          </p>
         </footer>
       </div>
     </>
