@@ -74,10 +74,7 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
             }}
             value={item.mainText}
           >
-            <Accordion.Header
-              className={classnames("flex")}
-              ref={accordionHeaderRef}
-            >
+            <Accordion.Header className={classnames("flex")} ref={accordionHeaderRef}>
               <Accordion.Trigger
                 className={classnames(
                   theme,
@@ -99,10 +96,7 @@ const AccordionDemo = ({ ...props }: AccordionProps) => {
               onClick={() => handleAccordionTriggerClick("1")}
             >
               <div
-                className={classnames(
-                  `accordion-collapsibleText${size}`,
-                  "px-5 animate-fade-up",
-                )}
+                className={classnames(`accordion-collapsibleText${size}`, "px-5 animate-fade-up")}
               >
                 {item.collapsibleText}
               </div>
