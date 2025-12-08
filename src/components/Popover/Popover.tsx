@@ -1,56 +1,94 @@
-import * as Popover from "@radix-ui/react-popover";
+import * as RadixPopover from "@radix-ui/react-popover";
 import { MixerHorizontalIcon, Cross2Icon } from "@radix-ui/react-icons";
 import classnames from "classnames";
-import { useTheme } from "../../themes/useTheme";
-import { useSize } from "../../themes/useSize";
+import { useTheme } from "../../theme";
+import { useSize } from "../../theme";
 
-type Field = {
+/**
+ * Field definition for Popover form
+ */
+export interface PopoverField {
+  /** Field label */
   label: string;
+  /** htmlFor attribute */
   htmlFor: string;
+  /** Input id */
   id: string;
+  /** Default value */
   defaultValue?: string;
-};
-type Fields = { field: Field[]; fieldTitle: string };
-export interface PopoverProps {
-  buttonTriggerLabel?: string;
-  buttonCloseLabel?: string;
-  fields: Fields[];
 }
 
-const PopoverDemo = ({ ...props }: PopoverProps) => {
+/**
+ * Field group with title
+ */
+export interface PopoverFieldGroup {
+  /** Fields in this group */
+  field: PopoverField[];
+  /** Group title */
+  fieldTitle: string;
+}
+
+/**
+ * Props for the Popover component
+ */
+export interface PopoverProps {
+  /** Aria label for trigger button */
+  buttonTriggerLabel?: string;
+  /** Aria label for close button */
+  buttonCloseLabel?: string;
+  /** Field groups to render */
+  fields: PopoverFieldGroup[];
+  /** Additional className */
+  className?: string;
+}
+
+/**
+ * A popover component with form fields.
+ *
+ * @example
+ * ```tsx
+ * <Popover
+ *   buttonTriggerLabel="Settings"
+ *   fields={[
+ *     {
+ *       fieldTitle: "Dimensions",
+ *       field: [{ label: "Width", htmlFor: "width", id: "width", defaultValue: "100%" }]
+ *     }
+ *   ]}
+ * />
+ * ```
+ */
+export const Popover = ({ buttonTriggerLabel, fields, className }: PopoverProps) => {
   const { theme } = useTheme();
   const { size } = useSize();
 
   return (
-    <Popover.Root>
-      <Popover.Trigger asChild>
+    <RadixPopover.Root>
+      <RadixPopover.Trigger asChild>
         <button
           className={classnames(
             theme,
             `popover-trigger${size}`,
             "rounded-full inline-flex items-center justify-center text-color11 bg-color3 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-black outline-none",
+            className,
           )}
-          aria-label={props.buttonTriggerLabel}
+          aria-label={buttonTriggerLabel}
         >
           <MixerHorizontalIcon />
         </button>
-      </Popover.Trigger>
-      <Popover.Portal>
-        <Popover.Content
+      </RadixPopover.Trigger>
+      <RadixPopover.Portal>
+        <RadixPopover.Content
           className={classnames(
             theme,
             `popover-content${size}`,
             "bg-color3 shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_hsla(206,22%,7%,.2)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade",
           )}
         >
-          {props.fields.map((fieldsets, index) => (
+          {fields.map((fieldsets, index) => (
             <div
               key={`${index}-${fieldsets.fieldTitle}`}
-              className={classnames(
-                theme,
-                `popover-content-container${size}`,
-                "flex flex-col",
-              )}
+              className={classnames(theme, `popover-content-container${size}`, "flex flex-col")}
             >
               <p
                 className={classnames(
@@ -64,15 +102,9 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
               {fieldsets.field.map((fieldset) => (
                 <fieldset
                   key={`${index}-${fieldset.label}`}
-                  className={classnames(
-                    theme,
-                    "flex justify-between items-center",
-                  )}
+                  className={classnames(theme, "flex justify-between items-center")}
                 >
-                  <label
-                    className={classnames(theme, "text-color11")}
-                    htmlFor={fieldset.htmlFor}
-                  >
+                  <label className={classnames(theme, "text-color11")} htmlFor={fieldset.htmlFor}>
                     {fieldset.label}
                   </label>
                   <input
@@ -87,7 +119,7 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
               ))}
             </div>
           ))}
-          <Popover.Close
+          <RadixPopover.Close
             className={classnames(
               theme,
               `popover-close${size}`,
@@ -96,12 +128,12 @@ const PopoverDemo = ({ ...props }: PopoverProps) => {
             aria-label="Close"
           >
             <Cross2Icon />
-          </Popover.Close>
-          <Popover.Arrow className={classnames(theme, "fill-color3")} />
-        </Popover.Content>
-      </Popover.Portal>
-    </Popover.Root>
+          </RadixPopover.Close>
+          <RadixPopover.Arrow className={classnames(theme, "fill-color3")} />
+        </RadixPopover.Content>
+      </RadixPopover.Portal>
+    </RadixPopover.Root>
   );
 };
 
-export default PopoverDemo;
+export default Popover;

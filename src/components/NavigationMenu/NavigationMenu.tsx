@@ -1,48 +1,90 @@
 import React, { ForwardedRef } from "react";
-import * as NavigationMenu from "@radix-ui/react-navigation-menu";
+import * as RadixNavigationMenu from "@radix-ui/react-navigation-menu";
 import classnames from "classnames";
 import { CaretDownIcon } from "@radix-ui/react-icons";
-import { useTheme } from "../../themes/useTheme";
-import { useSize } from "../../themes/useSize";
+import { useTheme } from "../../theme";
+import { useSize } from "../../theme";
 
-type Item = {
-  type: string;
+/**
+ * Navigation menu item content
+ */
+export interface NavigationMenuItem {
+  /** Item display type: "card" for featured, "text" for simple */
+  type: "card" | "text";
+  /** Item title */
   title: string;
+  /** Link URL */
   href: string;
+  /** Description text */
   text: string;
-};
-type Items = { item?: Item[]; title: string; href?: string };
-export interface NavigationProps {
-  items: Items[];
 }
 
-const NavigationMenuDemo = ({ ...props }: NavigationProps) => {
+/**
+ * Navigation menu section
+ */
+export interface NavigationMenuSection {
+  /** Items in this section (omit for simple link) */
+  item?: NavigationMenuItem[];
+  /** Section title */
+  title: string;
+  /** Direct link href (for sections without dropdown) */
+  href?: string;
+}
+
+/**
+ * Props for the NavigationMenu component
+ */
+export interface NavigationMenuProps {
+  /** Menu sections */
+  items: NavigationMenuSection[];
+  /** Additional className */
+  className?: string;
+}
+
+/**
+ * A responsive navigation menu with dropdowns and featured items.
+ *
+ * @example
+ * ```tsx
+ * <NavigationMenu items={[
+ *   {
+ *     title: "Products",
+ *     item: [
+ *       { type: "card", title: "Featured", href: "/", text: "Our main product" },
+ *       { type: "text", title: "Other", href: "/other", text: "Description" }
+ *     ]
+ *   },
+ *   { title: "About", href: "/about" }
+ * ]} />
+ * ```
+ */
+export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
   const { theme } = useTheme();
   const { size } = useSize();
 
   return (
-    <NavigationMenu.Root
-      className={classnames(theme, "relative flex w-screen justify-center")}
+    <RadixNavigationMenu.Root
+      className={classnames(theme, "relative flex w-screen justify-center", className)}
     >
-      <NavigationMenu.List
+      <RadixNavigationMenu.List
         className={classnames(
           theme,
           `navigation-menu-list${size}`,
           "center shadow-blackA7 m-0 flex list-none bg-color3 shadow-[0_2px_10px]",
         )}
       >
-        {props.items.map((items, index) => (
-          <NavigationMenu.Item key={`${items.title}-${index}`}>
-            {items.item ? (
+        {items.map((menuItem, index) => (
+          <RadixNavigationMenu.Item key={`${menuItem.title}-${index}`}>
+            {menuItem.item ? (
               <>
-                <NavigationMenu.Trigger
+                <RadixNavigationMenu.Trigger
                   className={classnames(
                     theme,
                     `navigation-menu-trigger${size}`,
                     "text-color11 hover:bg-color4 focus:shadow-color7 group flex select-none items-center justify-between font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
                   )}
                 >
-                  {items.title}
+                  {menuItem.title}
                   <CaretDownIcon
                     className={classnames(
                       theme,
@@ -50,8 +92,8 @@ const NavigationMenuDemo = ({ ...props }: NavigationProps) => {
                     )}
                     aria-hidden
                   />
-                </NavigationMenu.Trigger>
-                <NavigationMenu.Content
+                </RadixNavigationMenu.Trigger>
+                <RadixNavigationMenu.Content
                   className={classnames(
                     theme,
                     `navigation-menu-content${size}`,
@@ -64,9 +106,9 @@ const NavigationMenuDemo = ({ ...props }: NavigationProps) => {
                       "one m-0 grid list-none sm:grid-cols-[0.75fr_1fr]",
                     )}
                   >
-                    {items.item.map((item, index) => (
+                    {menuItem.item.map((item, idx) => (
                       <ListItem
-                        key={`${item.title}-${index}`}
+                        key={`${item.title}-${idx}`}
                         type={item.type}
                         theme={theme}
                         href={item.href}
@@ -77,23 +119,23 @@ const NavigationMenuDemo = ({ ...props }: NavigationProps) => {
                       </ListItem>
                     ))}
                   </ul>
-                </NavigationMenu.Content>
+                </RadixNavigationMenu.Content>
               </>
             ) : (
-              <NavigationMenu.Link
+              <RadixNavigationMenu.Link
                 className={classnames(
                   `navigation-menu-simple-link${size}`,
                   "text-color11 hover:bg-color4 focus:shadow-color7 block select-none font-medium leading-none no-underline outline-none focus:shadow-[0_0_0_2px]",
                 )}
-                href={items.href}
+                href={menuItem.href}
               >
-                {items.title}
-              </NavigationMenu.Link>
+                {menuItem.title}
+              </RadixNavigationMenu.Link>
             )}
-          </NavigationMenu.Item>
+          </RadixNavigationMenu.Item>
         ))}
 
-        <NavigationMenu.Indicator
+        <RadixNavigationMenu.Indicator
           className={classnames(
             theme,
             `navigation-menu-indicator${size}`,
@@ -101,8 +143,8 @@ const NavigationMenuDemo = ({ ...props }: NavigationProps) => {
           )}
         >
           <div className={classnames(theme, "relative bg-color3")} />
-        </NavigationMenu.Indicator>
-      </NavigationMenu.List>
+        </RadixNavigationMenu.Indicator>
+      </RadixNavigationMenu.List>
 
       <div
         className={classnames(
@@ -110,7 +152,7 @@ const NavigationMenuDemo = ({ ...props }: NavigationProps) => {
           "z-10 perspective-[2000px] absolute top-full left-0 flex w-full justify-center",
         )}
       >
-        <NavigationMenu.Viewport
+        <RadixNavigationMenu.Viewport
           className={classnames(
             theme,
             `navigation-menu-viewport${size}`,
@@ -118,36 +160,27 @@ const NavigationMenuDemo = ({ ...props }: NavigationProps) => {
           )}
         />
       </div>
-    </NavigationMenu.Root>
+    </RadixNavigationMenu.Root>
   );
 };
 
-export interface INavigationListItemProps {
+interface ListItemProps {
   children?: React.ReactNode;
   className?: string;
   title: string;
-  asChild?: boolean;
   href?: string;
   theme: string;
-  type: string;
+  type: "card" | "text";
   size: string;
 }
 
 const ListItem = React.forwardRef(
   (
-    {
-      className,
-      children,
-      theme,
-      title,
-      type,
-      size,
-      ...props
-    }: INavigationListItemProps,
+    { className, children, theme, title, type, size, ...props }: ListItemProps,
     forwardedRef: ForwardedRef<HTMLAnchorElement>,
   ) => (
     <li className={classnames(theme, type === "card" && "row-span-3 grid")}>
-      <NavigationMenu.Link asChild>
+      <RadixNavigationMenu.Link asChild>
         <a
           className={classnames(
             theme,
@@ -169,17 +202,19 @@ const ListItem = React.forwardRef(
               fill="white"
               className="my-4"
             >
-              <path d="M12 25C7.58173 25 4 21.4183 4 17C4 12.5817 7.58173 9 12 9V25Z"></path>
-              <path d="M12 0H4V8H12V0Z"></path>
-              <path d="M17 8C19.2091 8 21 6.20914 21 4C21 1.79086 19.2091 0 17 0C14.7909 0 13 1.79086 13 4C13 6.20914 14.7909 8 17 8Z"></path>
+              <path d="M12 25C7.58173 25 4 21.4183 4 17C4 12.5817 7.58173 9 12 9V25Z" />
+              <path d="M12 0H4V8H12V0Z" />
+              <path d="M17 8C19.2091 8 21 6.20914 21 4C21 1.79086 19.2091 0 17 0C14.7909 0 13 1.79086 13 4C13 6.20914 14.7909 8 17 8Z" />
             </svg>
           )}
           <div className="text-color12 font-medium leading-[1.2]">{title}</div>
           <p className="text-color11 leading-[1.4]">{children}</p>
         </a>
-      </NavigationMenu.Link>
+      </RadixNavigationMenu.Link>
     </li>
   ),
 );
 
-export default NavigationMenuDemo;
+ListItem.displayName = "ListItem";
+
+export default NavigationMenu;

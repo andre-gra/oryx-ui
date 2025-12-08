@@ -1,50 +1,198 @@
-# Oryx-ui
+# Oryx UI
 
-Welcome to the Oryx-ui project! This is a React component library that harnesses the power of Vite for fast and efficient development. The components are based on the radix-ui library and integrated with a custom theming system.
+A React component library with intelligent theming based on Radix UI primitives. Features an AI-powered theme agent that learns your preferences and automatically applies optimal theme combinations.
 
-## Getting Started
+## Installation
 
-### Prerequisites
+```bash
+npm install oryx-ui
+```
 
-Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+## Quick Start
 
-### Installation
+```tsx
+import { OryxProvider, Accordion, Select, AlertDialog } from 'oryx-ui';
+import 'oryx-ui/styles.css';
 
-`npm install`
+function App() {
+  return (
+    <OryxProvider defaultTheme="theme-amber">
+      <YourApp />
+    </OryxProvider>
+  );
+}
+```
 
-### Local Development
+## Features
 
-`npm run dev`
+- 🎨 **40+ Theme Variants** - Beautiful color palettes with light and dark modes
+- 📐 **3 Size Options** - Compact, default, and large component sizes
+- 🤖 **AI Theme Agent** - Learns preferences and auto-applies themes based on time/context
+- ♿ **Accessible** - Built on Radix UI primitives with full ARIA support
+- 🎯 **TypeScript** - Complete type definitions included
 
-Visit <http://localhost:3000> in your browser to view the app in development mode.
+## Components
 
-### Production build
+### Accordion
 
-`npm run build`
+```tsx
+import { Accordion } from 'oryx-ui';
 
-### Project Structure
+<Accordion
+  items={[
+    { mainText: "Section 1", collapsibleText: "Content 1" },
+    { mainText: "Section 2", collapsibleText: "Content 2" }
+  ]}
+/>
+```
 
-/src: Contains the source code of the app.
-/themes/palettes: Contains configuration files for the theming system.
+### Select
 
-### Components and Radix-UI
+```tsx
+import { Select } from 'oryx-ui';
 
-The components in this project are based on the radix-ui library, providing a solid foundation for building accessible and flexible React components. Be sure to check the radix-ui documentation for more details.
+<Select
+  label="Choose fruit"
+  placeholder="Select..."
+  options={[
+    { label: "Fruits", group: [{ value: "apple", label: "Apple" }] }
+  ]}
+  onValueChange={(value) => console.log(value)}
+/>
+```
 
-### Tailwind
+### AlertDialog
 
-All the project and components use Tailwind!!
+```tsx
+import { AlertDialog } from 'oryx-ui';
 
-### Theming System
+<AlertDialog
+  texts={{
+    buttonTrigger: "Delete",
+    content: "Are you sure?",
+    description: "This action cannot be undone.",
+    buttonCancel: "Cancel",
+    action: "Delete"
+  }}
+  onAction={() => handleDelete()}
+/>
+```
 
-This project integrates a custom theming system that allows you to customize the look and feel of the app to fit the needs of your project. Refer to the /themes directory for more information on how to configure and use the theming system.
+### NavigationMenu
 
-The presets you find in themes/palettes are based on [Radix-ui/colors](https://www.radix-ui.com/colors), to obtain a comprehensive color system for designing beautiful, accessible websites and apps.
+```tsx
+import { NavigationMenu } from 'oryx-ui';
 
-### Issue Reporting
+<NavigationMenu
+  items={[
+    {
+      title: "Products",
+      item: [
+        { type: "card", title: "Featured", href: "/", text: "Our main product" },
+        { type: "text", title: "Other", href: "/other", text: "Description" }
+      ]
+    },
+    { title: "About", href: "/about" }
+  ]}
+/>
+```
 
-If you encounter issues or have suggestions, please open a new issue on GitHub Issues.
+### Popover
 
-### License
+```tsx
+import { Popover } from 'oryx-ui';
 
-This project is distributed under the MIT license.
+<Popover
+  buttonTriggerLabel="Settings"
+  fields={[
+    {
+      fieldTitle: "Dimensions",
+      field: [{ label: "Width", htmlFor: "width", id: "width", defaultValue: "100%" }]
+    }
+  ]}
+/>
+```
+
+## Theming
+
+### Available Themes
+
+Themes follow the naming pattern `theme-{color}` or `theme-{color}Dark`:
+
+- `theme-amber`, `theme-amberDark`
+- `theme-blue`, `theme-blueDark`
+- `theme-crimson`, `theme-crimsonDark`
+- `theme-cyan`, `theme-cyanDark`
+- `theme-green`, `theme-greenDark`
+- `theme-indigo`, `theme-indigoDark`
+- `theme-mint`, `theme-mintDark`
+- `theme-orange`, `theme-orangeDark`
+- `theme-pink`, `theme-pinkDark`
+- `theme-plum`, `theme-plumDark`
+- `theme-purple`, `theme-purpleDark`
+- `theme-red`, `theme-redDark`
+- `theme-sky`, `theme-skyDark`
+- `theme-teal`, `theme-tealDark`
+- `theme-tomato`, `theme-tomatoDark`
+- `theme-violet`, `theme-violetDark`
+- `theme-yellow`, `theme-yellowDark`
+- And more...
+
+### Using Theme Hooks
+
+```tsx
+import { useTheme, useSize } from 'oryx-ui';
+
+function MyComponent() {
+  const { theme, changeTheme } = useTheme();
+  const { size, changeSize } = useSize();
+
+  return (
+    <button onClick={() => changeTheme('theme-blueDark')}>
+      Current: {theme}
+    </button>
+  );
+}
+```
+
+## AI Theme Agent
+
+The library includes an intelligent agent that learns from user interactions:
+
+```tsx
+import { OryxProvider, useThemeAgent, ThemeAgentPanel } from 'oryx-ui';
+
+// Enable agent (on by default)
+<OryxProvider enableAgent={true}>
+  <App />
+</OryxProvider>
+
+// Access agent in components
+function Settings() {
+  const { state, recommendation, getInsights } = useThemeAgent();
+  
+  return (
+    <div>
+      <p>Interactions tracked: {state.interactionCount}</p>
+      <ThemeAgentPanel /> {/* Built-in UI panel */}
+    </div>
+  );
+}
+```
+
+## Peer Dependencies
+
+```json
+{
+  "react": ">=17.0.0",
+  "react-dom": ">=17.0.0"
+}
+```
+
+## License
+
+MIT
+
+## Author
+
+[andre-gra](https://github.com/andre-gra)
