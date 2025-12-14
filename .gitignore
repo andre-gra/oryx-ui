@@ -27,5 +27,5 @@ dist-ssr
 COMMENT.md
 
 # Demo (for local testing only)
-demo/
-vite.demo.config.ts
+#demo/
+#vite.demo.config.ts
