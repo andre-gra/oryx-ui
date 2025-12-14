@@ -83,5 +83,8 @@ export interface ThemeAgentContextValue {
   disableAgent: () => void;
   setMode: (mode: AgentMode) => void;
   getInsights: () => string[];
-  forceRecommendation: () => void;
+  recordInteraction: (theme: Theme, size: Size) => void; // Added back recordInteraction
+  applyRecommendation: ((rec: AgentRecommendation) => void) | null; // Added back applyRecommendation
+  generateThemeFromPrompt: (prompt: string) => Theme;
 }
+

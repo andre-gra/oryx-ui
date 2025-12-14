@@ -44,7 +44,9 @@
   ],
   "scripts": {
     "dev": "vite --config vite.demo.config.ts",
-    "build": "tsc -p tsconfig.build.json && vite build",
+    "build:lib": "tsc -p tsconfig.build.json && vite build",
+    "build:demo": "vite build --outDir dist-demo --config vite.demo.config.ts",
+    "build": "npm run build:lib && npm run build:demo",
     "lint": "oxlint",
     "preview": "vite preview",
     "prepublishOnly": "npm run build"

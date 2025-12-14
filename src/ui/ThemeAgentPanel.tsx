@@ -1,9 +1,21 @@
 import { useThemeAgent } from "../agents/useThemeAgent";
+import React, { useState } from "react";
+import { useTheme } from "../themes/useTheme";
 
 export const ThemeAgentPanel = () => {
-  const { state, recommendation, getInsights } = useThemeAgent();
+  const { state, recommendation, getInsights, generateThemeFromPrompt } = useThemeAgent();
+  const { changeTheme } = useTheme();
+  const [prompt, setPrompt] = useState("");
 
   const insights = getInsights();
+
+  const handleGenerateTheme = () => {
+    const newTheme = generateThemeFromPrompt(prompt);
+    if (newTheme) {
+      changeTheme(newTheme);
+    }
+    setPrompt("");
+  };
 
   if (!state.isActive) {
     return null;
@@ -46,6 +58,29 @@ export const ThemeAgentPanel = () => {
           </div>
         </div>
       )}
+
+      {/* AI Theme Generator Input */}
+      <div className="mt-4">
+        <label htmlFor="theme-prompt" className="text-color12 mb-2 block text-sm font-semibold">
+          🎨 Generate Theme with AI:
+        </label>
+        <div className="flex space-x-2">
+          <input
+            id="theme-prompt"
+            type="text"
+            placeholder="e.g., 'A dark, futuristic theme with neon accents'"
+            className="bg-color1 border-color6 text-color11 flex-grow rounded-md border p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+          />
+          <button
+            onClick={handleGenerateTheme}
+            className="bg-blue-600 text-color1 hover:bg-blue-700 rounded-md px-4 py-2 text-sm font-medium transition-colors"
+          >
+            Generate
+          </button>
+        </div>
+      </div>
 
       {/* Learning Status */}
       {state.interactionCount < 5 && (
