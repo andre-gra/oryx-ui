@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { GitHubLogoIcon, ReaderIcon } from "@radix-ui/react-icons";
 import {
   Accordion,
   Select,
@@ -123,7 +124,29 @@ const App = () => {
   const { theme, changeTheme } = useTheme();
   const { size, changeSize } = useSize();
   return (
-    <div className={`${theme} min-h-screen bg-gradient-to-br from-color1 via-color2 to-color3 p-8`}>
+    <div
+      className={`${theme} min-h-screen bg-gradient-to-br from-color1 via-color2 to-color3 p-8 relative`}
+    >
+      <div className="absolute top-4 right-4 flex gap-3 z-50">
+        <a
+          href="https://oryx-ui-docs.onrender.com/"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-2 px-4 py-2 bg-color2 border border-color6 rounded-full shadow-sm hover:bg-color3 transition-colors text-color11 font-medium"
+        >
+          <ReaderIcon className="w-5 h-5" />
+          <span>Docs</span>
+        </a>
+        <a
+          href="https://github.com/andre-gra/oryx-ui"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-2 px-4 py-2 bg-color2 border border-color6 rounded-full shadow-sm hover:bg-color3 transition-colors text-color11 font-medium"
+        >
+          <GitHubLogoIcon className="w-5 h-5" />
+          <span>GitHub</span>
+        </a>
+      </div>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-color11 text-center mb-2">
           <img src="oryx.svg" alt="oryx" className="inline-block mr-2" width="50" />
@@ -139,6 +162,61 @@ const App = () => {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Navigation Menu - Full width */}
+          <div
+            className={classNames(
+              "bg-color4 z-10 w-fit h-fit backdrop-blur-sm rounded-xl p-6",
+              size === "4" && "col-span-2",
+            )}
+          >
+            <h2 className="text-color11 text-xl font-semibold mb-4">Navigation Menu</h2>
+            <NavigationMenu
+              items={[
+                {
+                  title: "Products",
+                  item: [
+                    {
+                      type: "card",
+                      title: "Featured",
+                      href: "#",
+                      text: "Our main product offering",
+                    },
+                    {
+                      type: "text",
+                      title: "Components",
+                      href: "#",
+                      text: "UI building blocks",
+                    },
+                    {
+                      type: "text",
+                      title: "Themes",
+                      href: "#",
+                      text: "Color and styling options",
+                    },
+                  ],
+                },
+                {
+                  title: "Docs",
+                  item: [
+                    {
+                      type: "text",
+                      title: "Getting Started",
+                      href: "#",
+                      text: "Quick start guide",
+                    },
+                    {
+                      type: "text",
+                      title: "API Reference",
+                      href: "#",
+                      text: "Component documentation",
+                    },
+                  ],
+                },
+                { title: "GitHub", href: "https://github.com/andre-gra/oryx-ui" },
+              ]}
+            />
+          </div>
+
           {/* Accordion */}
           <div
             className={classNames(
@@ -235,57 +313,21 @@ const App = () => {
               ]}
             />
           </div>
-
-          {/* Navigation Menu - Full width */}
-          <div className="bg-color4 w-fit backdrop-blur-sm rounded-xl p-6 md:col-span-2">
-            <h2 className="text-color11 text-xl font-semibold mb-4">Navigation Menu</h2>
-            <NavigationMenu
-              items={[
-                {
-                  title: "Products",
-                  item: [
-                    {
-                      type: "card",
-                      title: "Featured",
-                      href: "#",
-                      text: "Our main product offering",
-                    },
-                    {
-                      type: "text",
-                      title: "Components",
-                      href: "#",
-                      text: "UI building blocks",
-                    },
-                    {
-                      type: "text",
-                      title: "Themes",
-                      href: "#",
-                      text: "Color and styling options",
-                    },
-                  ],
-                },
-                {
-                  title: "Docs",
-                  item: [
-                    {
-                      type: "text",
-                      title: "Getting Started",
-                      href: "#",
-                      text: "Quick start guide",
-                    },
-                    {
-                      type: "text",
-                      title: "API Reference",
-                      href: "#",
-                      text: "Component documentation",
-                    },
-                  ],
-                },
-                { title: "GitHub", href: "https://github.com/andre-gra/oryx-ui" },
-              ]}
-            />
-          </div>
         </div>
+
+        <footer className="mt-12 py-6 text-center border-t border-color6">
+          <p className="text-color11">
+            Created by{" "}
+            <a
+              href="https://github.com/andre-gra"
+              target="_blank"
+              rel="noreferrer"
+              className="text-color9 hover:text-color10 hover:underline font-medium transition-colors"
+            >
+              andre-gra
+            </a>
+          </p>
+        </footer>
       </div>
     </div>
   );
