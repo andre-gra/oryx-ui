@@ -26,7 +26,7 @@
   .accordion-content$(size) {
     @apply text-[calc(5px*$size)];
 
-    .accordion-collapsibleText $(size) {
+    .accordion-collapsibleText$(size) {
       @apply py-[calc(5px*$size)];
     }
   }
