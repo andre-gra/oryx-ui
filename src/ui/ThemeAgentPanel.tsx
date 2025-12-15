@@ -1,18 +1,22 @@
 import { useThemeAgent } from "../agents/useThemeAgent";
-import React, { useState } from "react";
+import { useState, FormEvent } from "react";
 import { useTheme } from "../themes/useTheme";
+import classNames from "classnames";
 
 export const ThemeAgentPanel = () => {
   const { state, recommendation, getInsights, generateThemeFromPrompt } = useThemeAgent();
   const { changeTheme } = useTheme();
   const [prompt, setPrompt] = useState("");
+  const [animationState, setAnimationState] = useState(false);
 
   const insights = getInsights();
 
-  const handleGenerateTheme = () => {
+  const handleGenerateTheme = (e?: FormEvent) => {
+    e?.preventDefault();
     const newTheme = generateThemeFromPrompt(prompt);
     if (newTheme) {
       changeTheme(newTheme);
+      setAnimationState(true);
     }
     setPrompt("");
   };
@@ -27,7 +31,7 @@ export const ThemeAgentPanel = () => {
         <h3 className="text-color12 text-sm font-semibold">🤖 AI Theme Assistant</h3>
         <span
           className={`text-xs px-2 py-1 rounded ${
-            state.isLearning ? "bg-blue-500 text-white" : "bg-gray-500 text-white"
+            state.isLearning ? "bg-color3 text-color11" : "bg-color6 text-color11"
           }`}
         >
           {state.mode === "full-automatic" ? "Auto" : "Manual"}
@@ -64,22 +68,26 @@ export const ThemeAgentPanel = () => {
         <label htmlFor="theme-prompt" className="text-color12 mb-2 block text-sm font-semibold">
           🎨 Generate Theme with AI:
         </label>
-        <div className="flex space-x-2">
+        <form className="flex space-x-2" onSubmit={handleGenerateTheme}>
           <input
             id="theme-prompt"
             type="text"
             placeholder="e.g., 'A dark, futuristic theme with neon accents'"
-            className="bg-color1 border-color6 text-color11 flex-grow rounded-md border p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-color1 border-color6 text-color11 flex-grow rounded-md border p-2 text-sm focus:outline-none focus:ring-2 focus:ring-color6"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
           />
           <button
-            onClick={handleGenerateTheme}
-            className="bg-blue-600 text-color1 hover:bg-blue-700 rounded-md px-4 py-2 text-sm font-medium transition-colors"
+            type="submit"
+            onAnimationEnd={() => setAnimationState(false)}
+            className={classNames(
+              "bg-color6 text-color11 hover:bg-color7 rounded-md px-4 py-2 text-sm font-medium transition-colors",
+              animationState && "animate-pulse animate-once animate-duration-200",
+            )}
           >
             Generate
           </button>
-        </div>
+        </form>
       </div>
 
       {/* Learning Status */}

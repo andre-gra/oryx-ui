@@ -43,6 +43,8 @@ export interface SelectProps {
   onValueChange?: (value: string) => void;
   /** Additional className */
   className?: string;
+  /** Optional ID for accessibility */
+  id?: string;
 }
 
 /**
@@ -67,6 +69,7 @@ export const Select = ({
   value,
   onValueChange,
   className,
+  id,
 }: SelectProps) => {
   const { theme } = useTheme();
   const { size } = useSize();
@@ -74,6 +77,7 @@ export const Select = ({
   return (
     <RadixSelect.Root value={value} onValueChange={onValueChange}>
       <RadixSelect.Trigger
+        id={id}
         aria-label={label}
         className={classnames(
           theme,

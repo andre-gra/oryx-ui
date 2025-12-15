@@ -64,7 +64,7 @@ export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
 
   return (
     <RadixNavigationMenu.Root
-      className={classnames(theme, "relative flex w-screen justify-center", className)}
+      className={classnames(theme, "relative flex w-full justify-center", className)}
     >
       <RadixNavigationMenu.List
         className={classnames(

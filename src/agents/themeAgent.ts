@@ -41,7 +41,7 @@ export class ThemeAgent {
     let selectedTheme: Theme = "theme-amber"; // Default theme
 
     if (lowerPrompt.includes("dark")) {
-      selectedTheme = "theme-slateDark"; // Example dark theme
+      selectedTheme = "theme-amberDark"; // Example dark theme
       if (lowerPrompt.includes("blue")) selectedTheme = "theme-blueDark";
       else if (lowerPrompt.includes("red")) selectedTheme = "theme-redDark";
       else if (lowerPrompt.includes("green")) selectedTheme = "theme-greenDark";
@@ -51,32 +51,25 @@ export class ThemeAgent {
       else if (lowerPrompt.includes("red")) selectedTheme = "theme-red";
       else if (lowerPrompt.includes("green")) selectedTheme = "theme-green";
     } else {
-        // More specific color keywords for light themes by default if no light/dark specified
-        if (lowerPrompt.includes("blue")) selectedTheme = "theme-blue";
-        else if (lowerPrompt.includes("red")) selectedTheme = "theme-red";
-        else if (lowerPrompt.includes("green")) selectedTheme = "theme-green";
-        else if (lowerPrompt.includes("orange")) selectedTheme = "theme-orange";
-        else if (lowerPrompt.includes("pink")) selectedTheme = "theme-pink";
-        else if (lowerPrompt.includes("purple")) selectedTheme = "theme-purple";
-        else if (lowerPrompt.includes("grass")) selectedTheme = "theme-grass";
-        else if (lowerPrompt.includes("sky")) selectedTheme = "theme-sky";
-        else if (lowerPrompt.includes("mint")) selectedTheme = "theme-mint";
-        else if (lowerPrompt.includes("teal")) selectedTheme = "theme-teal";
-        else if (lowerPrompt.includes("violet")) selectedTheme = "theme-violet";
-        else if (lowerPrompt.includes("crimson")) selectedTheme = "theme-crimson";
-        else if (lowerPrompt.includes("brown")) selectedTheme = "theme-brown";
-        else if (lowerPrompt.includes("indigo")) selectedTheme = "theme-indigo";
-        else if (lowerPrompt.includes("yellow")) selectedTheme = "theme-yellow";
-        else if (lowerPrompt.includes("lime")) selectedTheme = "theme-lime";
-        else if (lowerPrompt.includes("plum")) selectedTheme = "theme-plum";
-        else if (lowerPrompt.includes("cyan")) selectedTheme = "theme-cyan";
-
-        // Check for specific dark themes if no 'dark' keyword but specific dark color is mentioned
-        if (lowerPrompt.includes("mauve")) selectedTheme = "theme-mauveDark";
-        else if (lowerPrompt.includes("olive")) selectedTheme = "theme-oliveDark";
-        else if (lowerPrompt.includes("sage")) selectedTheme = "theme-sageDark";
-        else if (lowerPrompt.includes("sand")) selectedTheme = "theme-sandDark";
-        else if (lowerPrompt.includes("slate")) selectedTheme = "theme-slateDark";
+      // More specific color keywords for light themes by default if no light/dark specified
+      if (lowerPrompt.includes("blue")) selectedTheme = "theme-blue";
+      else if (lowerPrompt.includes("red")) selectedTheme = "theme-red";
+      else if (lowerPrompt.includes("green")) selectedTheme = "theme-green";
+      else if (lowerPrompt.includes("orange")) selectedTheme = "theme-orange";
+      else if (lowerPrompt.includes("pink")) selectedTheme = "theme-pink";
+      else if (lowerPrompt.includes("purple")) selectedTheme = "theme-purple";
+      else if (lowerPrompt.includes("grass")) selectedTheme = "theme-grass";
+      else if (lowerPrompt.includes("sky")) selectedTheme = "theme-sky";
+      else if (lowerPrompt.includes("mint")) selectedTheme = "theme-mint";
+      else if (lowerPrompt.includes("teal")) selectedTheme = "theme-teal";
+      else if (lowerPrompt.includes("violet")) selectedTheme = "theme-violet";
+      else if (lowerPrompt.includes("crimson")) selectedTheme = "theme-crimson";
+      else if (lowerPrompt.includes("brown")) selectedTheme = "theme-brown";
+      else if (lowerPrompt.includes("indigo")) selectedTheme = "theme-indigo";
+      else if (lowerPrompt.includes("yellow")) selectedTheme = "theme-yellow";
+      else if (lowerPrompt.includes("lime")) selectedTheme = "theme-lime";
+      else if (lowerPrompt.includes("plum")) selectedTheme = "theme-plum";
+      else if (lowerPrompt.includes("cyan")) selectedTheme = "theme-cyan";
     }
 
     return selectedTheme;

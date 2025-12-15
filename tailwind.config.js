@@ -47,7 +47,7 @@ const {
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", "./demo/**/*.{js,ts,jsx,tsx}"],
   // TODO utilizzare la funzione presets di tailwind per non dover scrivere qui le estensioni del tema
   theme: {
     extend: {
@@ -129,12 +129,9 @@ export default {
       },
       animation: {
         slideUpAndFade: "slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideRightAndFade:
-          "slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideDownAndFade:
-          "slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideLeftAndFade:
-          "slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+        slideRightAndFade: "slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+        slideDownAndFade: "slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+        slideLeftAndFade: "slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
         slideDown: "slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1)",
         slideUp: "slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)",
         overlayShow: "overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",

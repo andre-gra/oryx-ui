@@ -1,5 +1,5 @@
+import classNames from "classnames";
 import {
-  OryxProvider,
   Accordion,
   Select,
   AlertDialog,
@@ -8,13 +8,19 @@ import {
   useTheme,
   useSize,
   ThemeAgentPanel,
+  type Theme,
+  Size,
 } from "../src";
 import "../src/oryx.css";
 
-const ThemeSelector = () => {
-  const { theme, changeTheme } = useTheme();
-  const { size, changeSize } = useSize();
+type ThemeSelectorProps = {
+  theme: Theme;
+  size: Size;
+  changeTheme: (theme: Theme) => void;
+  changeSize: (size: Size) => void;
+};
 
+const ThemeSelector = ({ theme, size, changeTheme, changeSize }: ThemeSelectorProps) => {
   const themeOptions = [
     {
       label: "Colors",
@@ -61,10 +67,6 @@ const ThemeSelector = () => {
         { value: "theme-yellowDark", label: "Yellow Dark" },
         { value: "theme-gray", label: "Gray" },
         { value: "theme-grayDark", label: "Gray Dark" },
-        { value: "theme-black", label: "Black" },
-        { value: "theme-blackDark", label: "Black Dark" },
-        { value: "theme-white", label: "White" },
-        { value: "theme-whiteDark", label: "White Dark" },
       ],
     },
   ];
@@ -81,20 +83,28 @@ const ThemeSelector = () => {
   ];
 
   return (
-    <div className="flex gap-4 flex-wrap mb-8 p-4 bg-color2 rounded-lg border border-color6">
+    <div
+      className={`${theme} flex gap-4 flex-wrap mb-8 p-4 bg-color2 rounded-lg border border-color6 transition-colors duration-300`}
+    >
       <div className="flex items-center gap-2">
-        <label className="text-color12 font-semibold">Theme:</label>
+        <label htmlFor="theme-select" className="text-color12 font-semibold">
+          Theme:
+        </label>
         <Select
+          id="theme-select"
           label="Theme"
           value={theme}
           options={themeOptions}
-          onValueChange={(val) => changeTheme(val as any)}
+          onValueChange={(val) => changeTheme(val as Theme)}
           className="min-w-[140px]"
         />
       </div>
       <div className="flex items-center gap-2">
-        <label className="text-color12 font-semibold">Size:</label>
+        <label htmlFor="size-select" className="text-color12 font-semibold">
+          Size:
+        </label>
         <Select
+          id="size-select"
           label="Size"
           value={size}
           options={sizeOptions}
@@ -110,161 +120,174 @@ const ThemeSelector = () => {
 };
 
 const App = () => {
+  const { theme, changeTheme } = useTheme();
+  const { size, changeSize } = useSize();
   return (
-    <OryxProvider>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-white text-center mb-2">🦌 Oryx UI Demo</h1>
-          <p className="text-gray-300 text-center mb-8">Testing the component library</p>
+    <div className={`${theme} min-h-screen bg-gradient-to-br from-color1 via-color2 to-color3 p-8`}>
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-4xl font-bold text-color11 text-center mb-2">
+          <img src="oryx.svg" alt="oryx" className="inline-block mr-2" width="50" />
+          <span className="inline-block align-middle">Oryx UI Demo</span>
+        </h1>
+        <p className="text-color10 text-center mb-8">Testing the component library</p>
 
-          <ThemeSelector />
+        <ThemeSelector
+          theme={theme}
+          size={size}
+          changeTheme={changeTheme}
+          changeSize={changeSize}
+        />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Accordion */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-              <h2 className="text-white text-xl font-semibold mb-4">Accordion</h2>
-              <Accordion
-                items={[
-                  {
-                    mainText: "Is it accessible?",
-                    collapsibleText: "Yes. It adheres to the WAI-ARIA design pattern.",
-                  },
-                  {
-                    mainText: "Is it styled?",
-                    collapsibleText: "Yes. It uses the Oryx UI theming system.",
-                  },
-                  {
-                    mainText: "Can it animate?",
-                    collapsibleText: "Yes. Built-in slide animations are included.",
-                  },
-                ]}
-              />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Accordion */}
+          <div
+            className={classNames(
+              "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
+              size === "4" && "col-span-2",
+            )}
+          >
+            <h2 className="text-color11 text-xl font-semibold mb-4">Accordion</h2>
+            <Accordion
+              items={[
+                {
+                  mainText: "Is it accessible?",
+                  collapsibleText: "Yes. It adheres to the WAI-ARIA design pattern.",
+                },
+                {
+                  mainText: "Is it styled?",
+                  collapsibleText: "Yes. It uses the Oryx UI theming system.",
+                },
+                {
+                  mainText: "Can it animate?",
+                  collapsibleText: "Yes. Built-in slide animations are included.",
+                },
+              ]}
+            />
+          </div>
 
-            {/* Select */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-              <h2 className="text-white text-xl font-semibold mb-4">Select</h2>
-              <Select
-                label="Choose a fruit"
-                placeholder="Select fruit..."
-                options={[
-                  {
-                    label: "Fruits",
-                    group: [
-                      { value: "apple", label: "Apple" },
-                      { value: "banana", label: "Banana" },
-                      { value: "orange", label: "Orange" },
-                    ],
-                  },
-                  {
-                    label: "Vegetables",
-                    group: [
-                      { value: "carrot", label: "Carrot" },
-                      { value: "broccoli", label: "Broccoli" },
-                    ],
-                  },
-                ]}
-                onValueChange={(value) => console.log("Selected:", value)}
-              />
-            </div>
+          {/* Select */}
+          <div className="bg-color4 w-fit backdrop-blur-sm rounded-xl p-6">
+            <h2 className="text-color11 text-xl font-semibold mb-4">Select</h2>
+            <Select
+              label="Choose a fruit"
+              placeholder="Select fruit..."
+              options={[
+                {
+                  label: "Fruits",
+                  group: [
+                    { value: "apple", label: "Apple" },
+                    { value: "banana", label: "Banana" },
+                    { value: "orange", label: "Orange" },
+                  ],
+                },
+                {
+                  label: "Vegetables",
+                  group: [
+                    { value: "carrot", label: "Carrot" },
+                    { value: "broccoli", label: "Broccoli" },
+                  ],
+                },
+              ]}
+              onValueChange={(value) => console.log("Selected:", value)}
+            />
+          </div>
 
-            {/* AlertDialog */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-              <h2 className="text-white text-xl font-semibold mb-4">Alert Dialog</h2>
-              <AlertDialog
-                texts={{
-                  buttonTrigger: "Delete Account",
-                  content: "Are you sure?",
-                  description:
-                    "This action cannot be undone. Your account will be permanently deleted.",
-                  buttonCancel: "Cancel",
-                  action: "Yes, Delete",
-                }}
-                onAction={() => console.log("Deleted!")}
-                onCancel={() => console.log("Cancelled")}
-              />
-            </div>
+          {/* AlertDialog */}
+          <div className="bg-color4 w-fit backdrop-blur-sm rounded-xl p-6">
+            <h2 className="text-color11 text-xl font-semibold mb-4">Alert Dialog</h2>
+            <AlertDialog
+              texts={{
+                buttonTrigger: "Delete Account",
+                content: "Are you sure?",
+                description:
+                  "This action cannot be undone. Your account will be permanently deleted.",
+                buttonCancel: "Cancel",
+                action: "Yes, Delete",
+              }}
+              onAction={() => console.log("Deleted!")}
+              onCancel={() => console.log("Cancelled")}
+            />
+          </div>
 
-            {/* Popover */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-              <h2 className="text-white text-xl font-semibold mb-4">Popover</h2>
-              <Popover
-                buttonTriggerLabel="Open settings"
-                fields={[
-                  {
-                    fieldTitle: "Dimensions",
-                    field: [
-                      {
-                        label: "Width",
-                        htmlFor: "width",
-                        id: "width",
-                        defaultValue: "100%",
-                      },
-                      {
-                        label: "Height",
-                        htmlFor: "height",
-                        id: "height",
-                        defaultValue: "auto",
-                      },
-                    ],
-                  },
-                ]}
-              />
-            </div>
+          {/* Popover */}
+          <div className="bg-color4 w-fit backdrop-blur-sm rounded-xl p-6">
+            <h2 className="text-color11 text-xl font-semibold mb-4">Popover</h2>
+            <Popover
+              buttonTriggerLabel="Open settings"
+              fields={[
+                {
+                  fieldTitle: "Dimensions",
+                  field: [
+                    {
+                      label: "Width",
+                      htmlFor: "width",
+                      id: "width",
+                      defaultValue: "100%",
+                    },
+                    {
+                      label: "Height",
+                      htmlFor: "height",
+                      id: "height",
+                      defaultValue: "auto",
+                    },
+                  ],
+                },
+              ]}
+            />
+          </div>
 
-            {/* Navigation Menu - Full width */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 md:col-span-2">
-              <h2 className="text-white text-xl font-semibold mb-4">Navigation Menu</h2>
-              <NavigationMenu
-                items={[
-                  {
-                    title: "Products",
-                    item: [
-                      {
-                        type: "card",
-                        title: "Featured",
-                        href: "#",
-                        text: "Our main product offering",
-                      },
-                      {
-                        type: "text",
-                        title: "Components",
-                        href: "#",
-                        text: "UI building blocks",
-                      },
-                      {
-                        type: "text",
-                        title: "Themes",
-                        href: "#",
-                        text: "Color and styling options",
-                      },
-                    ],
-                  },
-                  {
-                    title: "Docs",
-                    item: [
-                      {
-                        type: "text",
-                        title: "Getting Started",
-                        href: "#",
-                        text: "Quick start guide",
-                      },
-                      {
-                        type: "text",
-                        title: "API Reference",
-                        href: "#",
-                        text: "Component documentation",
-                      },
-                    ],
-                  },
-                  { title: "GitHub", href: "https://github.com/andre-gra/oryx-ui" },
-                ]}
-              />
-            </div>
+          {/* Navigation Menu - Full width */}
+          <div className="bg-color4 w-fit backdrop-blur-sm rounded-xl p-6 md:col-span-2">
+            <h2 className="text-color11 text-xl font-semibold mb-4">Navigation Menu</h2>
+            <NavigationMenu
+              items={[
+                {
+                  title: "Products",
+                  item: [
+                    {
+                      type: "card",
+                      title: "Featured",
+                      href: "#",
+                      text: "Our main product offering",
+                    },
+                    {
+                      type: "text",
+                      title: "Components",
+                      href: "#",
+                      text: "UI building blocks",
+                    },
+                    {
+                      type: "text",
+                      title: "Themes",
+                      href: "#",
+                      text: "Color and styling options",
+                    },
+                  ],
+                },
+                {
+                  title: "Docs",
+                  item: [
+                    {
+                      type: "text",
+                      title: "Getting Started",
+                      href: "#",
+                      text: "Quick start guide",
+                    },
+                    {
+                      type: "text",
+                      title: "API Reference",
+                      href: "#",
+                      text: "Component documentation",
+                    },
+                  ],
+                },
+                { title: "GitHub", href: "https://github.com/andre-gra/oryx-ui" },
+              ]}
+            />
           </div>
         </div>
       </div>
-    </OryxProvider>
+    </div>
   );
 };
 
