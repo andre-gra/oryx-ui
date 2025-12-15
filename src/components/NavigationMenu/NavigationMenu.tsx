@@ -64,7 +64,7 @@ export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
 
   return (
     <RadixNavigationMenu.Root
-      className={classnames(theme, "relative flex w-full justify-center", className)}
+      className={classnames(theme, "relative flex w-full justify-center z-50", className)}
     >
       <RadixNavigationMenu.List
         className={classnames(
@@ -149,7 +149,7 @@ export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
       <div
         className={classnames(
           theme,
-          "z-10 perspective-[2000px] absolute top-full left-0 flex w-full justify-center",
+          "perspective-[2000px] absolute top-full left-0 flex w-fit justify-center",
         )}
       >
         <RadixNavigationMenu.Viewport

@@ -54,7 +54,7 @@ export const Accordion = ({ items, className }: AccordionProps) => {
       className={classnames(
         theme,
         `accordion-root${size}`,
-        "bg-color2 shadow-[0_2px_10px] shadow-blackA7",
+        "bg-color2 shadow-[0_2px_10px] shadow-blackA7 max-w-max max-h-max",
         className,
       )}
       ref={accordionRootRef}
