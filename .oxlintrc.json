@@ -37,5 +37,5 @@
     "builtin": true
   },
   "globals": {},
-  "ignorePatterns": ["dist", "node_modules", "*.config.js", "*.config.ts"]
+  "ignorePatterns": ["dist", "demo/dist", "node_modules", "*.config.js", "*.config.ts"]
 }
