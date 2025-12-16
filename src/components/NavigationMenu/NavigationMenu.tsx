@@ -70,7 +70,7 @@ export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
         className={classnames(
           theme,
           `navigation-menu-list${size}`,
-          "center shadow-blackA7 m-0 flex list-none bg-color3 shadow-[0_2px_10px]",
+          "center shadow-blackA7 m-0 flex flex-wrap list-none bg-color3 shadow-[0_2px_10px]",
         )}
       >
         {items.map((menuItem, index) => (
@@ -149,14 +149,14 @@ export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
       <div
         className={classnames(
           theme,
-          "perspective-[2000px] absolute top-full left-0 flex w-fit justify-center",
+          "perspective-[2000px] absolute top-full left-0 flex flex-col w-[inherit] md:flex-row md:w-fit justify-center",
         )}
       >
         <RadixNavigationMenu.Viewport
           className={classnames(
             theme,
             `navigation-menu-viewport${size}`,
-            "data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden bg-color3 transition-[width,_height] duration-300 sm:w-[var(--radix-navigation-menu-viewport-width)]",
+            "data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden bg-color3 transition-[width,_height] duration-300 sm:w-[calc(var(--radix-navigation-menu-viewport-width)-64px)]",
           )}
         />
       </div>

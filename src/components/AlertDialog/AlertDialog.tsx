@@ -94,7 +94,7 @@ export const AlertDialog = ({ texts, onAction, onCancel, className }: AlertDialo
           >
             {texts.description}
           </RadixAlertDialog.Description>
-          <div className={classnames(`alertdialog-actions${size}`, "flex justify-end")}>
+          <div className={classnames(`alertdialog-actions${size}`, "flex flex-wrap justify-end")}>
             <RadixAlertDialog.Cancel
               asChild
               className={classnames(

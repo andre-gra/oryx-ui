@@ -113,7 +113,7 @@ const ThemeSelector = ({ theme, size, changeTheme, changeSize }: ThemeSelectorPr
           className="min-w-[100px]"
         />
       </div>
-      <div className="flex-1 min-w-[300px]">
+      <div className="flex-1 w-full">
         <ThemeAgentPanel />
       </div>
     </div>
@@ -127,7 +127,7 @@ const App = () => {
     <div
       className={`${theme} min-h-screen bg-gradient-to-br from-color1 via-color2 to-color3 p-8 relative`}
     >
-      <div className="absolute top-4 right-4 flex gap-3 z-50">
+      <div className="relative md:absolute top-4 md:right-4 flex justify-center md:justify-end mb-8 -mt-4 md:mb-0 md:-mt-0 gap-3 z-50">
         <a
           href="https://oryx-ui-docs.onrender.com/"
           target="_blank"
@@ -166,7 +166,7 @@ const App = () => {
           <div
             className={classNames(
               "bg-color4 z-10 w-fit h-fit backdrop-blur-sm rounded-xl p-6",
-              size === "4" && "col-span-2",
+              size === "4" && "col-span-2 xl:col-span-1",
             )}
           >
             <h2 className="text-color11 text-xl font-semibold mb-4">Navigation Menu</h2>
@@ -221,7 +221,7 @@ const App = () => {
           <div
             className={classNames(
               "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
-              size === "4" && "col-span-2",
+              size === "4" && "col-span-2 lg:col-span-1",
             )}
           >
             <h2 className="text-color11 text-xl font-semibold mb-4">Accordion</h2>
@@ -244,7 +244,12 @@ const App = () => {
           </div>
 
           {/* Select */}
-          <div className="bg-color4 w-fit backdrop-blur-sm rounded-xl p-6">
+          <div
+            className={classNames(
+              "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
+              size === "4" && "col-span-2 lg:col-span-1",
+            )}
+          >
             <h2 className="text-color11 text-xl font-semibold mb-4">Select</h2>
             <Select
               label="Choose a fruit"
@@ -271,7 +276,12 @@ const App = () => {
           </div>
 
           {/* AlertDialog */}
-          <div className="bg-color4 w-fit backdrop-blur-sm rounded-xl p-6">
+          <div
+            className={classNames(
+              "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
+              size === "4" && "col-span-2 lg:col-span-1",
+            )}
+          >
             <h2 className="text-color11 text-xl font-semibold mb-4">Alert Dialog</h2>
             <AlertDialog
               texts={{
@@ -288,7 +298,12 @@ const App = () => {
           </div>
 
           {/* Popover */}
-          <div className="bg-color4 w-fit backdrop-blur-sm rounded-xl p-6">
+          <div
+            className={classNames(
+              "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
+              size === "4" && "col-span-2 lg:col-span-1",
+            )}
+          >
             <h2 className="text-color11 text-xl font-semibold mb-4">Popover</h2>
             <Popover
               buttonTriggerLabel="Open settings"

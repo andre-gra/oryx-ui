@@ -68,7 +68,7 @@ export const ThemeAgentPanel = () => {
         <label htmlFor="theme-prompt" className="text-color12 mb-2 block text-sm font-semibold">
           🎨 Generate Theme with AI:
         </label>
-        <form className="flex space-x-2" onSubmit={handleGenerateTheme}>
+        <form className="flex flex-wrap gap-2" onSubmit={handleGenerateTheme}>
           <input
             id="theme-prompt"
             type="text"

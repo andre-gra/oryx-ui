@@ -39,7 +39,7 @@
   }
 
   .alertdialog-content$(size) {
-    @apply max-w-[calc(165px*$size)] p-[calc(8px*$size)] max-h-[calc(28vh*$size)] w-[calc(30vw*$size)] rounded-[calc(1px*$size*2)];
+    @apply max-w-[calc(165px*$size)] p-[calc(8px*$size)] max-h-[calc(28vh*$size)] w-[calc(20vw*$size)] rounded-[calc(1px*$size*2)];
 
     .alertdialog-title$(size) {
       @apply text-[calc(6px*$size)];
