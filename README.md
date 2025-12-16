@@ -2,6 +2,8 @@
 
 A React component library with intelligent theming based on Radix UI primitives. Features an AI-powered theme agent that learns your preferences and automatically applies optimal theme combinations.
 
+## ⚠️ Please note that this package is currently in alpha and is not ready for production use !!
+
 ## Installation
 
 ```bash

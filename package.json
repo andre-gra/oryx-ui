@@ -1,5 +1,5 @@
 {
-  "name": "oryx-ui",
+  "name": "@andre-gra/oryx-ui",
   "version": "1.0.0",
   "private": false,
   "type": "module",
@@ -45,12 +45,12 @@
   "scripts": {
     "dev": "vite --config vite.demo.config.ts",
     "build:lib": "tsc -p tsconfig.build.json && vite build",
-    "build:demo": "vite build --outDir dist --config vite.demo.config.ts",
+    "build:demo": "vite build --outDir dist-demo --config vite.demo.config.ts",
     "build": "npm run build:lib && npm run build:demo",
     "lint": "oxlint",
     "preview": "vite preview",
     "preview:demo": "vite preview --config vite.demo.config.ts",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build:lib"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
