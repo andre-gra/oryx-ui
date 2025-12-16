@@ -127,7 +127,7 @@ const App = () => {
     <div
       className={`${theme} min-h-screen bg-gradient-to-br from-color1 via-color2 to-color3 p-8 relative`}
     >
-      <div className="relative md:absolute top-4 md:right-4 flex justify-center md:justify-end mb-8 -mt-4 md:mb-0 md:-mt-0 gap-3 z-50">
+      <div className="relative md:absolute top-4 md:right-4 flex justify-center md:justify-end mb-8 -mt-4 md:mb-0 md:-mt-0 gap-3 z-10">
         <a
           href="https://oryx-ui-docs.onrender.com/"
           target="_blank"

@@ -91,13 +91,15 @@ export const Select = ({
           <ChevronDownIcon />
         </RadixSelect.Icon>
       </RadixSelect.Trigger>
-      <RadixSelect.Portal>
+      <RadixSelect.Portal className="z-10">
         <RadixSelect.Content
           className={classnames(
             theme,
             `select-content${size}`,
             "overflow-hidden bg-color3 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]",
           )}
+          // position="popper"
+          // sideOffset={5}
         >
           <RadixSelect.ScrollUpButton
             className={classnames(
