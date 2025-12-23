@@ -40,6 +40,8 @@ export {
   type PopoverFieldGroup,
 } from "./components/Popover";
 
+export { Checkbox, type CheckboxProps } from "./components/Checkbox";
+
 // ============================================================================
 // THEMING
 // ============================================================================

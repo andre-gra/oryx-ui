@@ -11,9 +11,9 @@ export const ThemeAgentPanel = () => {
 
   const insights = getInsights();
 
-  const handleGenerateTheme = (e?: FormEvent) => {
+  const handleGenerateTheme = async (e?: FormEvent) => {
     e?.preventDefault();
-    const newTheme = generateThemeFromPrompt(prompt);
+    const newTheme = await generateThemeFromPrompt(prompt);
     if (newTheme) {
       changeTheme(newTheme);
       setAnimationState(true);

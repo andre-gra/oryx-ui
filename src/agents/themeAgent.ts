@@ -7,6 +7,9 @@ import type {
   AgentMode,
 } from "./agentTypes";
 import { InteractionTracker } from "./interactionTracker";
+import { GoogleGenAI } from "@google/genai";
+import { GEMINI_API_KEY } from "../config";
+import { availableThemes } from "./availableThemes";
 
 const PREFERENCES_KEY = "oryx-theme-preferences";
 const MIN_INTERACTIONS = 5; // Minimum interactions before making confident recommendations
@@ -18,10 +21,19 @@ export class ThemeAgent {
   private tracker: InteractionTracker;
   private preferences: Map<string, StylePreference> = new Map();
   private mode: AgentMode = "full-automatic";
+  private genAI?: GoogleGenAI;
 
   constructor() {
     this.tracker = new InteractionTracker();
     this.loadPreferences();
+    console.log('vite', GEMINI_API_KEY)
+    if (GEMINI_API_KEY) {
+      this.genAI = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+    } else {
+      console.warn(
+        "Gemini API key not found. Please set VITE_GEMINI_API_KEY in your .env file. AI features will be limited.",
+      );
+    }
   }
 
   /**
@@ -33,46 +45,41 @@ export class ThemeAgent {
   }
 
   /**
-   * Generates a theme based on a natural language prompt.
-   * For now, this is a simplified version using keyword matching.
+   * Generates a theme based on a natural language prompt using an LLM.
    */
-  generateThemeFromPrompt(prompt: string): Theme {
-    const lowerPrompt = prompt.toLowerCase();
-    let selectedTheme: Theme = "theme-amber"; // Default theme
-
-    if (lowerPrompt.includes("dark")) {
-      selectedTheme = "theme-amberDark"; // Example dark theme
-      if (lowerPrompt.includes("blue")) selectedTheme = "theme-blueDark";
-      else if (lowerPrompt.includes("red")) selectedTheme = "theme-redDark";
-      else if (lowerPrompt.includes("green")) selectedTheme = "theme-greenDark";
-    } else if (lowerPrompt.includes("light")) {
-      selectedTheme = "theme-amber"; // Example light theme
-      if (lowerPrompt.includes("blue")) selectedTheme = "theme-blue";
-      else if (lowerPrompt.includes("red")) selectedTheme = "theme-red";
-      else if (lowerPrompt.includes("green")) selectedTheme = "theme-green";
-    } else {
-      // More specific color keywords for light themes by default if no light/dark specified
-      if (lowerPrompt.includes("blue")) selectedTheme = "theme-blue";
-      else if (lowerPrompt.includes("red")) selectedTheme = "theme-red";
-      else if (lowerPrompt.includes("green")) selectedTheme = "theme-green";
-      else if (lowerPrompt.includes("orange")) selectedTheme = "theme-orange";
-      else if (lowerPrompt.includes("pink")) selectedTheme = "theme-pink";
-      else if (lowerPrompt.includes("purple")) selectedTheme = "theme-purple";
-      else if (lowerPrompt.includes("grass")) selectedTheme = "theme-grass";
-      else if (lowerPrompt.includes("sky")) selectedTheme = "theme-sky";
-      else if (lowerPrompt.includes("mint")) selectedTheme = "theme-mint";
-      else if (lowerPrompt.includes("teal")) selectedTheme = "theme-teal";
-      else if (lowerPrompt.includes("violet")) selectedTheme = "theme-violet";
-      else if (lowerPrompt.includes("crimson")) selectedTheme = "theme-crimson";
-      else if (lowerPrompt.includes("brown")) selectedTheme = "theme-brown";
-      else if (lowerPrompt.includes("indigo")) selectedTheme = "theme-indigo";
-      else if (lowerPrompt.includes("yellow")) selectedTheme = "theme-yellow";
-      else if (lowerPrompt.includes("lime")) selectedTheme = "theme-lime";
-      else if (lowerPrompt.includes("plum")) selectedTheme = "theme-plum";
-      else if (lowerPrompt.includes("cyan")) selectedTheme = "theme-cyan";
+  async generateThemeFromPrompt(prompt: string): Promise<Theme> {
+    if (!this.genAI) {
+      console.warn("Gemini API not initialized. Falling back to default theme.");
+      return "theme-amber";
     }
 
-    return selectedTheme;
+    const llmPrompt = `You are a theme selection expert for a UI library.
+Based on the user's prompt, select the most appropriate theme from the following list.
+Return ONLY the name of the theme from the list, and nothing else.
+
+Available themes: ${availableThemes.join(", ")}
+
+User prompt: "${prompt}"`;
+
+    try {
+      const result = await this.genAI.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: llmPrompt,
+      });
+
+      const text = (result.text || "").trim();
+
+      // Validate the response is a valid theme
+      if (availableThemes.includes(text as Theme)) {
+        return text as Theme;
+      } else {
+        console.warn(`LLM returned an invalid theme: ${text}. Falling back to default.`);
+        return "theme-amber";
+      }
+    } catch (error) {
+      console.error("Error generating theme from prompt:", error);
+      return "theme-amber"; // Fallback on error
+    }
   }
 
   /**

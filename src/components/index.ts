@@ -8,3 +8,4 @@ export {
   type NavigationMenuItem,
 } from "./NavigationMenu";
 export { Popover, type PopoverProps, type PopoverField, type PopoverFieldGroup } from "./Popover";
+export { Checkbox, type CheckboxProps } from "./Checkbox";

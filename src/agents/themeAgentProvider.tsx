@@ -13,7 +13,7 @@ export interface ThemeAgentContextValue {
   getInsights: () => string[];
   recordInteraction: (theme: Theme, size: Size) => void;
   applyRecommendation: ((rec: AgentRecommendation) => void) | null;
-  generateThemeFromPrompt: (prompt: string) => Theme | null;
+  generateThemeFromPrompt: (prompt: string) => Promise<Theme | null>;
 }
 
 export const ThemeAgentContext = createContext<ThemeAgentContextValue | null>(null);
@@ -115,9 +115,9 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
     return agentRef.current.getInsights();
   }, []);
 
-  const generateThemeFromPrompt = useCallback((prompt: string): Theme | null => {
+  const generateThemeFromPrompt = useCallback(async (prompt: string): Promise<Theme | null> => {
     if (!agentRef.current) return null;
-    return agentRef.current.generateThemeFromPrompt(prompt);
+    return await agentRef.current.generateThemeFromPrompt(prompt);
   }, []);
 
   const value: ThemeAgentContextValue = {
