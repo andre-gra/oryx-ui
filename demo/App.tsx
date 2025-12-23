@@ -6,6 +6,7 @@ import {
   AlertDialog,
   NavigationMenu,
   Popover,
+  Checkbox,
   useTheme,
   useSize,
   ThemeAgentPanel,
@@ -295,6 +296,42 @@ const App = () => {
               onAction={() => console.log("Deleted!")}
               onCancel={() => console.log("Cancelled")}
             />
+          </div>
+
+          {/* Checkbox */}
+          <div
+            className={classNames(
+              "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
+              size === "4" && "col-span-2 lg:col-span-1",
+            )}
+          >
+            <h2 className="text-color11 text-xl font-semibold mb-4">Checkbox</h2>
+            <div className="space-y-3">
+              <Checkbox
+                label="Accept terms and conditions"
+                onCheckedChange={(checked) => console.log("Terms:", checked)}
+              />
+              <Checkbox
+                label="Subscribe to newsletter"
+                checked
+                onCheckedChange={(checked) => console.log("Newsletter:", checked)}
+              />
+              <Checkbox
+                label="Enable notifications"
+                indeterminate
+                onCheckedChange={(checked) => console.log("Notifications:", checked)}
+              />
+              <Checkbox
+                label="Premium feature"
+                disabled
+                onCheckedChange={(checked) => console.log("Premium:", checked)}
+              />
+              <Checkbox
+                label="Required field"
+                required
+                onCheckedChange={(checked) => console.log("Required:", checked)}
+              />
+            </div>
           </div>
 
           {/* Popover */}
