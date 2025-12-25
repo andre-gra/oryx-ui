@@ -1,89 +1,89 @@
-import { createContext, useEffect, useRef, useState, useCallback } from "react";
-import type { AgentMode, AgentRecommendation, AgentState } from "./agentTypes";
-import { ThemeAgent } from "./themeAgent";
-import type { Theme } from "../themes/themeProvider";
-import type { Size } from "../themes/sizeProvider";
+import { createContext, useEffect, useRef, useState, useCallback } from 'react'
+import type { AgentMode, AgentRecommendation, AgentState } from './agentTypes'
+import { ThemeAgent } from './themeAgent'
+import type { Theme } from '../themes/themeProvider'
+import type { Size } from '../themes/sizeProvider'
 
 export interface ThemeAgentContextValue {
-  state: AgentState;
-  recommendation: AgentRecommendation | null;
-  enableAgent: () => void;
-  disableAgent: () => void;
-  setMode: (mode: AgentMode) => void;
-  getInsights: () => string[];
-  recordInteraction: (theme: Theme, size: Size) => void;
-  applyRecommendation: ((rec: AgentRecommendation) => void) | null;
-  generateThemeFromPrompt: (prompt: string) => Promise<Theme | null>;
+  state: AgentState
+  recommendation: AgentRecommendation | null
+  enableAgent: () => void
+  disableAgent: () => void
+  setMode: (mode: AgentMode) => void
+  getInsights: () => string[]
+  recordInteraction: (theme: Theme, size: Size) => void
+  applyRecommendation: ((rec: AgentRecommendation) => void) | null
+  generateThemeFromPrompt: (prompt: string) => Promise<Theme | null>
 }
 
-export const ThemeAgentContext = createContext<ThemeAgentContextValue | null>(null);
+export const ThemeAgentContext = createContext<ThemeAgentContextValue | null>(null)
 
 type ProviderProps = {
-  children: React.ReactNode;
-  onRecommendation?: (recommendation: AgentRecommendation) => void;
-};
+  children: React.ReactNode
+  onRecommendation?: (recommendation: AgentRecommendation) => void
+}
 
 const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendation }) => {
-  const agentRef = useRef<ThemeAgent | null>(null);
+  const agentRef = useRef<ThemeAgent | null>(null)
   const [state, setState] = useState<AgentState>({
-    mode: "full-automatic",
+    mode: 'full-automatic',
     isActive: true,
     isLearning: true,
     interactionCount: 0,
     currentSession: {
-      theme: "theme-amber",
-      size: "3",
+      theme: 'theme-amber',
+      size: '3',
       startTime: Date.now(),
     },
-  });
-  const [recommendation, setRecommendation] = useState<AgentRecommendation | null>(null);
+  })
+  const [recommendation, setRecommendation] = useState<AgentRecommendation | null>(null)
 
   // Initialize agent
   useEffect(() => {
     if (!agentRef.current) {
-      agentRef.current = new ThemeAgent();
+      agentRef.current = new ThemeAgent()
       setState((prev) => ({
         ...prev,
         interactionCount: agentRef.current!.getInteractionCount(),
-      }));
+      }))
     }
-  }, []);
+  }, [])
 
   // Check for recommendations periodically
   useEffect(() => {
-    if (!state.isActive || !agentRef.current) return;
+    if (!state.isActive || !agentRef.current) return
 
     const checkRecommendation = () => {
-      const rec = agentRef.current!.getRecommendation();
-      setRecommendation(rec);
+      const rec = agentRef.current!.getRecommendation()
+      setRecommendation(rec)
 
       // In full-automatic mode, apply recommendation immediately
-      if (rec && state.mode === "full-automatic" && onRecommendation) {
+      if (rec && state.mode === 'full-automatic' && onRecommendation) {
         // Only apply if confidence is high enough
         if (rec.confidence >= 0.3) {
-          onRecommendation(rec);
+          onRecommendation(rec)
         }
       }
 
       setState((prev) => ({
         ...prev,
         lastRecommendation: rec || undefined,
-      }));
-    };
+      }))
+    }
 
     // Check immediately
-    checkRecommendation();
+    checkRecommendation()
 
     // Then check every 5 minutes
-    const interval = setInterval(checkRecommendation, 5 * 60 * 1000);
+    const interval = setInterval(checkRecommendation, 5 * 60 * 1000)
 
-    return () => clearInterval(interval);
-  }, [state.isActive, state.mode, onRecommendation]);
+    return () => clearInterval(interval)
+  }, [state.isActive, state.mode, onRecommendation])
 
   const recordInteraction = useCallback((theme: Theme, size: Size) => {
-    if (!agentRef.current) return;
+    if (!agentRef.current) return
 
-    agentRef.current.recordChange(theme, size);
+    agentRef.current.recordChange(theme, size)
     setState((prev) => ({
       ...prev,
       interactionCount: agentRef.current!.getInteractionCount(),
@@ -92,33 +92,33 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
         size,
         startTime: Date.now(),
       },
-    }));
-  }, []);
+    }))
+  }, [])
 
   const enableAgent = useCallback(() => {
-    setState((prev) => ({ ...prev, isActive: true }));
-  }, []);
+    setState((prev) => ({ ...prev, isActive: true }))
+  }, [])
 
   const disableAgent = useCallback(() => {
-    setState((prev) => ({ ...prev, isActive: false }));
-  }, []);
+    setState((prev) => ({ ...prev, isActive: false }))
+  }, [])
 
   const setMode = useCallback((mode: AgentMode) => {
     if (agentRef.current) {
-      agentRef.current.setMode(mode);
+      agentRef.current.setMode(mode)
     }
-    setState((prev) => ({ ...prev, mode }));
-  }, []);
+    setState((prev) => ({ ...prev, mode }))
+  }, [])
 
   const getInsights = useCallback((): string[] => {
-    if (!agentRef.current) return [];
-    return agentRef.current.getInsights();
-  }, []);
+    if (!agentRef.current) return []
+    return agentRef.current.getInsights()
+  }, [])
 
   const generateThemeFromPrompt = useCallback(async (prompt: string): Promise<Theme | null> => {
-    if (!agentRef.current) return null;
-    return await agentRef.current.generateThemeFromPrompt(prompt);
-  }, []);
+    if (!agentRef.current) return null
+    return await agentRef.current.generateThemeFromPrompt(prompt)
+  }, [])
 
   const value: ThemeAgentContextValue = {
     state,
@@ -130,9 +130,9 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
     recordInteraction,
     applyRecommendation: onRecommendation || null,
     generateThemeFromPrompt,
-  };
+  }
 
-  return <ThemeAgentContext.Provider value={value}>{children}</ThemeAgentContext.Provider>;
-};
+  return <ThemeAgentContext.Provider value={value}>{children}</ThemeAgentContext.Provider>
+}
 
-export default ThemeAgentProvider;
+export default ThemeAgentProvider

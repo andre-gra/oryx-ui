@@ -1,17 +1,17 @@
-import { useRef } from "react";
-import * as RadixAccordion from "@radix-ui/react-accordion";
-import classnames from "classnames";
-import { useTheme } from "../../theme";
-import { useSize } from "../../theme";
+import { useRef } from 'react'
+import * as RadixAccordion from '@radix-ui/react-accordion'
+import classnames from 'classnames'
+import { useTheme } from '../../theme'
+import { useSize } from '../../theme'
 
 /**
  * Item structure for Accordion
  */
 export interface AccordionItem {
   /** Header text displayed on the trigger */
-  mainText: string;
+  mainText: string
   /** Content revealed when expanded */
-  collapsibleText: string;
+  collapsibleText: string
 }
 
 /**
@@ -19,9 +19,9 @@ export interface AccordionItem {
  */
 export interface AccordionProps {
   /** Array of accordion items */
-  items: AccordionItem[];
+  items: AccordionItem[]
   /** Additional className for the root element */
-  className?: string;
+  className?: string
 }
 
 /**
@@ -36,17 +36,17 @@ export interface AccordionProps {
  * ```
  */
 export const Accordion = ({ items, className }: AccordionProps) => {
-  const { theme } = useTheme();
-  const { size } = useSize();
+  const { theme } = useTheme()
+  const { size } = useSize()
 
-  const accordionRootRef = useRef<HTMLDivElement>(null);
-  const accordionItemRef = useRef<Map<string, HTMLDivElement> | null>(null);
+  const accordionRootRef = useRef<HTMLDivElement>(null)
+  const accordionItemRef = useRef<Map<string, HTMLDivElement> | null>(null)
 
   function getMap() {
     if (!accordionItemRef.current) {
-      accordionItemRef.current = new Map();
+      accordionItemRef.current = new Map()
     }
-    return accordionItemRef.current;
+    return accordionItemRef.current
   }
 
   return (
@@ -54,36 +54,36 @@ export const Accordion = ({ items, className }: AccordionProps) => {
       className={classnames(
         theme,
         `accordion-root${size}`,
-        "bg-color2 shadow-[0_2px_10px] shadow-blackA7 max-w-fit max-h-fit",
+        'bg-color2 shadow-[0_2px_10px] shadow-blackA7 max-w-fit max-h-fit',
         className,
       )}
       ref={accordionRootRef}
-      type={items.length > 1 ? "multiple" : "single"}
+      type={items.length > 1 ? 'multiple' : 'single'}
     >
       {items.map((item) => (
         <RadixAccordion.Item
           className={classnames(
             theme,
-            "focus-within:shadow-color9 mt-px overflow-hidden first:mt-0 focus-within:relative focus-within:shadow-[0_0_0_2px]",
+            'focus-within:shadow-color9 mt-px overflow-hidden first:mt-0 focus-within:relative focus-within:shadow-[0_0_0_2px]',
           )}
           key={item.mainText}
           id={item.mainText}
           ref={(node) => {
-            const map = getMap();
+            const map = getMap()
             if (node) {
-              map.set(item.mainText, node);
+              map.set(item.mainText, node)
             } else {
-              map.delete(item.mainText);
+              map.delete(item.mainText)
             }
           }}
           value={item.mainText}
         >
-          <RadixAccordion.Header className={classnames("flex")}>
+          <RadixAccordion.Header className={classnames('flex')}>
             <RadixAccordion.Trigger
               className={classnames(
                 theme,
                 `accordion-trigger${size}`,
-                "text-color11 shadow-color9 hover:bg-color4 group flex flex-1 cursor-default items-center justify-between bg-color3 px-5 leading-none shadow-[0_1px_0] outline-none",
+                'text-color11 shadow-color9 hover:bg-color4 group flex flex-1 cursor-default items-center justify-between bg-color3 px-5 leading-none shadow-[0_1px_0] outline-none',
               )}
             >
               {item.mainText}
@@ -93,17 +93,17 @@ export const Accordion = ({ items, className }: AccordionProps) => {
             className={classnames(
               theme,
               `accordion-content${size}`,
-              "text-color12 bg-color2 data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden",
+              'text-color12 bg-color2 data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden',
             )}
           >
-            <div className={classnames(`accordion-collapsibleText${size}`, "px-5 animate-fade-up")}>
+            <div className={classnames(`accordion-collapsibleText${size}`, 'px-5 animate-fade-up')}>
               {item.collapsibleText}
             </div>
           </RadixAccordion.Content>
         </RadixAccordion.Item>
       ))}
     </RadixAccordion.Root>
-  );
-};
+  )
+}
 
-export default Accordion;
+export default Accordion

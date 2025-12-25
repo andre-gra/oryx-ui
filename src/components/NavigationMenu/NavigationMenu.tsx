@@ -1,22 +1,22 @@
-import React, { ForwardedRef } from "react";
-import * as RadixNavigationMenu from "@radix-ui/react-navigation-menu";
-import classnames from "classnames";
-import { CaretDownIcon } from "@radix-ui/react-icons";
-import { useTheme } from "../../theme";
-import { useSize } from "../../theme";
+import React, { ForwardedRef } from 'react'
+import * as RadixNavigationMenu from '@radix-ui/react-navigation-menu'
+import classnames from 'classnames'
+import { CaretDownIcon } from '@radix-ui/react-icons'
+import { useTheme } from '../../theme'
+import { useSize } from '../../theme'
 
 /**
  * Navigation menu item content
  */
 export interface NavigationMenuItem {
   /** Item display type: "card" for featured, "text" for simple */
-  type: "card" | "text";
+  type: 'card' | 'text'
   /** Item title */
-  title: string;
+  title: string
   /** Link URL */
-  href: string;
+  href: string
   /** Description text */
-  text: string;
+  text: string
 }
 
 /**
@@ -24,11 +24,11 @@ export interface NavigationMenuItem {
  */
 export interface NavigationMenuSection {
   /** Items in this section (omit for simple link) */
-  item?: NavigationMenuItem[];
+  item?: NavigationMenuItem[]
   /** Section title */
-  title: string;
+  title: string
   /** Direct link href (for sections without dropdown) */
-  href?: string;
+  href?: string
 }
 
 /**
@@ -36,9 +36,9 @@ export interface NavigationMenuSection {
  */
 export interface NavigationMenuProps {
   /** Menu sections */
-  items: NavigationMenuSection[];
+  items: NavigationMenuSection[]
   /** Additional className */
-  className?: string;
+  className?: string
 }
 
 /**
@@ -59,18 +59,18 @@ export interface NavigationMenuProps {
  * ```
  */
 export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
-  const { theme } = useTheme();
-  const { size } = useSize();
+  const { theme } = useTheme()
+  const { size } = useSize()
 
   return (
     <RadixNavigationMenu.Root
-      className={classnames(theme, "relative flex w-full justify-center z-50", className)}
+      className={classnames(theme, 'relative flex w-full justify-center z-50', className)}
     >
       <RadixNavigationMenu.List
         className={classnames(
           theme,
           `navigation-menu-list${size}`,
-          "center shadow-blackA7 m-0 flex flex-wrap list-none bg-color3 shadow-[0_2px_10px]",
+          'center shadow-blackA7 m-0 flex flex-wrap list-none bg-color3 shadow-[0_2px_10px]',
         )}
       >
         {items.map((menuItem, index) => (
@@ -81,14 +81,14 @@ export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
                   className={classnames(
                     theme,
                     `navigation-menu-trigger${size}`,
-                    "text-color11 hover:bg-color4 focus:shadow-color7 group flex select-none items-center justify-between font-medium leading-none outline-none focus:shadow-[0_0_0_2px]",
+                    'text-color11 hover:bg-color4 focus:shadow-color7 group flex select-none items-center justify-between font-medium leading-none outline-none focus:shadow-[0_0_0_2px]',
                   )}
                 >
                   {menuItem.title}
                   <CaretDownIcon
                     className={classnames(
                       theme,
-                      "text-color10 relative transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180",
+                      'text-color10 relative transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180',
                     )}
                     aria-hidden
                   />
@@ -97,13 +97,13 @@ export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
                   className={classnames(
                     theme,
                     `navigation-menu-content${size}`,
-                    "data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight absolute top-0 left-0 w-full sm:w-auto",
+                    'data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight absolute top-0 left-0 w-full sm:w-auto',
                   )}
                 >
                   <ul
                     className={classnames(
                       theme,
-                      "one m-0 grid list-none sm:grid-cols-[0.75fr_1fr]",
+                      'one m-0 grid list-none sm:grid-cols-[0.75fr_1fr]',
                     )}
                   >
                     {menuItem.item.map((item, idx) => (
@@ -125,7 +125,7 @@ export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
               <RadixNavigationMenu.Link
                 className={classnames(
                   `navigation-menu-simple-link${size}`,
-                  "text-color11 hover:bg-color4 focus:shadow-color7 block select-none font-medium leading-none no-underline outline-none focus:shadow-[0_0_0_2px]",
+                  'text-color11 hover:bg-color4 focus:shadow-color7 block select-none font-medium leading-none no-underline outline-none focus:shadow-[0_0_0_2px]',
                 )}
                 href={menuItem.href}
               >
@@ -139,39 +139,39 @@ export const NavigationMenu = ({ items, className }: NavigationMenuProps) => {
           className={classnames(
             theme,
             `navigation-menu-indicator${size}`,
-            "data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-10 flex items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]",
+            'data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-10 flex items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]',
           )}
         >
-          <div className={classnames(theme, "relative bg-color3")} />
+          <div className={classnames(theme, 'relative bg-color3')} />
         </RadixNavigationMenu.Indicator>
       </RadixNavigationMenu.List>
 
       <div
         className={classnames(
           theme,
-          "perspective-[2000px] absolute top-full left-0 flex flex-col w-[inherit] md:flex-row md:w-fit justify-center",
+          'perspective-[2000px] absolute top-full left-0 flex flex-col w-[inherit] md:flex-row md:w-fit justify-center',
         )}
       >
         <RadixNavigationMenu.Viewport
           className={classnames(
             theme,
             `navigation-menu-viewport${size}`,
-            "data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden bg-color3 transition-[width,_height] duration-300 sm:w-[calc(var(--radix-navigation-menu-viewport-width)-64px)]",
+            'data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden bg-color3 transition-[width,_height] duration-300 sm:w-[calc(var(--radix-navigation-menu-viewport-width)-64px)]',
           )}
         />
       </div>
     </RadixNavigationMenu.Root>
-  );
-};
+  )
+}
 
 interface ListItemProps {
-  children?: React.ReactNode;
-  className?: string;
-  title: string;
-  href?: string;
-  theme: string;
-  type: "card" | "text";
-  size: string;
+  children?: React.ReactNode
+  className?: string
+  title: string
+  href?: string
+  theme: string
+  type: 'card' | 'text'
+  size: string
 }
 
 const ListItem = React.forwardRef(
@@ -179,21 +179,21 @@ const ListItem = React.forwardRef(
     { className, children, theme, title, type, size, ...props }: ListItemProps,
     forwardedRef: ForwardedRef<HTMLAnchorElement>,
   ) => (
-    <li className={classnames(theme, type === "card" && "row-span-3 grid")}>
+    <li className={classnames(theme, type === 'card' && 'row-span-3 grid')}>
       <RadixNavigationMenu.Link asChild>
         <a
           className={classnames(
             theme,
             `navigation-menu-link${size}`,
-            type === "card"
-              ? "card-nav focus:shadow-color7 bg-color7 flex h-full w-full select-none flex-col justify-end no-underline outline-none focus:shadow-[0_0_0_2px]"
-              : "text-nav focus:shadow-[0_0_0_2px] focus:shadow-color7 hover:bg-color4 block select-none leading-none no-underline outline-none transition-colors",
+            type === 'card'
+              ? 'card-nav focus:shadow-color7 bg-color7 flex h-full w-full select-none flex-col justify-end no-underline outline-none focus:shadow-[0_0_0_2px]'
+              : 'text-nav focus:shadow-[0_0_0_2px] focus:shadow-color7 hover:bg-color4 block select-none leading-none no-underline outline-none transition-colors',
             className,
           )}
           {...props}
           ref={forwardedRef}
         >
-          {type === "card" && (
+          {type === 'card' && (
             <svg
               aria-hidden
               width="38"
@@ -213,8 +213,8 @@ const ListItem = React.forwardRef(
       </RadixNavigationMenu.Link>
     </li>
   ),
-);
+)
 
-ListItem.displayName = "ListItem";
+ListItem.displayName = 'ListItem'
 
-export default NavigationMenu;
+export default NavigationMenu

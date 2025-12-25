@@ -1,32 +1,32 @@
-import React from "react";
-import * as RadixCheckbox from "@radix-ui/react-checkbox";
-import classnames from "classnames";
-import { useTheme } from "../../theme";
-import { useSize } from "../../theme";
-import { CheckIcon } from "@radix-ui/react-icons";
+import React from 'react'
+import * as RadixCheckbox from '@radix-ui/react-checkbox'
+import classnames from 'classnames'
+import { useTheme } from '../../theme'
+import { useSize } from '../../theme'
+import { CheckIcon } from '@radix-ui/react-icons'
 
 /**
  * Props for the Checkbox component
  */
 export interface CheckboxProps {
   /** Whether the checkbox is checked */
-  checked?: boolean;
+  checked?: boolean
   /** Whether the checkbox is indeterminate (partially checked) */
-  indeterminate?: boolean;
+  indeterminate?: boolean
   /** Whether the checkbox is disabled */
-  disabled?: boolean;
+  disabled?: boolean
   /** Whether the checkbox is required */
-  required?: boolean;
+  required?: boolean
   /** The label text for the checkbox */
-  label?: string;
+  label?: string
   /** The name attribute for form submission */
-  name?: string;
+  name?: string
   /** The value attribute for form submission */
-  value?: string;
+  value?: string
   /** Callback when checked state changes */
-  onCheckedChange?: (checked: boolean | "indeterminate") => void;
+  onCheckedChange?: (checked: boolean | 'indeterminate') => void
   /** Additional className for the root element */
-  className?: string;
+  className?: string
 }
 
 /**
@@ -52,31 +52,31 @@ export const Checkbox = ({
   onCheckedChange,
   className,
 }: CheckboxProps) => {
-  const { theme } = useTheme();
-  const { size } = useSize();
-  const [internalChecked, setInternalChecked] = React.useState(checked || false);
-  
-  const checkboxId = React.useId();
-  const finalChecked = checked !== undefined ? checked : internalChecked;
-  
-  const handleCheckedChange = (newChecked: boolean | "indeterminate") => {
+  const { theme } = useTheme()
+  const { size } = useSize()
+  const [internalChecked, setInternalChecked] = React.useState(checked || false)
+
+  const checkboxId = React.useId()
+  const finalChecked = checked !== undefined ? checked : internalChecked
+
+  const handleCheckedChange = (newChecked: boolean | 'indeterminate') => {
     if (checked === undefined) {
-      setInternalChecked(newChecked === "indeterminate" ? false : newChecked);
+      setInternalChecked(newChecked === 'indeterminate' ? false : newChecked)
     }
-    onCheckedChange?.(newChecked);
-  };
+    onCheckedChange?.(newChecked)
+  }
 
   return (
-    <div className={classnames("flex items-center", className)}>
+    <div className={classnames('flex items-center', className)}>
       <RadixCheckbox.Root
         className={classnames(
           theme,
           `checkbox-root${size}`,
-          "bg-color1 border-2 border-color7 data-[state=checked]:bg-color9 data-[state=checked]:border-color9 data-[state=indeterminate]:bg-color9 data-[state=indeterminate]:border-color9 rounded flex h-5 w-5 appearance-none items-center justify-center outline-none transition-colors",
-          "hover:border-color8 focus:shadow-[0_0_0_2px] focus:shadow-color8 disabled:cursor-not-allowed disabled:opacity-50",
+          'bg-color1 border-2 border-color7 data-[state=checked]:bg-color9 data-[state=checked]:border-color9 data-[state=indeterminate]:bg-color9 data-[state=indeterminate]:border-color9 rounded flex h-5 w-5 appearance-none items-center justify-center outline-none transition-colors',
+          'hover:border-color8 focus:shadow-[0_0_0_2px] focus:shadow-color8 disabled:cursor-not-allowed disabled:opacity-50',
         )}
         id={label ? checkboxId : undefined}
-        checked={indeterminate ? "indeterminate" : finalChecked}
+        checked={indeterminate ? 'indeterminate' : finalChecked}
         onCheckedChange={handleCheckedChange}
         disabled={disabled}
         required={required}
@@ -85,7 +85,7 @@ export const Checkbox = ({
       >
         <RadixCheckbox.Indicator
           className={classnames(
-            "text-color1 transition-transform data-[state=checked]:animate-scale-in data-[state=indeterminate]:animate-scale-in",
+            'text-color1 transition-transform data-[state=checked]:animate-scale-in data-[state=indeterminate]:animate-scale-in',
           )}
         >
           {indeterminate ? (
@@ -101,7 +101,7 @@ export const Checkbox = ({
           className={classnames(
             theme,
             `checkbox-label${size}`,
-            "text-color11 ml-2 select-none leading-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
+            'text-color11 ml-2 select-none leading-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
           )}
         >
           {label}
@@ -109,7 +109,7 @@ export const Checkbox = ({
         </label>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Checkbox;
+export default Checkbox

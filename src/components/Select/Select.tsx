@@ -1,20 +1,20 @@
-import React, { ForwardedRef } from "react";
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import * as RadixSelect from "@radix-ui/react-select";
-import classnames from "classnames";
-import { useTheme } from "../../theme";
-import { useSize } from "../../theme";
+import React, { ForwardedRef } from 'react'
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
+import * as RadixSelect from '@radix-ui/react-select'
+import classnames from 'classnames'
+import { useTheme } from '../../theme'
+import { useSize } from '../../theme'
 
 /**
  * Individual option item
  */
 export interface SelectOption {
   /** Display label */
-  label: string;
+  label: string
   /** Value to be submitted */
-  value: string;
+  value: string
   /** Whether option is disabled */
-  disabled?: boolean;
+  disabled?: boolean
 }
 
 /**
@@ -22,9 +22,9 @@ export interface SelectOption {
  */
 export interface SelectOptionGroup {
   /** Options in this group */
-  group: SelectOption[];
+  group: SelectOption[]
   /** Group label */
-  label: string;
+  label: string
 }
 
 /**
@@ -32,19 +32,19 @@ export interface SelectOptionGroup {
  */
 export interface SelectProps {
   /** Accessible label for the select */
-  label: string;
+  label: string
   /** Placeholder text when no value selected */
-  placeholder?: string;
+  placeholder?: string
   /** Grouped options */
-  options: SelectOptionGroup[];
+  options: SelectOptionGroup[]
   /** Controlled value */
-  value?: string;
+  value?: string
   /** Callback when value changes */
-  onValueChange?: (value: string) => void;
+  onValueChange?: (value: string) => void
   /** Additional className */
-  className?: string;
+  className?: string
   /** Optional ID for accessibility */
-  id?: string;
+  id?: string
 }
 
 /**
@@ -71,8 +71,8 @@ export const Select = ({
   className,
   id,
 }: SelectProps) => {
-  const { theme } = useTheme();
-  const { size } = useSize();
+  const { theme } = useTheme()
+  const { size } = useSize()
 
   return (
     <RadixSelect.Root value={value} onValueChange={onValueChange}>
@@ -82,12 +82,12 @@ export const Select = ({
         className={classnames(
           theme,
           `select-trigger${size}`,
-          "inline-flex items-center justify-center leading-none bg-color3 text-color11 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color10 data-[placeholder]:text-color9 outline-none",
+          'inline-flex items-center justify-center leading-none bg-color3 text-color11 shadow-[0_2px_10px] shadow-blackA7 hover:bg-color4 focus:shadow-[0_0_0_2px] focus:shadow-color10 data-[placeholder]:text-color9 outline-none',
           className,
         )}
       >
         <RadixSelect.Value placeholder={placeholder} />
-        <RadixSelect.Icon className={classnames(theme, "select-icon text-color11")}>
+        <RadixSelect.Icon className={classnames(theme, 'select-icon text-color11')}>
           <ChevronDownIcon />
         </RadixSelect.Icon>
       </RadixSelect.Trigger>
@@ -96,7 +96,7 @@ export const Select = ({
           className={classnames(
             theme,
             `select-content${size}`,
-            "overflow-hidden bg-color3 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]",
+            'overflow-hidden bg-color3 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]',
           )}
           // position="popper"
           // sideOffset={5}
@@ -105,7 +105,7 @@ export const Select = ({
             className={classnames(
               theme,
               `select-scroll-up-button${size}`,
-              "flex items-center justify-center bg-color3 text-color11 cursor-default",
+              'flex items-center justify-center bg-color3 text-color11 cursor-default',
             )}
           >
             <ChevronUpIcon />
@@ -115,7 +115,7 @@ export const Select = ({
               <div key={option.label.toLowerCase()}>
                 <RadixSelect.Group>
                   <RadixSelect.Label
-                    className={classnames(theme, `select-label${size}`, "text-gray11")}
+                    className={classnames(theme, `select-label${size}`, 'text-gray11')}
                   >
                     {option.label}
                   </RadixSelect.Label>
@@ -133,7 +133,7 @@ export const Select = ({
                 </RadixSelect.Group>
                 {options.length > 1 && index < options.length - 1 && (
                   <RadixSelect.Separator
-                    className={classnames(theme, `select-separator${size}`, "bg-color10")}
+                    className={classnames(theme, `select-separator${size}`, 'bg-color10')}
                   />
                 )}
               </div>
@@ -143,7 +143,7 @@ export const Select = ({
             className={classnames(
               theme,
               `select-scroll-down-button${size}`,
-              "flex items-center justify-center bg-color3 text-color11 cursor-default",
+              'flex items-center justify-center bg-color3 text-color11 cursor-default',
             )}
           >
             <ChevronDownIcon />
@@ -151,16 +151,16 @@ export const Select = ({
         </RadixSelect.Content>
       </RadixSelect.Portal>
     </RadixSelect.Root>
-  );
-};
+  )
+}
 
 interface SelectItemProps {
-  children: React.ReactNode;
-  className?: string;
-  value: string;
-  disabled?: boolean;
-  theme: string;
-  size: string;
+  children: React.ReactNode
+  className?: string
+  value: string
+  disabled?: boolean
+  theme: string
+  size: string
 }
 
 const SelectItem = React.forwardRef(
@@ -173,7 +173,7 @@ const SelectItem = React.forwardRef(
         className={classnames(
           theme,
           `select-item${size}`,
-          "leading-none text-color11 flex items-center relative select-none data-[disabled]:text-gray8 data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-color9 data-[highlighted]:text-color1",
+          'leading-none text-color11 flex items-center relative select-none data-[disabled]:text-gray8 data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-color9 data-[highlighted]:text-color1',
         )}
         {...props}
         ref={forwardedRef}
@@ -183,16 +183,16 @@ const SelectItem = React.forwardRef(
           className={classnames(
             theme,
             `select-item-indicator${size}`,
-            "absolute left-0 inline-flex items-center justify-center",
+            'absolute left-0 inline-flex items-center justify-center',
           )}
         >
           <CheckIcon />
         </RadixSelect.ItemIndicator>
       </RadixSelect.Item>
-    );
+    )
   },
-);
+)
 
-SelectItem.displayName = "SelectItem";
+SelectItem.displayName = 'SelectItem'
 
-export default Select;
+export default Select

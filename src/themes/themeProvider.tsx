@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from 'react'
 import type {
   Amber,
   Teal,
@@ -40,7 +40,7 @@ import type {
   LimeDark,
   Yellow,
   YellowDark,
-} from "./palettes";
+} from './palettes'
 
 export type Theme = `theme-${
   | Amber
@@ -82,29 +82,29 @@ export type Theme = `theme-${
   | Lime
   | LimeDark
   | Yellow
-  | YellowDark}`;
+  | YellowDark}`
 
 export interface ThemeContextProps {
-  theme: Theme;
-  changeTheme: (theme: Theme) => void;
+  theme: Theme
+  changeTheme: (theme: Theme) => void
 }
 
-export const ThemeContext = createContext<ThemeContextProps | null>(null);
+export const ThemeContext = createContext<ThemeContextProps | null>(null)
 
 type ProviderProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 const ThemeProvider: React.FC<ProviderProps> = ({ children }: ProviderProps) => {
   const [currentTheme, setCurrentTheme] = useState<Theme>(() => {
-    const localTheme = localStorage.getItem("theme");
-    return localTheme !== null ? (localTheme as Theme) : "theme-amber";
-  });
+    const localTheme = localStorage.getItem('theme')
+    return localTheme !== null ? (localTheme as Theme) : 'theme-amber'
+  })
 
   // Save to localStorage whenever theme changes
   useEffect(() => {
-    localStorage.setItem("theme", currentTheme);
-  }, [currentTheme]);
+    localStorage.setItem('theme', currentTheme)
+  }, [currentTheme])
 
   return (
     <ThemeContext.Provider
@@ -115,7 +115,7 @@ const ThemeProvider: React.FC<ProviderProps> = ({ children }: ProviderProps) => 
     >
       {children}
     </ThemeContext.Provider>
-  );
-};
+  )
+}
 
-export default ThemeProvider;
+export default ThemeProvider

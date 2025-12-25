@@ -1,28 +1,28 @@
-import { useThemeAgent } from "../agents/useThemeAgent";
-import { useState, FormEvent } from "react";
-import { useTheme } from "../themes/useTheme";
-import classNames from "classnames";
+import { useThemeAgent } from '../agents/useThemeAgent'
+import { useState, FormEvent } from 'react'
+import { useTheme } from '../themes/useTheme'
+import classNames from 'classnames'
 
 export const ThemeAgentPanel = () => {
-  const { state, recommendation, getInsights, generateThemeFromPrompt } = useThemeAgent();
-  const { changeTheme } = useTheme();
-  const [prompt, setPrompt] = useState("");
-  const [animationState, setAnimationState] = useState(false);
+  const { state, recommendation, getInsights, generateThemeFromPrompt } = useThemeAgent()
+  const { changeTheme } = useTheme()
+  const [prompt, setPrompt] = useState('')
+  const [animationState, setAnimationState] = useState(false)
 
-  const insights = getInsights();
+  const insights = getInsights()
 
   const handleGenerateTheme = async (e?: FormEvent) => {
-    e?.preventDefault();
-    const newTheme = await generateThemeFromPrompt(prompt);
+    e?.preventDefault()
+    const newTheme = await generateThemeFromPrompt(prompt)
     if (newTheme) {
-      changeTheme(newTheme);
-      setAnimationState(true);
+      changeTheme(newTheme)
+      setAnimationState(true)
     }
-    setPrompt("");
-  };
+    setPrompt('')
+  }
 
   if (!state.isActive) {
-    return null;
+    return null
   }
 
   return (
@@ -31,10 +31,10 @@ export const ThemeAgentPanel = () => {
         <h3 className="text-color12 text-sm font-semibold">🤖 AI Theme Assistant</h3>
         <span
           className={`text-xs px-2 py-1 rounded ${
-            state.isLearning ? "bg-color3 text-color11" : "bg-color6 text-color11"
+            state.isLearning ? 'bg-color3 text-color11' : 'bg-color6 text-color11'
           }`}
         >
-          {state.mode === "full-automatic" ? "Auto" : "Manual"}
+          {state.mode === 'full-automatic' ? 'Auto' : 'Manual'}
         </span>
       </div>
 
@@ -56,7 +56,7 @@ export const ThemeAgentPanel = () => {
             <span className="text-xs text-color10">
               Confidence: {Math.round(recommendation.confidence * 100)}%
             </span>
-            {state.mode === "full-automatic" && (
+            {state.mode === 'full-automatic' && (
               <span className="text-xs text-green-600 font-medium">✓ Auto-Applied</span>
             )}
           </div>
@@ -81,8 +81,8 @@ export const ThemeAgentPanel = () => {
             type="submit"
             onAnimationEnd={() => setAnimationState(false)}
             className={classNames(
-              "bg-color6 text-color11 hover:bg-color7 rounded-md px-4 py-2 text-sm font-medium transition-colors",
-              animationState && "animate-pulse animate-once animate-duration-200",
+              'bg-color6 text-color11 hover:bg-color7 rounded-md px-4 py-2 text-sm font-medium transition-colors',
+              animationState && 'animate-pulse animate-once animate-duration-200',
             )}
           >
             Generate
@@ -99,5 +99,5 @@ export const ThemeAgentPanel = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}

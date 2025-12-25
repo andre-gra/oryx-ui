@@ -48,6 +48,8 @@
     "build:demo": "vite build --outDir dist-demo --config vite.demo.config.ts",
     "build": "npm run build:lib && npm run build:demo",
     "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "preview": "vite preview",
     "preview:demo": "vite preview --config vite.demo.config.ts",
     "prepublishOnly": "npm run build:lib"

@@ -1,27 +1,27 @@
-import { type ReactNode } from "react";
-import ThemeProvider from "../themes/themeProvider";
-import SizeProvider from "../themes/sizeProvider";
-import ThemeAgentProvider from "../agents/themeAgentProvider";
-import { AgentInteractionTracker } from "../agents/AgentInteractionTracker";
-import { useTheme } from "../themes/useTheme";
-import { useSize } from "../themes/useSize";
-import type { AgentRecommendation } from "../agents/agentTypes";
-import { useCallback } from "react";
-import type { Theme } from "../themes/themeProvider";
-import type { Size } from "../themes/sizeProvider";
+import { type ReactNode } from 'react'
+import ThemeProvider from '../themes/themeProvider'
+import SizeProvider from '../themes/sizeProvider'
+import ThemeAgentProvider from '../agents/themeAgentProvider'
+import { AgentInteractionTracker } from '../agents/AgentInteractionTracker'
+import { useTheme } from '../themes/useTheme'
+import { useSize } from '../themes/useSize'
+import type { AgentRecommendation } from '../agents/agentTypes'
+import { useCallback } from 'react'
+import type { Theme } from '../themes/themeProvider'
+import type { Size } from '../themes/sizeProvider'
 
 /**
  * Props for OryxProvider
  */
 export interface OryxProviderProps {
   /** Child components */
-  children: ReactNode;
+  children: ReactNode
   /** Default theme (reserved for future use) */
-  defaultTheme?: Theme;
+  defaultTheme?: Theme
   /** Default size (reserved for future use) */
-  defaultSize?: Size;
+  defaultSize?: Size
   /** Enable AI theme agent (defaults to true) */
-  enableAgent?: boolean;
+  enableAgent?: boolean
 }
 
 /**
@@ -31,22 +31,22 @@ const OryxProviderInner = ({
   children,
   enableAgent = true,
 }: {
-  children: ReactNode;
-  enableAgent?: boolean;
+  children: ReactNode
+  enableAgent?: boolean
 }) => {
-  const { changeTheme } = useTheme();
-  const { changeSize } = useSize();
+  const { changeTheme } = useTheme()
+  const { changeSize } = useSize()
 
   const handleRecommendation = useCallback(
     (rec: AgentRecommendation) => {
-      changeTheme(rec.theme);
-      changeSize(rec.size);
+      changeTheme(rec.theme)
+      changeSize(rec.size)
     },
     [changeTheme, changeSize],
-  );
+  )
 
   if (!enableAgent) {
-    return <>{children}</>;
+    return <>{children}</>
   }
 
   return (
@@ -54,8 +54,8 @@ const OryxProviderInner = ({
       <AgentInteractionTracker />
       {children}
     </ThemeAgentProvider>
-  );
-};
+  )
+}
 
 /**
  * Unified provider that wraps all Oryx UI context providers.
@@ -83,8 +83,8 @@ export const OryxProvider = ({
   enableAgent = true,
 }: OryxProviderProps) => {
   // Suppress unused variable warnings - these are reserved for future implementation
-  void _defaultTheme;
-  void _defaultSize;
+  void _defaultTheme
+  void _defaultSize
 
   return (
     <ThemeProvider>
@@ -92,7 +92,7 @@ export const OryxProvider = ({
         <OryxProviderInner enableAgent={enableAgent}>{children}</OryxProviderInner>
       </SizeProvider>
     </ThemeProvider>
-  );
-};
+  )
+}
 
-export default OryxProvider;
+export default OryxProvider

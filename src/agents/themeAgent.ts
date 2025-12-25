@@ -1,38 +1,38 @@
-import type { Theme } from "../themes/themeProvider";
-import type { Size } from "../themes/sizeProvider";
+import type { Theme } from '../themes/themeProvider'
+import type { Size } from '../themes/sizeProvider'
 import type {
   StyleInteraction,
   StylePreference,
   AgentRecommendation,
   AgentMode,
-} from "./agentTypes";
-import { InteractionTracker } from "./interactionTracker";
-import { GoogleGenAI } from "@google/genai";
-import { GEMINI_API_KEY } from "../config";
-import { availableThemes } from "./availableThemes";
+} from './agentTypes'
+import { InteractionTracker } from './interactionTracker'
+import { GoogleGenAI } from '@google/genai'
+import { GEMINI_API_KEY } from '../config'
+import { availableThemes } from './availableThemes'
 
-const PREFERENCES_KEY = "oryx-theme-preferences";
-const MIN_INTERACTIONS = 5; // Minimum interactions before making confident recommendations
+const PREFERENCES_KEY = 'oryx-theme-preferences'
+const MIN_INTERACTIONS = 5 // Minimum interactions before making confident recommendations
 
 /**
  * AI Agent that learns user preferences and recommends theme/size combinations
  */
 export class ThemeAgent {
-  private tracker: InteractionTracker;
-  private preferences: Map<string, StylePreference> = new Map();
-  private mode: AgentMode = "full-automatic";
-  private genAI?: GoogleGenAI;
+  private tracker: InteractionTracker
+  private preferences: Map<string, StylePreference> = new Map()
+  private mode: AgentMode = 'full-automatic'
+  private genAI?: GoogleGenAI
 
   constructor() {
-    this.tracker = new InteractionTracker();
-    this.loadPreferences();
+    this.tracker = new InteractionTracker()
+    this.loadPreferences()
     console.log('vite', GEMINI_API_KEY)
     if (GEMINI_API_KEY) {
-      this.genAI = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+      this.genAI = new GoogleGenAI({ apiKey: GEMINI_API_KEY })
     } else {
       console.warn(
-        "Gemini API key not found. Please set VITE_GEMINI_API_KEY in your .env file. AI features will be limited.",
-      );
+        'Gemini API key not found. Please set VITE_GEMINI_API_KEY in your .env file. AI features will be limited.',
+      )
     }
   }
 
@@ -40,8 +40,8 @@ export class ThemeAgent {
    * Record a theme/size change
    */
   recordChange(theme: Theme, size: Size): void {
-    this.tracker.startSession(theme, size);
-    this.updatePreferences();
+    this.tracker.startSession(theme, size)
+    this.updatePreferences()
   }
 
   /**
@@ -49,36 +49,36 @@ export class ThemeAgent {
    */
   async generateThemeFromPrompt(prompt: string): Promise<Theme> {
     if (!this.genAI) {
-      console.warn("Gemini API not initialized. Falling back to default theme.");
-      return "theme-amber";
+      console.warn('Gemini API not initialized. Falling back to default theme.')
+      return 'theme-amber'
     }
 
     const llmPrompt = `You are a theme selection expert for a UI library.
 Based on the user's prompt, select the most appropriate theme from the following list.
 Return ONLY the name of the theme from the list, and nothing else.
 
-Available themes: ${availableThemes.join(", ")}
+Available themes: ${availableThemes.join(', ')}
 
-User prompt: "${prompt}"`;
+User prompt: "${prompt}"`
 
     try {
       const result = await this.genAI.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: 'gemini-2.5-flash',
         contents: llmPrompt,
-      });
+      })
 
-      const text = (result.text || "").trim();
+      const text = (result.text || '').trim()
 
       // Validate the response is a valid theme
       if (availableThemes.includes(text as Theme)) {
-        return text as Theme;
+        return text as Theme
       } else {
-        console.warn(`LLM returned an invalid theme: ${text}. Falling back to default.`);
-        return "theme-amber";
+        console.warn(`LLM returned an invalid theme: ${text}. Falling back to default.`)
+        return 'theme-amber'
       }
     } catch (error) {
-      console.error("Error generating theme from prompt:", error);
-      return "theme-amber"; // Fallback on error
+      console.error('Error generating theme from prompt:', error)
+      return 'theme-amber' // Fallback on error
     }
   }
 
@@ -86,137 +86,137 @@ User prompt: "${prompt}"`;
    * Get current recommendation based on learned preferences
    */
   getRecommendation(): AgentRecommendation | null {
-    const interactions = this.tracker.getRecentInteractions(30);
+    const interactions = this.tracker.getRecentInteractions(30)
 
     // Not enough data to make recommendations
     if (interactions.length < MIN_INTERACTIONS) {
-      return null;
+      return null
     }
 
-    const now = new Date();
-    const currentHour = now.getHours();
-    const currentDay = now.getDay();
+    const now = new Date()
+    const currentHour = now.getHours()
+    const currentDay = now.getDay()
 
     // Update preferences before recommending
-    this.updatePreferences();
+    this.updatePreferences()
 
     // Score each preference based on context
-    let bestScore = 0;
-    let bestPreference: StylePreference | null = null;
+    let bestScore = 0
+    let bestPreference: StylePreference | null = null
 
     for (const pref of this.preferences.values()) {
-      let score = pref.score;
+      let score = pref.score
 
       // Boost score based on time of day match
-      const timeBoost = this.getTimeBoost(pref, currentHour);
-      score *= 1 + timeBoost;
+      const timeBoost = this.getTimeBoost(pref, currentHour)
+      score *= 1 + timeBoost
 
       // Boost score based on day of week match
-      const dayBoost = pref.dayPatterns[currentDay] / Math.max(...pref.dayPatterns, 1);
-      score *= 1 + dayBoost * 0.3;
+      const dayBoost = pref.dayPatterns[currentDay] / Math.max(...pref.dayPatterns, 1)
+      score *= 1 + dayBoost * 0.3
 
       // Recency boost
-      const daysSinceUse = (Date.now() - pref.lastUsed) / (1000 * 60 * 60 * 24);
-      const recencyBoost = Math.max(0, 1 - daysSinceUse / 30);
-      score *= 1 + recencyBoost * 0.2;
+      const daysSinceUse = (Date.now() - pref.lastUsed) / (1000 * 60 * 60 * 24)
+      const recencyBoost = Math.max(0, 1 - daysSinceUse / 30)
+      score *= 1 + recencyBoost * 0.2
 
       if (score > bestScore) {
-        bestScore = score;
-        bestPreference = pref;
+        bestScore = score
+        bestPreference = pref
       }
     }
 
-    if (!bestPreference) return null;
+    if (!bestPreference) return null
 
     // Calculate confidence (0-1)
-    const totalInteractions = interactions.length;
+    const totalInteractions = interactions.length
     const confidence = Math.min(
       1,
       (bestPreference.usageCount / totalInteractions) * (totalInteractions / 20),
-    );
+    )
 
     return {
       theme: bestPreference.theme,
       size: bestPreference.size,
       confidence,
       reason: this.generateReason(bestPreference, currentHour),
-    };
+    }
   }
 
   /**
    * Get insights about user preferences
    */
   getInsights(): string[] {
-    const insights: string[] = [];
-    const interactions = this.tracker.getRecentInteractions(30);
+    const insights: string[] = []
+    const interactions = this.tracker.getRecentInteractions(30)
 
     if (interactions.length < MIN_INTERACTIONS) {
       insights.push(
         `Learning your preferences... (${interactions.length}/${MIN_INTERACTIONS} interactions recorded)`,
-      );
-      return insights;
+      )
+      return insights
     }
 
     // Find most used combination
-    const sorted = Array.from(this.preferences.values()).sort((a, b) => b.score - a.score);
+    const sorted = Array.from(this.preferences.values()).sort((a, b) => b.score - a.score)
 
     if (sorted.length > 0) {
-      const favorite = sorted[0];
-      const themeLabel = favorite.theme.replace("theme-", "");
-      insights.push(`Your favorite combination: ${themeLabel} theme with size ${favorite.size}`);
+      const favorite = sorted[0]
+      const themeLabel = favorite.theme.replace('theme-', '')
+      insights.push(`Your favorite combination: ${themeLabel} theme with size ${favorite.size}`)
     }
 
     // Time preference
-    const timePrefs = this.getTimePreferences();
+    const timePrefs = this.getTimePreferences()
     if (timePrefs) {
-      insights.push(timePrefs);
+      insights.push(timePrefs)
     }
 
     // Total tracking info
-    insights.push(`Tracking ${interactions.length} recent interactions`);
+    insights.push(`Tracking ${interactions.length} recent interactions`)
 
-    return insights;
+    return insights
   }
 
   /**
    * Set agent mode
    */
   setMode(mode: AgentMode): void {
-    this.mode = mode;
+    this.mode = mode
   }
 
   /**
    * Get current mode
    */
   getMode(): AgentMode {
-    return this.mode;
+    return this.mode
   }
 
   /**
    * Get interaction count
    */
   getInteractionCount(): number {
-    return this.tracker.getInteractionCount();
+    return this.tracker.getInteractionCount()
   }
 
   /**
    * Update preferences based on interaction history
    */
   private updatePreferences(): void {
-    const interactions = this.tracker.getRecentInteractions(30);
-    this.preferences.clear();
+    const interactions = this.tracker.getRecentInteractions(30)
+    this.preferences.clear()
 
     // Aggregate interactions into preferences
     for (const interaction of interactions) {
-      const key = this.getPreferenceKey(interaction.theme, interaction.size);
-      const existing = this.preferences.get(key);
+      const key = this.getPreferenceKey(interaction.theme, interaction.size)
+      const existing = this.preferences.get(key)
 
       if (existing) {
-        existing.usageCount++;
-        existing.totalDuration += interaction.duration || 0;
-        existing.lastUsed = Math.max(existing.lastUsed, interaction.timestamp);
-        this.updateTimePattern(existing, interaction);
-        existing.dayPatterns[interaction.dayOfWeek]++;
+        existing.usageCount++
+        existing.totalDuration += interaction.duration || 0
+        existing.lastUsed = Math.max(existing.lastUsed, interaction.timestamp)
+        this.updateTimePattern(existing, interaction)
+        existing.dayPatterns[interaction.dayOfWeek]++
       } else {
         const newPref: StylePreference = {
           theme: interaction.theme,
@@ -227,97 +227,97 @@ User prompt: "${prompt}"`;
           score: 0,
           timePatterns: { morning: 0, afternoon: 0, evening: 0, night: 0 },
           dayPatterns: [0, 0, 0, 0, 0, 0, 0],
-        };
-        this.updateTimePattern(newPref, interaction);
-        newPref.dayPatterns[interaction.dayOfWeek]++;
-        this.preferences.set(key, newPref);
+        }
+        this.updateTimePattern(newPref, interaction)
+        newPref.dayPatterns[interaction.dayOfWeek]++
+        this.preferences.set(key, newPref)
       }
     }
 
     // Calculate scores
     for (const pref of this.preferences.values()) {
-      pref.score = this.calculateScore(pref, interactions.length);
+      pref.score = this.calculateScore(pref, interactions.length)
     }
 
-    this.savePreferences();
+    this.savePreferences()
   }
 
   /**
    * Calculate preference score
    */
   private calculateScore(pref: StylePreference, totalInteractions: number): number {
-    const usageRatio = pref.usageCount / totalInteractions;
-    const avgDuration = pref.totalDuration / pref.usageCount;
-    const durationScore = Math.min(1, avgDuration / (30 * 60 * 1000)); // Normalize to 30 min
+    const usageRatio = pref.usageCount / totalInteractions
+    const avgDuration = pref.totalDuration / pref.usageCount
+    const durationScore = Math.min(1, avgDuration / (30 * 60 * 1000)) // Normalize to 30 min
 
-    return usageRatio * 0.7 + durationScore * 0.3;
+    return usageRatio * 0.7 + durationScore * 0.3
   }
 
   /**
    * Update time pattern for a preference
    */
   private updateTimePattern(pref: StylePreference, interaction: StyleInteraction): void {
-    const hour = interaction.hourOfDay;
-    if (hour >= 6 && hour < 12) pref.timePatterns.morning++;
-    else if (hour >= 12 && hour < 18) pref.timePatterns.afternoon++;
-    else if (hour >= 18 && hour < 24) pref.timePatterns.evening++;
-    else pref.timePatterns.night++;
+    const hour = interaction.hourOfDay
+    if (hour >= 6 && hour < 12) pref.timePatterns.morning++
+    else if (hour >= 12 && hour < 18) pref.timePatterns.afternoon++
+    else if (hour >= 18 && hour < 24) pref.timePatterns.evening++
+    else pref.timePatterns.night++
   }
 
   /**
    * Get time-based boost for a preference
    */
   private getTimeBoost(pref: StylePreference, currentHour: number): number {
-    let pattern: keyof StylePreference["timePatterns"];
-    if (currentHour >= 6 && currentHour < 12) pattern = "morning";
-    else if (currentHour >= 12 && currentHour < 18) pattern = "afternoon";
-    else if (currentHour >= 18 && currentHour < 24) pattern = "evening";
-    else pattern = "night";
+    let pattern: keyof StylePreference['timePatterns']
+    if (currentHour >= 6 && currentHour < 12) pattern = 'morning'
+    else if (currentHour >= 12 && currentHour < 18) pattern = 'afternoon'
+    else if (currentHour >= 18 && currentHour < 24) pattern = 'evening'
+    else pattern = 'night'
 
-    const total = Object.values(pref.timePatterns).reduce((a, b) => a + b, 0);
-    return total > 0 ? pref.timePatterns[pattern] / total : 0;
+    const total = Object.values(pref.timePatterns).reduce((a, b) => a + b, 0)
+    return total > 0 ? pref.timePatterns[pattern] / total : 0
   }
 
   /**
    * Get user's time preferences as a string
    */
   private getTimePreferences(): string | null {
-    const timeCounts = { morning: 0, afternoon: 0, evening: 0, night: 0 };
+    const timeCounts = { morning: 0, afternoon: 0, evening: 0, night: 0 }
 
     for (const pref of this.preferences.values()) {
-      timeCounts.morning += pref.timePatterns.morning;
-      timeCounts.afternoon += pref.timePatterns.afternoon;
-      timeCounts.evening += pref.timePatterns.evening;
-      timeCounts.night += pref.timePatterns.night;
+      timeCounts.morning += pref.timePatterns.morning
+      timeCounts.afternoon += pref.timePatterns.afternoon
+      timeCounts.evening += pref.timePatterns.evening
+      timeCounts.night += pref.timePatterns.night
     }
 
-    const entries = Object.entries(timeCounts);
-    const max = Math.max(...entries.map(([, v]) => v));
-    const preferredTime = entries.find(([, v]) => v === max)?.[0];
+    const entries = Object.entries(timeCounts)
+    const max = Math.max(...entries.map(([, v]) => v))
+    const preferredTime = entries.find(([, v]) => v === max)?.[0]
 
-    return preferredTime ? `You're most active in the ${preferredTime}` : null;
+    return preferredTime ? `You're most active in the ${preferredTime}` : null
   }
 
   /**
    * Generate human-readable reason for recommendation
    */
   private generateReason(pref: StylePreference, currentHour: number): string {
-    const themeLabel = pref.theme.replace("theme-", "");
-    let timeContext = "";
+    const themeLabel = pref.theme.replace('theme-', '')
+    let timeContext = ''
 
-    if (currentHour >= 6 && currentHour < 12) timeContext = "morning";
-    else if (currentHour >= 12 && currentHour < 18) timeContext = "afternoon";
-    else if (currentHour >= 18 && currentHour < 24) timeContext = "evening";
-    else timeContext = "night";
+    if (currentHour >= 6 && currentHour < 12) timeContext = 'morning'
+    else if (currentHour >= 12 && currentHour < 18) timeContext = 'afternoon'
+    else if (currentHour >= 18 && currentHour < 24) timeContext = 'evening'
+    else timeContext = 'night'
 
-    return `You often use ${themeLabel} (size ${pref.size}) in the ${timeContext}`;
+    return `You often use ${themeLabel} (size ${pref.size}) in the ${timeContext}`
   }
 
   /**
    * Get preference key
    */
   private getPreferenceKey(theme: Theme, size: Size): string {
-    return `${theme}-${size}`;
+    return `${theme}-${size}`
   }
 
   /**
@@ -325,13 +325,13 @@ User prompt: "${prompt}"`;
    */
   private loadPreferences(): void {
     try {
-      const stored = localStorage.getItem(PREFERENCES_KEY);
+      const stored = localStorage.getItem(PREFERENCES_KEY)
       if (stored) {
-        const data = JSON.parse(stored);
-        this.preferences = new Map(Object.entries(data));
+        const data = JSON.parse(stored)
+        this.preferences = new Map(Object.entries(data))
       }
     } catch (error) {
-      console.warn("Failed to load preferences:", error);
+      console.warn('Failed to load preferences:', error)
     }
   }
 
@@ -340,10 +340,10 @@ User prompt: "${prompt}"`;
    */
   private savePreferences(): void {
     try {
-      const data = Object.fromEntries(this.preferences);
-      localStorage.setItem(PREFERENCES_KEY, JSON.stringify(data));
+      const data = Object.fromEntries(this.preferences)
+      localStorage.setItem(PREFERENCES_KEY, JSON.stringify(data))
     } catch (error) {
-      console.warn("Failed to save preferences:", error);
+      console.warn('Failed to save preferences:', error)
     }
   }
 }

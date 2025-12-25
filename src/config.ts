@@ -8,4 +8,4 @@
 // We use import.meta.env.VITE_GEMINI_API_KEY to access the environment variable.
 // This is a Vite-specific feature.
 
-export const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+export const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY

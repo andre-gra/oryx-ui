@@ -3,5 +3,5 @@ export {
   type NavigationMenuProps,
   type NavigationMenuSection,
   type NavigationMenuItem,
-} from "./NavigationMenu";
-export { NavigationMenu as default } from "./NavigationMenu";
+} from './NavigationMenu'
+export { NavigationMenu as default } from './NavigationMenu'

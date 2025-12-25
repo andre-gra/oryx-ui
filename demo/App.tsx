@@ -1,5 +1,5 @@
-import classNames from "classnames";
-import { GitHubLogoIcon, ReaderIcon } from "@radix-ui/react-icons";
+import classNames from 'classnames'
+import { GitHubLogoIcon, ReaderIcon } from '@radix-ui/react-icons'
 import {
   Accordion,
   Select,
@@ -12,77 +12,77 @@ import {
   ThemeAgentPanel,
   type Theme,
   Size,
-} from "../src";
-import "../src/oryx.css";
+} from '../src'
+import '../src/oryx.css'
 
 type ThemeSelectorProps = {
-  theme: Theme;
-  size: Size;
-  changeTheme: (theme: Theme) => void;
-  changeSize: (size: Size) => void;
-};
+  theme: Theme
+  size: Size
+  changeTheme: (theme: Theme) => void
+  changeSize: (size: Size) => void
+}
 
 const ThemeSelector = ({ theme, size, changeTheme, changeSize }: ThemeSelectorProps) => {
   const themeOptions = [
     {
-      label: "Colors",
+      label: 'Colors',
       group: [
-        { value: "theme-amber", label: "Amber" },
-        { value: "theme-amberDark", label: "Amber Dark" },
-        { value: "theme-blue", label: "Blue" },
-        { value: "theme-blueDark", label: "Blue Dark" },
-        { value: "theme-brown", label: "Brown" },
-        { value: "theme-brownDark", label: "Brown Dark" },
-        { value: "theme-crimson", label: "Crimson" },
-        { value: "theme-crimsonDark", label: "Crimson Dark" },
-        { value: "theme-cyan", label: "Cyan" },
-        { value: "theme-cyanDark", label: "Cyan Dark" },
-        { value: "theme-grass", label: "Grass" },
-        { value: "theme-grassDark", label: "Grass Dark" },
-        { value: "theme-green", label: "Green" },
-        { value: "theme-greenDark", label: "Green Dark" },
-        { value: "theme-indigo", label: "Indigo" },
-        { value: "theme-indigoDark", label: "Indigo Dark" },
-        { value: "theme-lime", label: "Lime" },
-        { value: "theme-limeDark", label: "Lime Dark" },
-        { value: "theme-mint", label: "Mint" },
-        { value: "theme-mintDark", label: "Mint Dark" },
-        { value: "theme-orange", label: "Orange" },
-        { value: "theme-orangeDark", label: "Orange Dark" },
-        { value: "theme-pink", label: "Pink" },
-        { value: "theme-pinkDark", label: "Pink Dark" },
-        { value: "theme-plum", label: "Plum" },
-        { value: "theme-plumDark", label: "Plum Dark" },
-        { value: "theme-purple", label: "Purple" },
-        { value: "theme-purpleDark", label: "Purple Dark" },
-        { value: "theme-red", label: "Red" },
-        { value: "theme-redDark", label: "Red Dark" },
-        { value: "theme-sky", label: "Sky" },
-        { value: "theme-skyDark", label: "Sky Dark" },
-        { value: "theme-teal", label: "Teal" },
-        { value: "theme-tealDark", label: "Teal Dark" },
-        { value: "theme-tomato", label: "Tomato" },
-        { value: "theme-tomatoDark", label: "Tomato Dark" },
-        { value: "theme-violet", label: "Violet" },
-        { value: "theme-violetDark", label: "Violet Dark" },
-        { value: "theme-yellow", label: "Yellow" },
-        { value: "theme-yellowDark", label: "Yellow Dark" },
-        { value: "theme-gray", label: "Gray" },
-        { value: "theme-grayDark", label: "Gray Dark" },
+        { value: 'theme-amber', label: 'Amber' },
+        { value: 'theme-amberDark', label: 'Amber Dark' },
+        { value: 'theme-blue', label: 'Blue' },
+        { value: 'theme-blueDark', label: 'Blue Dark' },
+        { value: 'theme-brown', label: 'Brown' },
+        { value: 'theme-brownDark', label: 'Brown Dark' },
+        { value: 'theme-crimson', label: 'Crimson' },
+        { value: 'theme-crimsonDark', label: 'Crimson Dark' },
+        { value: 'theme-cyan', label: 'Cyan' },
+        { value: 'theme-cyanDark', label: 'Cyan Dark' },
+        { value: 'theme-grass', label: 'Grass' },
+        { value: 'theme-grassDark', label: 'Grass Dark' },
+        { value: 'theme-green', label: 'Green' },
+        { value: 'theme-greenDark', label: 'Green Dark' },
+        { value: 'theme-indigo', label: 'Indigo' },
+        { value: 'theme-indigoDark', label: 'Indigo Dark' },
+        { value: 'theme-lime', label: 'Lime' },
+        { value: 'theme-limeDark', label: 'Lime Dark' },
+        { value: 'theme-mint', label: 'Mint' },
+        { value: 'theme-mintDark', label: 'Mint Dark' },
+        { value: 'theme-orange', label: 'Orange' },
+        { value: 'theme-orangeDark', label: 'Orange Dark' },
+        { value: 'theme-pink', label: 'Pink' },
+        { value: 'theme-pinkDark', label: 'Pink Dark' },
+        { value: 'theme-plum', label: 'Plum' },
+        { value: 'theme-plumDark', label: 'Plum Dark' },
+        { value: 'theme-purple', label: 'Purple' },
+        { value: 'theme-purpleDark', label: 'Purple Dark' },
+        { value: 'theme-red', label: 'Red' },
+        { value: 'theme-redDark', label: 'Red Dark' },
+        { value: 'theme-sky', label: 'Sky' },
+        { value: 'theme-skyDark', label: 'Sky Dark' },
+        { value: 'theme-teal', label: 'Teal' },
+        { value: 'theme-tealDark', label: 'Teal Dark' },
+        { value: 'theme-tomato', label: 'Tomato' },
+        { value: 'theme-tomatoDark', label: 'Tomato Dark' },
+        { value: 'theme-violet', label: 'Violet' },
+        { value: 'theme-violetDark', label: 'Violet Dark' },
+        { value: 'theme-yellow', label: 'Yellow' },
+        { value: 'theme-yellowDark', label: 'Yellow Dark' },
+        { value: 'theme-gray', label: 'Gray' },
+        { value: 'theme-grayDark', label: 'Gray Dark' },
       ],
     },
-  ];
+  ]
 
   const sizeOptions = [
     {
-      label: "Scale",
+      label: 'Scale',
       group: [
-        { value: "2", label: "Small" },
-        { value: "3", label: "Medium" },
-        { value: "4", label: "Large" },
+        { value: '2', label: 'Small' },
+        { value: '3', label: 'Medium' },
+        { value: '4', label: 'Large' },
       ],
     },
-  ];
+  ]
 
   return (
     <div
@@ -118,12 +118,12 @@ const ThemeSelector = ({ theme, size, changeTheme, changeSize }: ThemeSelectorPr
         <ThemeAgentPanel />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const App = () => {
-  const { theme, changeTheme } = useTheme();
-  const { size, changeSize } = useSize();
+  const { theme, changeTheme } = useTheme()
+  const { size, changeSize } = useSize()
   return (
     <div
       className={`${theme} min-h-screen bg-gradient-to-br from-color1 via-color2 to-color3 p-8 relative`}
@@ -166,54 +166,54 @@ const App = () => {
           {/* Navigation Menu - Full width */}
           <div
             className={classNames(
-              "bg-color4 z-10 w-fit h-fit backdrop-blur-sm rounded-xl p-6",
-              size === "4" && "col-span-2 xl:col-span-1",
+              'bg-color4 z-10 w-fit h-fit backdrop-blur-sm rounded-xl p-6',
+              size === '4' && 'col-span-2 xl:col-span-1',
             )}
           >
             <h2 className="text-color11 text-xl font-semibold mb-4">Navigation Menu</h2>
             <NavigationMenu
               items={[
                 {
-                  title: "Products",
+                  title: 'Products',
                   item: [
                     {
-                      type: "card",
-                      title: "Featured",
-                      href: "#",
-                      text: "Our main product offering",
+                      type: 'card',
+                      title: 'Featured',
+                      href: '#',
+                      text: 'Our main product offering',
                     },
                     {
-                      type: "text",
-                      title: "Components",
-                      href: "#",
-                      text: "UI building blocks",
+                      type: 'text',
+                      title: 'Components',
+                      href: '#',
+                      text: 'UI building blocks',
                     },
                     {
-                      type: "text",
-                      title: "Themes",
-                      href: "#",
-                      text: "Color and styling options",
+                      type: 'text',
+                      title: 'Themes',
+                      href: '#',
+                      text: 'Color and styling options',
                     },
                   ],
                 },
                 {
-                  title: "Docs",
+                  title: 'Docs',
                   item: [
                     {
-                      type: "text",
-                      title: "Getting Started",
-                      href: "#",
-                      text: "Quick start guide",
+                      type: 'text',
+                      title: 'Getting Started',
+                      href: '#',
+                      text: 'Quick start guide',
                     },
                     {
-                      type: "text",
-                      title: "API Reference",
-                      href: "#",
-                      text: "Component documentation",
+                      type: 'text',
+                      title: 'API Reference',
+                      href: '#',
+                      text: 'Component documentation',
                     },
                   ],
                 },
-                { title: "GitHub", href: "https://github.com/andre-gra/oryx-ui" },
+                { title: 'GitHub', href: 'https://github.com/andre-gra/oryx-ui' },
               ]}
             />
           </div>
@@ -221,24 +221,24 @@ const App = () => {
           {/* Accordion */}
           <div
             className={classNames(
-              "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
-              size === "4" && "col-span-2 lg:col-span-1",
+              'bg-color4 w-fit backdrop-blur-sm rounded-xl p-6',
+              size === '4' && 'col-span-2 lg:col-span-1',
             )}
           >
             <h2 className="text-color11 text-xl font-semibold mb-4">Accordion</h2>
             <Accordion
               items={[
                 {
-                  mainText: "Is it accessible?",
-                  collapsibleText: "Yes. It adheres to the WAI-ARIA design pattern.",
+                  mainText: 'Is it accessible?',
+                  collapsibleText: 'Yes. It adheres to the WAI-ARIA design pattern.',
                 },
                 {
-                  mainText: "Is it styled?",
-                  collapsibleText: "Yes. It uses the Oryx UI theming system.",
+                  mainText: 'Is it styled?',
+                  collapsibleText: 'Yes. It uses the Oryx UI theming system.',
                 },
                 {
-                  mainText: "Can it animate?",
-                  collapsibleText: "Yes. Built-in slide animations are included.",
+                  mainText: 'Can it animate?',
+                  collapsibleText: 'Yes. Built-in slide animations are included.',
                 },
               ]}
             />
@@ -247,8 +247,8 @@ const App = () => {
           {/* Select */}
           <div
             className={classNames(
-              "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
-              size === "4" && "col-span-2 lg:col-span-1",
+              'bg-color4 w-fit backdrop-blur-sm rounded-xl p-6',
+              size === '4' && 'col-span-2 lg:col-span-1',
             )}
           >
             <h2 className="text-color11 text-xl font-semibold mb-4">Select</h2>
@@ -257,79 +257,79 @@ const App = () => {
               placeholder="Select fruit..."
               options={[
                 {
-                  label: "Fruits",
+                  label: 'Fruits',
                   group: [
-                    { value: "apple", label: "Apple" },
-                    { value: "banana", label: "Banana" },
-                    { value: "orange", label: "Orange" },
+                    { value: 'apple', label: 'Apple' },
+                    { value: 'banana', label: 'Banana' },
+                    { value: 'orange', label: 'Orange' },
                   ],
                 },
                 {
-                  label: "Vegetables",
+                  label: 'Vegetables',
                   group: [
-                    { value: "carrot", label: "Carrot" },
-                    { value: "broccoli", label: "Broccoli" },
+                    { value: 'carrot', label: 'Carrot' },
+                    { value: 'broccoli', label: 'Broccoli' },
                   ],
                 },
               ]}
-              onValueChange={(value) => console.log("Selected:", value)}
+              onValueChange={(value) => console.log('Selected:', value)}
             />
           </div>
 
           {/* AlertDialog */}
           <div
             className={classNames(
-              "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
-              size === "4" && "col-span-2 lg:col-span-1",
+              'bg-color4 w-fit backdrop-blur-sm rounded-xl p-6',
+              size === '4' && 'col-span-2 lg:col-span-1',
             )}
           >
             <h2 className="text-color11 text-xl font-semibold mb-4">Alert Dialog</h2>
             <AlertDialog
               texts={{
-                buttonTrigger: "Delete Account",
-                content: "Are you sure?",
+                buttonTrigger: 'Delete Account',
+                content: 'Are you sure?',
                 description:
-                  "This action cannot be undone. Your account will be permanently deleted.",
-                buttonCancel: "Cancel",
-                action: "Yes, Delete",
+                  'This action cannot be undone. Your account will be permanently deleted.',
+                buttonCancel: 'Cancel',
+                action: 'Yes, Delete',
               }}
-              onAction={() => console.log("Deleted!")}
-              onCancel={() => console.log("Cancelled")}
+              onAction={() => console.log('Deleted!')}
+              onCancel={() => console.log('Cancelled')}
             />
           </div>
 
           {/* Checkbox */}
           <div
             className={classNames(
-              "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
-              size === "4" && "col-span-2 lg:col-span-1",
+              'bg-color4 w-fit backdrop-blur-sm rounded-xl p-6',
+              size === '4' && 'col-span-2 lg:col-span-1',
             )}
           >
             <h2 className="text-color11 text-xl font-semibold mb-4">Checkbox</h2>
             <div className="space-y-3">
               <Checkbox
                 label="Accept terms and conditions"
-                onCheckedChange={(checked) => console.log("Terms:", checked)}
+                onCheckedChange={(checked) => console.log('Terms:', checked)}
               />
               <Checkbox
                 label="Subscribe to newsletter"
                 checked
-                onCheckedChange={(checked) => console.log("Newsletter:", checked)}
+                onCheckedChange={(checked) => console.log('Newsletter:', checked)}
               />
               <Checkbox
                 label="Enable notifications"
                 indeterminate
-                onCheckedChange={(checked) => console.log("Notifications:", checked)}
+                onCheckedChange={(checked) => console.log('Notifications:', checked)}
               />
               <Checkbox
                 label="Premium feature"
                 disabled
-                onCheckedChange={(checked) => console.log("Premium:", checked)}
+                onCheckedChange={(checked) => console.log('Premium:', checked)}
               />
               <Checkbox
                 label="Required field"
                 required
-                onCheckedChange={(checked) => console.log("Required:", checked)}
+                onCheckedChange={(checked) => console.log('Required:', checked)}
               />
             </div>
           </div>
@@ -337,8 +337,8 @@ const App = () => {
           {/* Popover */}
           <div
             className={classNames(
-              "bg-color4 w-fit backdrop-blur-sm rounded-xl p-6",
-              size === "4" && "col-span-2 lg:col-span-1",
+              'bg-color4 w-fit backdrop-blur-sm rounded-xl p-6',
+              size === '4' && 'col-span-2 lg:col-span-1',
             )}
           >
             <h2 className="text-color11 text-xl font-semibold mb-4">Popover</h2>
@@ -346,19 +346,19 @@ const App = () => {
               buttonTriggerLabel="Open settings"
               fields={[
                 {
-                  fieldTitle: "Dimensions",
+                  fieldTitle: 'Dimensions',
                   field: [
                     {
-                      label: "Width",
-                      htmlFor: "width",
-                      id: "width",
-                      defaultValue: "100%",
+                      label: 'Width',
+                      htmlFor: 'width',
+                      id: 'width',
+                      defaultValue: '100%',
                     },
                     {
-                      label: "Height",
-                      htmlFor: "height",
-                      id: "height",
-                      defaultValue: "auto",
+                      label: 'Height',
+                      htmlFor: 'height',
+                      id: 'height',
+                      defaultValue: 'auto',
                     },
                   ],
                 },
@@ -369,7 +369,7 @@ const App = () => {
 
         <footer className="mt-12 py-6 text-center border-t border-color6">
           <p className="text-color11">
-            Created by{" "}
+            Created by{' '}
             <a
               href="https://github.com/andre-gra"
               target="_blank"
@@ -382,7 +382,7 @@ const App = () => {
         </footer>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

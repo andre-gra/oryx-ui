@@ -1,4 +1,4 @@
-import { useContext } from "react";
-import { SizeContext, SizeContextProps } from "./sizeProvider";
+import { useContext } from 'react'
+import { SizeContext, SizeContextProps } from './sizeProvider'
 
-export const useSize = () => useContext(SizeContext) as SizeContextProps;
+export const useSize = () => useContext(SizeContext) as SizeContextProps
