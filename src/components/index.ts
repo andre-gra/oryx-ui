@@ -9,3 +9,5 @@ export {
 } from './NavigationMenu'
 export { Popover, type PopoverProps, type PopoverField, type PopoverFieldGroup } from './Popover'
 export { Checkbox, type CheckboxProps } from './Checkbox'
+export { Button, type ButtonProps } from './Button'
+export { Stepper, type StepperProps, type StepperStep } from './Stepper'

@@ -207,4 +207,39 @@
   .navigation-menu-viewport$(size) {
     @apply mt-[calc(3px*$size)] rounded-[calc(1px*$size*2)]
   }
+
+  /* -------------------------------------------------------------------------------------------------
+ * Button size rules (dividing by 3 logic)
+ * ----------------------------------------------------------------------------------------------- */
+  .button$(size) {
+    @apply px-[calc(5px*$size)] h-[calc(12px*$size)] text-[calc(5px*$size)] rounded-[calc(1px*$size*1.5)];
+  }
+
+  /* -------------------------------------------------------------------------------------------------
+ * Stepper size rules (dividing by 3 logic)
+ * ----------------------------------------------------------------------------------------------- */
+  .stepper$(size) {
+    @apply py-[calc(3px*$size)];
+  }
+
+  .stepper-circle$(size) {
+    @apply w-[calc(10px*$size)] h-[calc(10px*$size)] text-[calc(4.5px*$size)];
+
+    svg {
+      width: calc(5px*$size);
+      height: calc(5px*$size);
+    }
+  }
+
+  .stepper-label$(size) {
+    @apply text-[calc(4.5px*$size)];
+  }
+
+  .stepper-description$(size) {
+    @apply text-[calc(3.5px*$size)];
+  }
+
+  .stepper-connector$(size) {
+    @apply mx-[calc(2px*$size)] mx-[calc(2px*$size)] md:mx-[calc(4px*$size)];
+  }
 }

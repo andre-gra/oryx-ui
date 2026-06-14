@@ -81,3 +81,10 @@ export {
 // ============================================================================
 
 export { ThemeAgentPanel } from './ui/ThemeAgentPanel'
+
+// ============================================================================
+// NEW COMPONENTS
+// ============================================================================
+
+export { Button, type ButtonProps } from './components/Button'
+export { Stepper, type StepperProps, type StepperStep } from './components/Stepper'
