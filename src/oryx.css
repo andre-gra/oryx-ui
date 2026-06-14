@@ -240,6 +240,6 @@
   }
 
   .stepper-connector$(size) {
-    @apply mx-[calc(2px*$size)] mx-[calc(2px*$size)] md:mx-[calc(4px*$size)];
+    @apply mx-[calc(2px*$size)] md:mx-[calc(4px*$size)];
   }
 }
