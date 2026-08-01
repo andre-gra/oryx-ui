@@ -10,9 +10,11 @@ import { InteractionTracker } from './interactionTracker'
 import { GoogleGenAI } from '@google/genai'
 import { GEMINI_API_KEY } from '../config'
 import { availableThemes } from './availableThemes'
+import { agentRecommend, type AgentInput } from '../engine/agent'
 
 const PREFERENCES_KEY = 'oryx-theme-preferences'
 const MIN_INTERACTIONS = 5 // Minimum interactions before making confident recommendations
+const SIZES: Size[] = ['2', '3', '4']
 
 /**
  * AI Agent that learns user preferences and recommends theme/size combinations
@@ -96,50 +98,30 @@ User prompt: "${prompt}"`
     const now = new Date()
     const currentHour = now.getHours()
     const currentDay = now.getDay()
+    const nowMs = Date.now()
 
-    // Update preferences before recommending
-    this.updatePreferences()
+    // Map interactions to numeric ids (index into availableThemes / SIZES)
+    const inputs: AgentInput[] = interactions.map((i) => ({
+      themeId: availableThemes.indexOf(i.theme),
+      sizeId: SIZES.indexOf(i.size),
+      timestampMs: i.timestamp,
+      durationMs: i.duration || 0,
+      dayOfWeek: i.dayOfWeek,
+      hourOfDay: i.hourOfDay,
+    }))
 
-    // Score each preference based on context
-    let bestScore = 0
-    let bestPreference: StylePreference | null = null
+    // Scoring delegated to the oryx-engine (Zig -> WASM, con fallback JS)
+    const rec = agentRecommend(inputs, currentHour, currentDay, nowMs)
+    if (!rec) return null
 
-    for (const pref of this.preferences.values()) {
-      let score = pref.score
-
-      // Boost score based on time of day match
-      const timeBoost = this.getTimeBoost(pref, currentHour)
-      score *= 1 + timeBoost
-
-      // Boost score based on day of week match
-      const dayBoost = pref.dayPatterns[currentDay] / Math.max(...pref.dayPatterns, 1)
-      score *= 1 + dayBoost * 0.3
-
-      // Recency boost
-      const daysSinceUse = (Date.now() - pref.lastUsed) / (1000 * 60 * 60 * 24)
-      const recencyBoost = Math.max(0, 1 - daysSinceUse / 30)
-      score *= 1 + recencyBoost * 0.2
-
-      if (score > bestScore) {
-        bestScore = score
-        bestPreference = pref
-      }
-    }
-
-    if (!bestPreference) return null
-
-    // Calculate confidence (0-1)
-    const totalInteractions = interactions.length
-    const confidence = Math.min(
-      1,
-      (bestPreference.usageCount / totalInteractions) * (totalInteractions / 20),
-    )
+    const theme = availableThemes[rec.themeId]
+    const size = SIZES[rec.sizeId]
 
     return {
-      theme: bestPreference.theme,
-      size: bestPreference.size,
-      confidence,
-      reason: this.generateReason(bestPreference, currentHour),
+      theme,
+      size,
+      confidence: rec.confidence,
+      reason: this.generateReason(theme, size, currentHour),
     }
   }
 
@@ -265,20 +247,6 @@ User prompt: "${prompt}"`
   }
 
   /**
-   * Get time-based boost for a preference
-   */
-  private getTimeBoost(pref: StylePreference, currentHour: number): number {
-    let pattern: keyof StylePreference['timePatterns']
-    if (currentHour >= 6 && currentHour < 12) pattern = 'morning'
-    else if (currentHour >= 12 && currentHour < 18) pattern = 'afternoon'
-    else if (currentHour >= 18 && currentHour < 24) pattern = 'evening'
-    else pattern = 'night'
-
-    const total = Object.values(pref.timePatterns).reduce((a, b) => a + b, 0)
-    return total > 0 ? pref.timePatterns[pattern] / total : 0
-  }
-
-  /**
    * Get user's time preferences as a string
    */
   private getTimePreferences(): string | null {
@@ -301,8 +269,8 @@ User prompt: "${prompt}"`
   /**
    * Generate human-readable reason for recommendation
    */
-  private generateReason(pref: StylePreference, currentHour: number): string {
-    const themeLabel = pref.theme.replace('theme-', '')
+  private generateReason(theme: Theme, size: Size, currentHour: number): string {
+    const themeLabel = theme.replace('theme-', '')
     let timeContext = ''
 
     if (currentHour >= 6 && currentHour < 12) timeContext = 'morning'
@@ -310,7 +278,7 @@ User prompt: "${prompt}"`
     else if (currentHour >= 18 && currentHour < 24) timeContext = 'evening'
     else timeContext = 'night'
 
-    return `You often use ${themeLabel} (size ${pref.size}) in the ${timeContext}`
+    return `You often use ${themeLabel} (size ${size}) in the ${timeContext}`
   }
 
   /**

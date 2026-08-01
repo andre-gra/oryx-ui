@@ -26,3 +26,7 @@ dist-demo
 
 # Comment
 COMMENT.md
+
+# Zig build artifacts (il .wasm in src/engine/ e' commitato come artefatto del POC)
+.zig-cache
+zig-out

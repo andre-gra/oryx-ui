@@ -88,3 +88,39 @@ export { ThemeAgentPanel } from './ui/ThemeAgentPanel'
 
 export { Button, type ButtonProps } from './components/Button'
 export { Stepper, type StepperProps, type StepperStep } from './components/Stepper'
+
+// ============================================================================
+// ORYX ENGINE (POC: Zig -> WASM)
+// ============================================================================
+
+export {
+  initEngine,
+  engine,
+  isWasmActive,
+  getWasmInstance,
+  benchContrastMatrix,
+  benchTheme,
+  validate,
+  type EngineApi,
+  type ThemeMode,
+  type ThemeA11yResult,
+  type BenchResult,
+  type ValidationResult,
+} from './engine/core'
+
+// ============================================================================
+// ORYX ENGINE AGENT (scoring preferenze in Zig -> WASM)
+// ============================================================================
+
+export {
+  agentRecommend,
+  agentRecommendJS,
+  validateAgent,
+  benchAgent,
+  syntheticInteractions,
+  AGENT_MAX_INTERACTIONS,
+  AGENT_MIN_INTERACTIONS,
+  type AgentInput,
+  type AgentRecommendationResult,
+  type AgentValidationResult,
+} from './engine/agent'
