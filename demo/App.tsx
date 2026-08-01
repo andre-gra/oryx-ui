@@ -9,6 +9,7 @@ import { Chapter5 } from './pages/Chapter5'
 import { Chapter6 } from './pages/Chapter6'
 import { FinalePage } from './pages/FinalePage'
 import { SandboxPage } from './pages/SandboxPage'
+import { WasmPocPage } from './pages/WasmPocPage'
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/chapter/6" element={<Chapter6 />} />
           <Route path="/finale" element={<FinalePage />} />
           <Route path="/sandbox" element={<SandboxPage />} />
+          <Route path="/wasm-poc" element={<WasmPocPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

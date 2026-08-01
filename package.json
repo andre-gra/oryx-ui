@@ -43,8 +43,8 @@
     "**/*.css"
   ],
   "scripts": {
-    "dev": "vite --config vite.demo.config.ts",
-    "build:lib": "tsc -p tsconfig.build.json && vite build",
+    "dev": "npm run build:wasm && vite --config vite.demo.config.ts",
+    "build:lib": "npm run build:wasm && tsc -p tsconfig.build.json && vite build",
     "build:demo": "vite build --outDir dist-demo --config vite.demo.config.ts",
     "build": "npm run build:lib && npm run build:demo",
     "lint": "oxlint",
@@ -52,7 +52,9 @@
     "format:check": "oxfmt --check",
     "preview": "vite preview",
     "preview:demo": "vite preview --config vite.demo.config.ts",
-    "prepublishOnly": "npm run build:lib"
+    "prepublishOnly": "npm run build:lib",
+    "build:wasm": "zig build --release=small --build-file oryx-engine/build.zig",
+    "test:wasm": "zig build test --build-file oryx-engine/build.zig"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
