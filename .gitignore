@@ -26,3 +26,7 @@ dist-demo
 
 # Comment
 COMMENT.md
+
+# Zig
+oryx-engine/.zig-cache
+oryx-engine/zig-out
