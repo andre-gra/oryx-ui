@@ -242,4 +242,35 @@
   .stepper-connector$(size) {
     @apply mx-[calc(2px*$size)] md:mx-[calc(4px*$size)];
   }
+
+  /* -------------------------------------------------------------------------------------------------
+  * Radio size rules (dividing by 3 logic)
+  * ----------------------------------------------------------------------------------------------- */
+  .radio$(size) {
+    @apply gap-[calc(2px*$size)];
+  }
+
+  .radio-label$(size) {
+    @apply text-[calc(4.5px*$size)] mb-[calc(1px*$size)];
+  }
+
+  .radio-item$(size) {
+    @apply w-[calc(6px*$size)] h-[calc(6px*$size)];
+  }
+
+  .radio-dot$(size) {
+    @apply w-[calc(2px*$size)] h-[calc(2px*$size)];
+  }
+
+  .radio-item-label$(size) {
+    @apply text-[calc(4.5px*$size)] ml-[calc(2px*$size)];
+  }
+
+  .radio-group$(size) {
+    @apply pl-[calc(4px*$size)] mt-[calc(2px*$size)] gap-[calc(1px*$size)];
+  }
+
+  .radio-group-label$(size) {
+    @apply text-[calc(4px*$size)] mb-[calc(1px*$size)];
+  }
 }

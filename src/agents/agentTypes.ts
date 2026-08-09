@@ -43,6 +43,12 @@ export interface AgentRecommendation {
 }
 
 /**
+ * Engine mode for the scoring core (Zig -> WASM).
+ * 'wasm' quando il modulo compilato è attivo, 'js' nel fallback, 'loading' durante l'init.
+ */
+export type EngineMode = 'wasm' | 'js' | 'loading'
+
+/**
  * Overall agent state and configuration
  */
 export interface AgentState {
@@ -50,6 +56,7 @@ export interface AgentState {
   isActive: boolean
   isLearning: boolean
   interactionCount: number
+  engineMode: EngineMode
   lastRecommendation?: AgentRecommendation
   currentSession: {
     theme: Theme

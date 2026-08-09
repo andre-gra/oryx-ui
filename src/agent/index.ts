@@ -14,5 +14,6 @@ export type {
   AgentRecommendation,
   AgentState,
   AgentMode,
+  EngineMode,
   ThemeAgentContextValue as AgentContextValue,
 } from '../agents/agentTypes'

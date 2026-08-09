@@ -11,3 +11,4 @@ export { Popover, type PopoverProps, type PopoverField, type PopoverFieldGroup }
 export { Checkbox, type CheckboxProps } from './Checkbox'
 export { Button, type ButtonProps } from './Button'
 export { Stepper, type StepperProps, type StepperStep } from './Stepper'
+export { Radio, type RadioProps, type RadioOption, type RadioHandle } from './Radio'

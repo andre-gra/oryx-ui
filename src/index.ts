@@ -74,6 +74,7 @@ export {
   type AgentRecommendation,
   type AgentState,
   type AgentMode,
+  type EngineMode,
 } from './agent'
 
 // ============================================================================
@@ -88,6 +89,7 @@ export { ThemeAgentPanel } from './ui/ThemeAgentPanel'
 
 export { Button, type ButtonProps } from './components/Button'
 export { Stepper, type StepperProps, type StepperStep } from './components/Stepper'
+export { Radio, type RadioProps, type RadioOption, type RadioHandle } from './components/Radio'
 
 // ============================================================================
 // ORYX ENGINE (POC: Zig -> WASM)

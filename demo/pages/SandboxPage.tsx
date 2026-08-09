@@ -8,11 +8,15 @@ import {
   Checkbox,
   Button,
   Stepper,
+  Radio,
   useSize,
 } from '../../src'
+import { useState, useRef } from 'react'
 
 export const SandboxPage = () => {
   const { size } = useSize()
+  const [radioResetKey, setRadioResetKey] = useState(0)
+  const radioRef = useRef<{ reset: () => void; getValues: () => Record<string, string | undefined> } | null>(null)
 
   return (
     <div className="space-y-6">
@@ -190,6 +194,48 @@ export const SandboxPage = () => {
               required
               onCheckedChange={(checked) => console.log('Required:', checked)}
             />
+          </div>
+        </div>
+
+        {/* Radio */}
+        <div
+          className={classNames(
+            'bg-color4 w-fit backdrop-blur-sm rounded-xl p-6',
+            size === '4' && 'col-span-2 lg:col-span-1',
+          )}
+        >
+          <h2 className="text-color11 text-xl font-semibold mb-4">Radio</h2>
+          <div className="space-y-3">
+            <Radio
+              ref={radioRef}
+              label="Plan"
+              name="plan"
+              defaultValue="basic"
+              resetKey={radioResetKey}
+              onValueChange={(value) => {
+                console.log('Plan:', value, radioRef.current?.getValues())
+              }}
+              items={[
+                { value: 'basic', label: 'Basic' },
+                { value: 'pro', label: 'Pro' },
+                {
+                  label: 'Enterprise',
+                  defaultValue: 'eu',
+                  items: [
+                    { value: 'eu', label: 'EU' },
+                    { value: 'us', label: 'US' },
+                  ],
+                },
+              ]}
+            />
+            <div className="flex gap-2 pt-2">
+              <Button variant="outline" onClick={() => setRadioResetKey((k) => k + 1)}>
+                Reset (resetKey)
+              </Button>
+              <Button variant="ghost" onClick={() => radioRef.current?.reset()}>
+                Reset (ref)
+              </Button>
+            </div>
           </div>
         </div>
 

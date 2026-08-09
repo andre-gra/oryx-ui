@@ -1,5 +1,5 @@
 import { createContext, useEffect, useRef, useState, useCallback } from 'react'
-import type { AgentMode, AgentRecommendation, AgentState } from './agentTypes'
+import type { AgentMode, AgentRecommendation, AgentState, EngineMode } from './agentTypes'
 import { ThemeAgent } from './themeAgent'
 import type { Theme } from '../themes/themeProvider'
 import type { Size } from '../themes/sizeProvider'
@@ -30,6 +30,7 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
     isActive: true,
     isLearning: true,
     interactionCount: 0,
+    engineMode: 'loading',
     currentSession: {
       theme: 'theme-amber',
       size: '3',
@@ -46,6 +47,10 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
         ...prev,
         interactionCount: agentRef.current!.getInteractionCount(),
       }))
+      // Riflette nello stato il mode effettivo del core (wasm/js) appena è pronto
+      agentRef.current.awaitEngineReady().then((engineMode: EngineMode) => {
+        setState((prev) => ({ ...prev, engineMode }))
+      })
     }
   }, [])
 

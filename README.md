@@ -115,6 +115,53 @@ import { Popover } from 'oryx-ui';
 />
 ```
 
+### Radio
+
+```tsx
+import { Radio } from 'oryx-ui';
+
+// Basic group
+<Radio
+  label="Plan"
+  name="plan"
+  defaultValue="basic"
+  items={[
+    { value: "basic", label: "Basic" },
+    { value: "pro", label: "Pro" }
+  ]}
+/>
+
+// Nested radio groups
+<Radio
+  label="Plan"
+  name="plan"
+  items={[
+    { value: "basic", label: "Basic" },
+    {
+      label: "Enterprise",
+      defaultValue: "eu",
+      items: [
+        { value: "eu", label: "EU" },
+        { value: "us", label: "US" }
+      ]
+    }
+  ]}
+/>
+
+// Reset from a Form
+const ref = useRef();
+<Radio
+  ref={ref}
+  label="Plan"
+  name="plan"
+  defaultValue="basic"
+  resetKey={formResetKey}
+  items={[{ value: "basic", label: "Basic" }, { value: "pro", label: "Pro" }]}
+/>
+// ref.current.reset()          — imperative reset
+// ref.current.getValues()      — { plan: "basic", "plan-1": "us" }
+```
+
 ## Theming
 
 ### Available Themes
@@ -180,6 +227,25 @@ function Settings() {
     </div>
   );
 }
+```
+
+## Oryx Engine (Zig → WASM)
+
+Il core di scoring dell'agente è compilato in **Zig** ed eseguito come modulo **WebAssembly** (`oryx-engine.wasm`), con un fallback **JavaScript identico** (f64, deterministico) quando WASM non è disponibile (browser vecchi, CSP restrittive).
+
+- **Auto-init lazy**: il modulo viene caricato al primo utilizzo dell'agente (una sola fetch, fire-and-forget) — nessun impatto sul page load.
+- **Zero-copy**: le interazioni vengono scritte direttamente nella linear memory WASM (struct a 24 byte, little-endian), senza serializzazione né allocazioni nel path di scoring.
+- **Stato osservabile**: `state.engineMode` espone `'wasm' | 'js' | 'loading'`; il `ThemeAgentPanel` mostra un badge con il core attivo.
+- **Parità verificata**: `validateAgent()` confronta WASM e JS sugli stessi input (0 mismatch su 500+ contesti); benchmark in `/wasm-poc` (dev, via URL diretto).
+
+Theming e colori usano lo stesso pattern: `engine.themeFromSeed()`, `engine.contrast()` ecc. (vedi `src/engine/core.ts`).
+
+```ts
+import { initEngine, engine, isWasmActive } from 'oryx-ui';
+
+// Init esplicito (opzionale: l'agente lo fa già in lazy)
+await initEngine();
+console.log(engine.mode); // 'wasm' | 'js'
 ```
 
 ## Peer Dependencies

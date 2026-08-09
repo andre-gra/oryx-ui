@@ -128,9 +128,6 @@ export const Layout = () => {
             <Button variant="ghost" onClick={() => navigate('/sandbox')}>
               Sandbox
             </Button>
-            <Button variant="ghost" onClick={() => navigate('/wasm-poc')}>
-              WASM POC
-            </Button>
             <Button variant="secondary" onClick={() => navigate('/chapter/1')}>
               Start Journey
             </Button>

@@ -29,13 +29,28 @@ export const ThemeAgentPanel = () => {
     <div className="theme-agent-panel bg-color2 border-color6 text-color11 rounded-lg border p-4 shadow-md">
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-color12 text-sm font-semibold">🤖 AI Theme Assistant</h3>
-        <span
-          className={`text-xs px-2 py-1 rounded ${
-            state.isLearning ? 'bg-color3 text-color11' : 'bg-color6 text-color11'
-          }`}
-        >
-          {state.mode === 'full-automatic' ? 'Auto' : 'Manual'}
-        </span>
+        <div className="flex items-center gap-1.5">
+          {/* Core engine badge: Zig/WASM attivo, fallback JS o init in corso */}
+          <span
+            className={`text-xs px-2 py-1 rounded font-medium ${
+              state.engineMode === 'wasm'
+                ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                : state.engineMode === 'js'
+                  ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+                  : 'bg-color3 text-color11'
+            }`}
+            title="Engine di scoring: Zig compilato in WASM, o fallback JS identico"
+          >
+            {state.engineMode === 'wasm' ? '✓ WASM core' : state.engineMode === 'js' ? 'JS fallback' : 'engine…'}
+          </span>
+          <span
+            className={`text-xs px-2 py-1 rounded ${
+              state.isLearning ? 'bg-color3 text-color11' : 'bg-color6 text-color11'
+            }`}
+          >
+            {state.mode === 'full-automatic' ? 'Auto' : 'Manual'}
+          </span>
+        </div>
       </div>
 
       {/* Insights */}

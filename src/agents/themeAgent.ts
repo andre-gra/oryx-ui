@@ -5,12 +5,14 @@ import type {
   StylePreference,
   AgentRecommendation,
   AgentMode,
+  EngineMode,
 } from './agentTypes'
 import { InteractionTracker } from './interactionTracker'
 import { GoogleGenAI } from '@google/genai'
 import { GEMINI_API_KEY } from '../config'
 import { availableThemes } from './availableThemes'
 import { agentRecommend, type AgentInput } from '../engine/agent'
+import { initEngine } from '../engine/core'
 
 const PREFERENCES_KEY = 'oryx-theme-preferences'
 const MIN_INTERACTIONS = 5 // Minimum interactions before making confident recommendations
@@ -24,11 +26,23 @@ export class ThemeAgent {
   private preferences: Map<string, StylePreference> = new Map()
   private mode: AgentMode = 'full-automatic'
   private genAI?: GoogleGenAI
+  private engineMode: EngineMode = 'loading'
+  private engineReady: Promise<EngineMode>
 
   constructor() {
     this.tracker = new InteractionTracker()
     this.loadPreferences()
-    console.log('vite', GEMINI_API_KEY)
+    // Lazy init del core Zig/WASM: fire-and-forget, nessun impatto sul page load.
+    // Alla prima raccomandazione il motore sarà pronto; se manca, fallback JS automatico.
+    this.engineReady = initEngine()
+      .then((e) => {
+        this.engineMode = e.mode
+        return e.mode
+      })
+      .catch(() => {
+        this.engineMode = 'js'
+        return 'js' as EngineMode
+      })
     if (GEMINI_API_KEY) {
       this.genAI = new GoogleGenAI({ apiKey: GEMINI_API_KEY })
     } else {
@@ -158,6 +172,20 @@ User prompt: "${prompt}"`
     insights.push(`Tracking ${interactions.length} recent interactions`)
 
     return insights
+  }
+
+  /**
+   * Stato del core di scoring: 'wasm' (Zig) | 'js' (fallback) | 'loading'
+   */
+  getEngineMode(): EngineMode {
+    return this.engineMode
+  }
+
+  /**
+   * Risolve quando l'engine è pronto (con il mode effettivo).
+   */
+  awaitEngineReady(): Promise<EngineMode> {
+    return this.engineReady
   }
 
   /**
