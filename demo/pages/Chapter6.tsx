@@ -9,7 +9,7 @@ export const Chapter6 = () => {
   const { chapters, completeChapter, setChapterTheme } = useStory()
   const navigate = useNavigate()
   const chapter = chapters[5]
-  const saved = chapter
+  if (!chapter) return null
   const [checked, setChecked] = useState<Record<string, boolean>>({
     design: false,
     code: false,
@@ -106,12 +106,12 @@ export const Chapter6 = () => {
             <ThemeDesigner
               chapterId={6}
               onSave={handleSave}
-              savedTheme={saved.theme}
-              savedSize={saved.size}
+              savedTheme={chapter.theme}
+              savedSize={chapter.size}
               prompt="Celebrate! What does a launch-day theme look like?"
             />
 
-            {saved.completed && (
+            {chapter.completed && (
               <Button
                 variant="primary"
                 className="w-full"

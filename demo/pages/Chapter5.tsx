@@ -6,7 +6,7 @@ import { useStory } from '../context/StoryProvider'
 export const Chapter5 = () => {
   const { chapters, completeChapter, setChapterTheme } = useStory()
   const chapter = chapters[4]
-  const saved = chapter
+  if (!chapter) return null
 
   const handleSave = (theme: any, size: any) => {
     setChapterTheme(5, theme, size)
@@ -75,8 +75,8 @@ export const Chapter5 = () => {
             <ThemeDesigner
               chapterId={5}
               onSave={handleSave}
-              savedTheme={saved.theme}
-              savedSize={saved.size}
+              savedTheme={chapter.theme}
+              savedSize={chapter.size}
               prompt="What refined, elegant palette matches a polished product?"
             />
           </div>

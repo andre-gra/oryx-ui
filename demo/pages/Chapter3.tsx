@@ -6,7 +6,7 @@ import { useStory } from '../context/StoryProvider'
 export const Chapter3 = () => {
   const { chapters, completeChapter, setChapterTheme } = useStory()
   const chapter = chapters[2]
-  const saved = chapter
+  if (!chapter) return null
 
   const handleSave = (theme: any, size: any) => {
     setChapterTheme(3, theme, size)
@@ -94,8 +94,8 @@ export const Chapter3 = () => {
             <ThemeDesigner
               chapterId={3}
               onSave={handleSave}
-              savedTheme={saved.theme}
-              savedSize={saved.size}
+              savedTheme={chapter.theme}
+              savedSize={chapter.size}
               prompt="What palette makes navigation feel intuitive and clear?"
             />
           </div>

@@ -11,10 +11,12 @@ export interface StepperProps {
   steps: StepperStep[]
   currentStep: number
   onStepClick?: (stepIndex: number) => void
+  /** Indice massimo cliccabile (0-based); gli step oltre questo limite non sono navigabili. */
+  maxClickableStep?: number
   className?: string
 }
 
-export const Stepper = ({ steps, currentStep, onStepClick, className }: StepperProps) => {
+export const Stepper = ({ steps, currentStep, onStepClick, maxClickableStep, className }: StepperProps) => {
   const { theme } = useTheme()
   const { size } = useSize()
 
@@ -32,7 +34,10 @@ export const Stepper = ({ steps, currentStep, onStepClick, className }: StepperP
         const isCompleted = index < currentStep
         const isActive = index === currentStep
         const isPending = index > currentStep
-        const isClickable = onStepClick && (isCompleted || isPending)
+        const isClickable =
+          onStepClick &&
+          (isCompleted || isPending) &&
+          (maxClickableStep === undefined || index <= maxClickableStep)
 
         const stepNumber = index + 1
 

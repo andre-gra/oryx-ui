@@ -1,4 +1,4 @@
-import { Accordion, Button } from '../../src'
+import { Accordion } from '../../src'
 import { ThemeDesigner } from '../components/ThemeDesigner'
 import { ChapterNavigation } from '../components/ChapterNavigation'
 import { useStory } from '../context/StoryProvider'
@@ -6,7 +6,7 @@ import { useStory } from '../context/StoryProvider'
 export const Chapter2 = () => {
   const { chapters, completeChapter, setChapterTheme } = useStory()
   const chapter = chapters[1]
-  const saved = chapter
+  if (!chapter) return null
 
   const handleSave = (theme: any, size: any) => {
     setChapterTheme(2, theme, size)
@@ -65,8 +65,8 @@ export const Chapter2 = () => {
             <ThemeDesigner
               chapterId={2}
               onSave={handleSave}
-              savedTheme={saved.theme}
-              savedSize={saved.size}
+              savedTheme={chapter.theme}
+              savedSize={chapter.size}
               prompt="What colors reflect an organized, productive team?"
             />
           </div>

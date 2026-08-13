@@ -6,7 +6,7 @@ import { useStory } from '../context/StoryProvider'
 export const Chapter4 = () => {
   const { chapters, completeChapter, setChapterTheme } = useStory()
   const chapter = chapters[3]
-  const saved = chapter
+  if (!chapter) return null
 
   const handleSave = (theme: any, size: any) => {
     setChapterTheme(4, theme, size)
@@ -68,8 +68,8 @@ export const Chapter4 = () => {
             <ThemeDesigner
               chapterId={4}
               onSave={handleSave}
-              savedTheme={saved.theme}
-              savedSize={saved.size}
+              savedTheme={chapter.theme}
+              savedSize={chapter.size}
               prompt="What theme suits a moment of important decision? Confident? Bold?"
             />
           </div>
