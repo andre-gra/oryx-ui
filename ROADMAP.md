@@ -43,3 +43,51 @@
 | 5️⃣ | Final polish, telemetry validation, and roadmap update |
 
 *All tasks will be tracked in the project board and linked to this roadmap entry.*
+
+---
+
+### 5. Generative UI — Architettura End-to-End (BEAM Micro-Service + React)
+
+**Goal:** Progettare e implementare il backend (BEAM micro-service) e l'orchestrazione per una piattaforma di Generative UI, mantenendo lo stack attuale (React/Vite, TypeScript, Tailwind, ThemeAgent, Color.zig).
+
+**Motivazione:** La BEAM VM è progettata per gestire milioni di connessioni concorrenti ad alta affidabilità; usiamo un micro-servizio BEAM per gestire gli stream LLM e la generazione dei widget, mantenendo il frontend React nativo senza riscrivere componenti UI.
+
+**Planned sub-tasks:**
+- **Design del tipo Widget condiviso** — Definire `type Widget = { MetricCard: { title: string; value: string } | BarChart: { labels: string[]; data: number[] } | TextWidget: { content: string } }` in un modulo condiviso (TypeScript o schema JSON) che sia usato sia dal backend BEAM che dal frontend React. Validazione dello stream LLM via schema (Zod) con fallimento sicuro su allucinazioni.
+- **Orchestratore LLM su BEAM** — Implementare un processo BEAM (Actor) che riceve prompt via WebSocket, richiama l'LLM, e streamma token JSON (widget) al client. Usare LangChain/LlamaIndex o Vercel AI SDK per RAG, memoria e contesto.
+- **Server-Driven Rendering via WebSocket** — Implementare il trasporto: connessione WebSocket bidirezionale da BEAM al client React. Il server serializza i widget tipizzati e li pusha come eventi parziali (draft → completed).
+- **Gestione dello stream React (Model/Msg/Effect)** — Implementare il ciclo Elm-Architecture in React (usando hooks o un contesto) per gestire lo stato della connessione, i widget ricevuti e le patch. `Model` contiene `socket_status`, `widgets`, `draft_widget`; `Msg` include `OnServerMessage`, `OnSocketConnected`, `UserSentPrompt`; `Effect` gestisce la connessione WebSocket nativa tramite FFI o libreria WebSocket.
+- **Rendering determinista & pattern matching** — La funzione `view` esegue pattern matching sui widget tipizzati per produrre componenti React nativi (Button, MetricCard, BarChart, etc.). Niente codice arbitrario generato dall'IA: il client rende solo costrutti che il tipo condiviso conosce.
+- **Streaming progressivo (token per token)** — Aggiungere stato `draft_widget: Widget | null` per accumulare frammenti delta dall'LLM e aggiornare la bozza in tempo reale finché il frame non si chiude.
+- **Documentazione & Demo** — Documentare l'architettura in `docs/roadmap/5-generative-ui-beam-micro.md`; creare una demo interattiva `/genui-stream-demo` che mostra l'interfaccia che si 'disegna da sola' in tempo reale.
+
+**Piano a 4 sprint:**
+| Sprint | Deliverable |
+|--------|-------------|
+| 1️⃣ | Tipi Widget condivisi + decoder + validazione schema (backend e frontend) |
+| 2️⃣ | Orchestratore LLM su BEAM + WebSocket stream processo (backend) |
+| 3️⃣ | Loop React (Model/Msg/Effect) + WebSocket FFI + rendering determinista |
+| 4️⃣ | Streaming progressivo, demo interattiva, documentazione |
+
+**Architettura di riferimento (BEAM Micro-Service + React):**
+```
+[ Input Utente ]
+       │
+       ▼
+React App (Vite) ──WebSocket──► BEAM WS Process (Actor) ──► LLM Orchestrator (structured JSON stream)
+       │                           │
+       │ JSON / WebSocket Stream   │ Output Struct
+       ▼                           ▼
+React Renderer (pattern matching) ◄───── Type-Safe Decoders (Zod)
+       │
+       ▼
+Dynamic View (pattern matching su Widget) → VNode nativi
+```
+
+**Vantaggi chiave della scelta:**
+- Concorrenza senza lock: centinaia di contesti IA e socket aperti con poche risorse.
+- Codice condiviso: stessi tipi e decodificatori nel backend BEAM e nel frontend.
+- Zero XSS / allucinazioni nel rendering: il client rende solo costrutti conosciuti dal tipo condiviso.
+- Mantenimento dello stack attuale: React, Tailwind, ThemeAgent, Color.zig continuano a funzionare senza modifiche invasive.
+
+*Questo lavoro esplora l'accoppiata BEAM + React come stack ideale per la Generative UI, differenziandosi dalla stack tradizionale Node/React/Next in favore di type-safety end-to-end e affidabilità concorrente.*
