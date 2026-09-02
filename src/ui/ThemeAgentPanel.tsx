@@ -4,7 +4,7 @@ import { useTheme } from '../themes/useTheme'
 import classNames from 'classnames'
 
 export const ThemeAgentPanel = () => {
-  const { state, recommendation, getInsights, generateThemeFromPrompt } = useThemeAgent()
+  const { state, recommendation, getInsights, generateThemeFromPrompt, isLoading } = useThemeAgent()
   const { changeTheme } = useTheme()
   const [prompt, setPrompt] = useState('')
   const [animationState, setAnimationState] = useState(false)
@@ -100,7 +100,7 @@ export const ThemeAgentPanel = () => {
               animationState && 'animate-pulse animate-once animate-duration-200',
             )}
           >
-            Generate
+            {isLoading ? 'Generating...' : 'Generate'}
           </button>
         </form>
       </div>

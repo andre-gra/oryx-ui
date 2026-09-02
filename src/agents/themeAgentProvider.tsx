@@ -14,6 +14,7 @@ export interface ThemeAgentContextValue {
   recordInteraction: (theme: Theme, size: Size) => void
   applyRecommendation: ((rec: AgentRecommendation) => void) | null
   generateThemeFromPrompt: (prompt: string) => Promise<Theme | null>
+  isLoading: boolean
 }
 
 export const ThemeAgentContext = createContext<ThemeAgentContextValue | null>(null)
@@ -38,6 +39,7 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
     },
   })
   const [recommendation, setRecommendation] = useState<AgentRecommendation | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   // Initialize agent
   useEffect(() => {
@@ -122,7 +124,12 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
 
   const generateThemeFromPrompt = useCallback(async (prompt: string): Promise<Theme | null> => {
     if (!agentRef.current) return null
-    return await agentRef.current.generateThemeFromPrompt(prompt)
+    setIsLoading(true)
+    try {
+      return await agentRef.current.generateThemeFromPrompt(prompt)
+    } finally {
+      setIsLoading(false)
+    }
   }, [])
 
   const value: ThemeAgentContextValue = {
@@ -135,6 +142,7 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
     recordInteraction,
     applyRecommendation: onRecommendation || null,
     generateThemeFromPrompt,
+    isLoading,
   }
 
   return <ThemeAgentContext.Provider value={value}>{children}</ThemeAgentContext.Provider>

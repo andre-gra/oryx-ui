@@ -128,7 +128,7 @@ const RadioGroupLevel = ({
         theme,
         `radio-root${size}`,
         'flex',
-        orientation === 'horizontal' ? 'flex-row' : 'flex-col',
+        orientation === 'horizontal' ? 'flex-row' : 'flex-col gap-1',
         className,
       )}
       name={name}
