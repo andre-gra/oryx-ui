@@ -17,3 +17,8 @@ export type {
   EngineMode,
   ThemeAgentContextValue as AgentContextValue,
 } from '../agents/agentTypes'
+
+// Sprint 1: preferenza tema e profilo AI
+export type { ThemePreference } from '../types/themePreference'
+export { STORAGE_KEY_THEME_PREFERENCE, themePreferenceStore } from '../types/themePreference'
+export type { ThemeProfile } from '../types/themeProfile'

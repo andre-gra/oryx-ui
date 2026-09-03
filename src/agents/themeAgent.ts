@@ -13,6 +13,12 @@ import { GEMINI_API_KEY } from '../config'
 import { availableThemes } from './availableThemes'
 import { agentRecommend, type AgentInput } from '../engine/agent'
 import { initEngine } from '../engine/core'
+import {
+  themePreferenceStore,
+  type ThemePreference,
+} from '../types/themePreference'
+import type { ThemeProfile } from '../types/themeProfile'
+import { isValidThemeProfile } from '../types/themeProfile'
 
 const PREFERENCES_KEY = 'oryx-theme-preferences'
 const MIN_INTERACTIONS = 5 // Minimum interactions before making confident recommendations
@@ -28,6 +34,9 @@ export class ThemeAgent {
   private genAI?: GoogleGenAI
   private engineMode: EngineMode = 'loading'
   private engineReady: Promise<EngineMode>
+  private currentPreference: ThemePreference = themePreferenceStore.get()
+  private currentAiProfile: ThemeProfile | null = null
+  private preferenceListeners: Set<(pref: ThemePreference) => void> = new Set()
 
   constructor() {
     this.tracker = new InteractionTracker()
@@ -50,6 +59,12 @@ export class ThemeAgent {
         'Gemini API key not found. Please set VITE_GEMINI_API_KEY in your .env file. AI features will be limited.',
       )
     }
+    // Sprint 1: sincronizza preferenza iniziale da localStorage
+    this.currentPreference = themePreferenceStore.get()
+    themePreferenceStore.subscribe((p) => {
+      this.currentPreference = p
+      this.notifyPreferenceChange()
+    })
   }
 
   /**
@@ -99,6 +114,140 @@ User prompt: "${prompt}"`
   }
 
   /**
+   * Estrae i colori CSS --oryx-* dominanti dal documento corrente.
+   * Restituisce un oggetto con i valori delle variabili CSS rilevanti.
+   */
+  private extractCssColors(): Record<string, string> {
+    if (typeof document === 'undefined' || !document.documentElement) {
+      return {}
+    }
+
+    const computed = getComputedStyle(document.documentElement)
+    const cssVars: Record<string, string> = {}
+
+    // Lista delle variabili CSS --oryx-* da leggere
+    const varNames = [
+      '--oryx-color-primary',
+      '--oryx-color-primary-50',
+      '--oryx-color-primary-100',
+      '--oryx-color-primary-200',
+      '--oryx-color-primary-300',
+      '--oryx-color-primary-400',
+      '--oryx-color-primary-500',
+      '--oryx-color-primary-600',
+      '--oryx-color-primary-700',
+      '--oryx-color-primary-800',
+      '--oryx-color-primary-900',
+      '--oryx-color-bg',
+      '--oryx-color-bg-surface',
+      '--oryx-color-text',
+      '--oryx-color-text-primary',
+      '--oryx-color-text-secondary',
+    ]
+
+    for (const varName of varNames) {
+      const value = computed.getPropertyValue(varName).trim()
+      if (value) {
+        cssVars[varName] = value
+      }
+    }
+
+    return cssVars
+  }
+
+  /**
+   * Genera una palette AI personalizzata basata sui colori dominanti della pagina.
+   * Usa Gemini con structured output per restituire un ThemeProfile validato.
+   */
+  async suggestPalette(prompt?: string): Promise<ThemeProfile | null> {
+    if (!this.genAI) {
+      console.warn(
+        'Gemini API not initialized. Cannot suggest AI palette. Set VITE_GEMINI_API_KEY in your .env file.',
+      )
+      return null
+    }
+
+    // 1. Estrai i colori CSS --oryx-* dal documento corrente
+    const domColors = this.extractCssColors()
+
+    // 2. Costruisci il prompt strutturato per Gemini
+    const llmPrompt = `You are a color palette expert for a UI library.
+Based on the dominant colors found on the current page, generate a harmonious theme palette
+${prompt ? `that matches this user request: "${prompt}".\n` : '.\n'}
+You MUST return ONLY a valid JSON object (no markdown, no code fences, no comments) matching exactly this schema:
+
+{
+  "id": "ai-palette-<unique-suffix>",
+  "name": "<descriptive name of the palette>",
+  "light": {
+    "primary": "#RRGGBB",
+    "bg": "#RRGGBB",
+    "text": "#RRGGBB"
+  },
+  "dark": {
+    "primary": "#RRGGBB",
+    "bg": "#RRGGBB",
+    "text": "#RRGGBB"
+  },
+  "acceptedAt": null
+}
+
+Rules:
+- All colors MUST be hex format: # followed by exactly 6 hex digits (e.g. #ff8800, #1A2B3C).
+- "id" must be a non-empty string, unique for palette (suggest "ai-palette-1", "ai-palette-2", etc.).
+- "name" must be a non-empty human-readable description (e.g. "Warm sunset palette").
+- "light.bg" should be a light background, "light.text" should be a dark text for contrast.
+- "dark.bg" should be a dark background, "dark.text" should be a light text for contrast.
+- "primary" is the accent color and should be harmonious with the dominant page colors.
+- "acceptedAt" MUST be null.
+
+Dominant colors found on the page (CSS custom properties --oryx-*):
+${JSON.stringify(domColors, null, 2)}
+
+Return ONLY the JSON object.`
+
+    try {
+      // 3. Chiama Gemini chiedendo JSON in risposta
+      const result = await this.genAI.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: llmPrompt,
+        config: {
+          responseMimeType: 'application/json',
+        },
+      })
+
+      const text = (result.text || '').trim()
+
+      // 4. Parse del JSON
+      let parsed: unknown
+      try {
+        parsed = JSON.parse(text)
+      } catch (parseError) {
+        console.warn('AI palette response is not valid JSON:', text, parseError)
+        return null
+      }
+
+      // 5. Validazione con type guard
+      if (isValidThemeProfile(parsed)) {
+        // acceptedAt è garantito null dal type guard
+        return {
+          id: parsed.id,
+          name: parsed.name,
+          light: { ...parsed.light },
+          dark: { ...parsed.dark },
+          acceptedAt: null,
+        }
+      }
+
+      console.warn('AI palette response failed validation:', parsed)
+      return null
+    } catch (error) {
+      console.error('Error generating AI palette suggestion:', error)
+      return null
+    }
+  }
+
+  /**
    * Get current recommendation based on learned preferences
    */
   getRecommendation(): AgentRecommendation | null {
@@ -132,10 +281,10 @@ User prompt: "${prompt}"`
     const size = SIZES[rec.sizeId]
 
     return {
-      theme,
+      theme: theme || 'theme-amber',
       size,
       confidence: rec.confidence,
-      reason: this.generateReason(theme, size, currentHour),
+      reason: this.generateReason(theme || 'theme-amber', size, currentHour),
     }
   }
 
@@ -158,7 +307,7 @@ User prompt: "${prompt}"`
 
     if (sorted.length > 0) {
       const favorite = sorted[0]
-      const themeLabel = favorite.theme.replace('theme-', '')
+      const themeLabel = favorite.theme?.replace('theme-', '') ?? 'unknown'
       insights.push(`Your favorite combination: ${themeLabel} theme with size ${favorite.size}`)
     }
 
@@ -195,11 +344,56 @@ User prompt: "${prompt}"`
     this.mode = mode
   }
 
-  /**
-   * Get current mode
-   */
   getMode(): AgentMode {
     return this.mode
+  }
+
+  /** Sprint 1: preferenza esplicita e profilo AI */
+  getPreference(): ThemePreference {
+    return themePreferenceStore.get()
+  }
+
+  /** Imposta la preferenza utente (persiste e notifica). */
+  setPreference(pref: ThemePreference): void {
+    themePreferenceStore.set(pref)
+    this.currentPreference = pref
+    this.notifyPreferenceChange()
+  }
+
+  /** Rimuove esplicitamente la preferenza (solo interazione utente). */
+  clearPreference(): void {
+    themePreferenceStore.clear()
+    this.currentPreference = null
+    this.notifyPreferenceChange()
+  }
+
+  /** Profilo AI corrente. */
+  getAiProfile(): ThemeProfile | null {
+    return this.currentAiProfile
+  }
+
+  /** Accetta e memorizza un profilo AI. */
+  acceptAiProfile(profile: ThemeProfile): void {
+    this.currentAiProfile = { ...profile, acceptedAt: new Date() }
+  }
+
+  /** Registra un listener per i cambi di preferenza. Ritorna unsubscribe. */
+  onPreferenceChange(listener: (pref: ThemePreference) => void): () => void {
+    this.preferenceListeners.add(listener)
+    return () => {
+      this.preferenceListeners.delete(listener)
+    }
+  }
+
+  /** Notifica tutti i listener iscritti. */
+  private notifyPreferenceChange(): void {
+    for (const listener of this.preferenceListeners) {
+      try {
+        listener(this.currentPreference)
+      } catch {
+        // Ignora errori individuali
+      }
+    }
   }
 
   /**

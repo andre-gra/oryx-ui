@@ -128,6 +128,9 @@ export const Layout = () => {
             <Button variant="ghost" onClick={() => navigate('/sandbox')}>
               Sandbox
             </Button>
+            <Button variant="ghost" onClick={() => navigate('/theme-toggle-demo')}>
+              Theme Toggle
+            </Button>
             <Button variant="secondary" onClick={() => navigate('/chapter/1')}>
               Start Journey
             </Button>

@@ -10,6 +10,7 @@ import { Chapter6 } from './pages/Chapter6'
 import { FinalePage } from './pages/FinalePage'
 import { SandboxPage } from './pages/SandboxPage'
 import { WasmPocPage } from './pages/WasmPocPage'
+import ThemeToggleDemo from './pages/ThemeToggleDemo'
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/finale" element={<FinalePage />} />
           <Route path="/sandbox" element={<SandboxPage />} />
           <Route path="/wasm-poc" element={<WasmPocPage />} />
+          <Route path="/theme-toggle-demo" element={<ThemeToggleDemo />} />
         </Route>
       </Routes>
     </BrowserRouter>

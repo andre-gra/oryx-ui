@@ -3,6 +3,8 @@ import type { AgentMode, AgentRecommendation, AgentState, EngineMode } from './a
 import { ThemeAgent } from './themeAgent'
 import type { Theme } from '../themes/themeProvider'
 import type { Size } from '../themes/sizeProvider'
+import type { ThemePreference } from '../types/themePreference'
+import type { ThemeProfile } from '../types/themeProfile'
 
 export interface ThemeAgentContextValue {
   state: AgentState
@@ -15,6 +17,11 @@ export interface ThemeAgentContextValue {
   applyRecommendation: ((rec: AgentRecommendation) => void) | null
   generateThemeFromPrompt: (prompt: string) => Promise<Theme | null>
   isLoading: boolean
+  preference: ThemePreference
+  setPreference: (pref: ThemePreference) => void
+  clearPreference: () => void
+  aiProfile: ThemeProfile | null
+  acceptAiProfile: (profile: ThemeProfile) => void
 }
 
 export const ThemeAgentContext = createContext<ThemeAgentContextValue | null>(null)
@@ -40,6 +47,8 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
   })
   const [recommendation, setRecommendation] = useState<AgentRecommendation | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [preference, setPreferenceState] = useState<ThemePreference | null>(null)
+  const [aiProfile, setAiProfileState] = useState<ThemeProfile | null>(null)
 
   // Initialize agent
   useEffect(() => {
@@ -49,10 +58,23 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
         ...prev,
         interactionCount: agentRef.current!.getInteractionCount(),
       }))
+      // Sprint 1: inizializza la preferenza letta da localStorage
+      setPreferenceState(agentRef.current.getPreference())
       // Riflette nello stato il mode effettivo del core (wasm/js) appena è pronto
       agentRef.current.awaitEngineReady().then((engineMode: EngineMode) => {
         setState((prev) => ({ ...prev, engineMode }))
       })
+    }
+  }, [])
+
+  // Sprint 1: sincronizza preferenza e profilo AI quando l'agente cambia
+  useEffect(() => {
+    if (!agentRef.current) return
+    const unsubscribePref = agentRef.current.onPreferenceChange((p: ThemePreference) => {
+      setPreferenceState(p)
+    })
+    return () => {
+      unsubscribePref()
     }
   }, [])
 
@@ -132,6 +154,25 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
     }
   }, [])
 
+  // Sprint 1: preferenza e profilo AI
+  const setPreferenceCallback = useCallback((pref: ThemePreference) => {
+    if (!agentRef.current) return
+    agentRef.current.setPreference(pref)
+    setPreferenceState(pref)
+  }, [])
+
+  const clearPreferenceCallback = useCallback(() => {
+    if (!agentRef.current) return
+    agentRef.current.clearPreference()
+    setPreferenceState(null)
+  }, [])
+
+  const acceptAiProfileCallback = useCallback((profile: ThemeProfile) => {
+    if (!agentRef.current) return
+    agentRef.current.acceptAiProfile(profile)
+    setAiProfileState(profile)
+  }, [])
+
   const value: ThemeAgentContextValue = {
     state,
     recommendation,
@@ -143,6 +184,11 @@ const ThemeAgentProvider: React.FC<ProviderProps> = ({ children, onRecommendatio
     applyRecommendation: onRecommendation || null,
     generateThemeFromPrompt,
     isLoading,
+    preference,
+    setPreference: setPreferenceCallback,
+    clearPreference: clearPreferenceCallback,
+    aiProfile,
+    acceptAiProfile: acceptAiProfileCallback,
   }
 
   return <ThemeAgentContext.Provider value={value}>{children}</ThemeAgentContext.Provider>

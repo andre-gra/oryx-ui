@@ -2,6 +2,7 @@ import { type ReactNode } from 'react'
 import ThemeProvider from '../themes/themeProvider'
 import SizeProvider from '../themes/sizeProvider'
 import ThemeAgentProvider from '../agents/themeAgentProvider'
+import ThemeModeBridge from '../components/ThemeModeBridge/ThemeModeBridge'
 import { AgentInteractionTracker } from '../agents/AgentInteractionTracker'
 import { useTheme } from '../themes/useTheme'
 import { useSize } from '../themes/useSize'
@@ -46,11 +47,17 @@ const OryxProviderInner = ({
   )
 
   if (!enableAgent) {
-    return <>{children}</>
+    return (
+      <>
+        <ThemeModeBridge />
+        {children}
+      </>
+    )
   }
 
   return (
     <ThemeAgentProvider onRecommendation={handleRecommendation}>
+      <ThemeModeBridge />
       <AgentInteractionTracker />
       {children}
     </ThemeAgentProvider>

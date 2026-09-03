@@ -1,5 +1,7 @@
 import type { Theme } from '../themes/themeProvider'
 import type { Size } from '../themes/sizeProvider'
+import type { ThemePreference } from '../types/themePreference'
+import type { ThemeProfile } from '../types/themeProfile'
 
 /**
  * Represents a single interaction event when user changes theme or size
@@ -93,4 +95,16 @@ export interface ThemeAgentContextValue {
   recordInteraction: (theme: Theme, size: Size) => void // Added back recordInteraction
   applyRecommendation: ((rec: AgentRecommendation) => void) | null // Added back applyRecommendation
   generateThemeFromPrompt: (prompt: string) => Theme
+
+  // Sprint 1: preferenza esplicita e profilo AI
+  /** Preferenza corrente dell'utente ('system' | 'light' | 'dark' | null). */
+  preference: ThemePreference
+  /** Imposta la preferenza utente (persiste in localStorage). */
+  setPreference: (pref: ThemePreference) => void
+  /** Rimuove esplicitamente la preferenza (solo interazione utente). */
+  clearPreference: () => void
+  /** Profilo palette AI correntemente attivo (o null). */
+  aiProfile: ThemeProfile | null
+  /** Accetta e memorizza un profilo AI come preferenza attiva. */
+  acceptAiProfile: (profile: ThemeProfile) => void
 }
