@@ -78,10 +78,10 @@
 
     .popover-content-container$(size) {
 
-      @apply gap-$size;
+      @apply gap-[calc(0.25rem*$size)];
 
       .popover-content-paragraph$(size) {
-        @apply leading-[calc(6px*$size)] mb-$size;
+        @apply leading-[calc(6px*$size)] mb-[calc(0.25rem*$size)];
       }
 
       fieldset {
@@ -92,7 +92,7 @@
         }
   
         input {
-          @apply text-[calc(4px*$size)] px-$size h-[calc(8px*$size)] rounded-[calc(1px*$size*1.5)];
+          @apply text-[calc(4px*$size)] px-[calc(0.25rem*$size)] h-[calc(8px*$size)] rounded-[calc(1px*$size*1.5)];
         }
       }
 
@@ -114,7 +114,7 @@
  * ----------------------------------------------------------------------------------------------- */
   @for $size from 2 through 4 by 1 {
     .select-trigger$(size) {
-      @apply px-[calc(5px*$size)] text-[calc(4px*$size)] h-[calc(12px*$size)] gap-$size rounded-[calc(1px*$size*2)];
+      @apply px-[calc(5px*$size)] text-[calc(4px*$size)] h-[calc(12px*$size)] gap-[calc(0.25rem*$size)] rounded-[calc(1px*$size*2)];
 
     }
 
@@ -179,7 +179,7 @@
   }
 
   .navigation-menu-link$(size).text-nav {
-    @apply rounded-[calc(1px*$size*2)] p-$size ;
+    @apply rounded-[calc(1px*$size*2)] p-[calc(0.25rem*$size)] ;
   }
 
   .navigation-menu-link$(size) {
