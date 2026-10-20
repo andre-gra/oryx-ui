@@ -1,0 +1,22 @@
+# Render deploy blueprint — https://render.com/docs/blueprints
+# Deploys the Oryx UI demo as a static site on the CDN.
+# Build command: npm ci && npm run build
+# Publish directory: demo/dist-demo
+
+apiVersion: render.com/v1
+kind: Blueprint
+
+metadata:
+  name: Oryx UI Demo
+  description: Static site for the Oryx UI component library demo
+
+services:
+  - type: static-site
+    name: oryx-ui-demo
+    repoName: oryx-ui
+    branch: main
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./demo/dist-demo
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
