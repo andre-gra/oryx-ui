@@ -1,0 +1,4 @@
+# Cloudflare Pages — https://developers.cloudflare.com/pages/functions/wrangler-configuration/
+name = "oryx-ui-demo"
+compatibility_date = "2026-10-20"
+pages_build_output_dir = "demo/dist-demo"
